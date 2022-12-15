@@ -1,5 +1,5 @@
 import type { Configuration as DevServerConfiguration } from "webpack-dev-server";
-import type { Configuration } from "webpack";
+import { Configuration, DefinePlugin } from "webpack";
 
 const devServer: DevServerConfiguration = {};
 
@@ -30,6 +30,12 @@ const config: Configuration = {
       },
     ],
   },
+  plugins: [
+    new DefinePlugin({
+      __DEV__: true,
+      __FIEND_DEV__: false,
+    }),
+  ],
 };
 
 // module.exports
