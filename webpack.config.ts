@@ -6,7 +6,7 @@ const devServer: DevServerConfiguration = {};
 const config: Configuration = {
   mode: "development",
   devServer,
-  entry: "./src/index.tsx",
+  entry: "./src/index.ts",
   output: {
     filename: "./public/output/index.js",
   },
