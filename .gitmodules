@@ -1,0 +1,3 @@
+[submodule "fiend-ui"]
+	path = fiend-ui
+	url = https://github.com/GitFiend/fiend-ui.git
