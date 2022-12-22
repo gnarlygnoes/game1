@@ -1,4 +1,4 @@
-import { $Model } from "../fiend-ui/src";
+import { $Model, $RunInAction } from "../fiend-ui/src";
 import { calcPosition, calcProgress } from "./calc-position";
 
 export interface Position {
@@ -7,7 +7,10 @@ export interface Position {
 }
 
 export class Store extends $Model {
-  readonly maxVelocity = 10;
+  $pageWidth = window.innerWidth;
+  $pageHeight = window.innerHeight;
+
+  // readonly maxVelocity = 10;
 
   $position: Position = {
     x: 100,
@@ -19,6 +22,13 @@ export class Store extends $Model {
   constructor() {
     super();
     super.connect();
+
+    addEventListener("resize", () => {
+      $RunInAction(() => {
+        this.$pageWidth = window.innerWidth;
+        this.$pageHeight = window.innerHeight;
+      });
+    });
   }
 
   moveTo(x: number, y: number) {
