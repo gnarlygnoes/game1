@@ -18,27 +18,6 @@ class Main extends $Component {
     addEventListener("mousedown", (e) => {
       this.store.moveTo(e.clientX, e.clientY);
     });
-
-    // addEventListener("keydown", (e) => {
-    //   switch (e.key) {
-    //     case "ArrowLeft":
-    //       this.$x -= 10;
-    //       console.log("move left");
-    //       break;
-    //     case "ArrowRight":
-    //       this.$x += 10;
-    //       console.log("move right");
-    //       break;
-    //     case "ArrowUp":
-    //       this.$y -= 10;
-    //       console.log("move up");
-    //       break;
-    //     case "ArrowDown":
-    //       this.$y += 10;
-    //       console.log("move down");
-    //       break;
-    //   }
-    // });
   }
 }
 

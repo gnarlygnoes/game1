@@ -10,7 +10,7 @@ export class Store extends $Model {
   $pageWidth = window.innerWidth;
   $pageHeight = window.innerHeight;
 
-  // readonly maxVelocity = 10;
+  $starsYPosition = 0;
 
   $position: Position = {
     x: 100,
@@ -29,6 +29,24 @@ export class Store extends $Model {
         this.$pageHeight = window.innerHeight;
       });
     });
+
+    this.gameLoop();
+  }
+
+  timeOfLastFrame = Date.now();
+
+  gameLoop = () => {
+    const now = Date.now();
+    this.update(now);
+
+    this.timeOfLastFrame = Date.now();
+
+    requestAnimationFrame(this.gameLoop);
+  };
+
+  update(now: number) {
+    this.$starsYPosition =
+      (this.$starsYPosition + 0.00002 * (now - this.timeOfLastFrame)) % 2;
   }
 
   moveTo(x: number, y: number) {

@@ -5,6 +5,7 @@ import { generateStars } from "./star-data";
 
 export class Stars extends $Component<{ store: Store }> {
   ref = createRef<HTMLCanvasElement>();
+
   stars = generateStars();
 
   render() {
@@ -28,13 +29,13 @@ export class Stars extends $Component<{ store: Store }> {
 
       if (context) {
         const {
-          store: { $pageWidth, $pageHeight },
+          store: { $pageWidth, $pageHeight, $starsYPosition },
         } = this.props;
 
         context.fillStyle = `rgb(0, 0, 0)`;
         context.fillRect(0, 0, $pageWidth, $pageHeight);
 
-        this.drawStars(context, $pageWidth, $pageHeight);
+        this.drawStars(context, $pageWidth, $pageHeight, $starsYPosition);
       }
     }
   }
@@ -42,21 +43,30 @@ export class Stars extends $Component<{ store: Store }> {
   drawStars(
     context: CanvasRenderingContext2D,
     pageWidth: number,
-    pageHeight: number
+    pageHeight: number,
+    starsYPosition: number
   ) {
     for (const { x, y, size, colour } of this.stars) {
+      const currentY = (y + starsYPosition) % 2;
+
+      // console.log(currentY);
+
       context.beginPath();
       context.fillStyle = colour;
-      context.arc(x * pageWidth, y * pageHeight, size * 5, 0, Math.PI * 2);
+      context.arc(
+        x * pageWidth,
+        currentY * pageHeight,
+        size * 5,
+        0,
+        Math.PI * 2
+      );
       context.fill();
     }
   }
 
   componentDidMount() {
-    this.draw();
-  }
-
-  componentDidUpdate() {
-    this.draw();
+    this.$AutoRun(() => {
+      this.draw();
+    });
   }
 }
