@@ -1,32 +1,32 @@
-import type { Configuration as DevServerConfiguration } from "webpack-dev-server";
-import { Configuration, DefinePlugin } from "webpack";
+import type {Configuration as DevServerConfiguration} from 'webpack-dev-server'
+import {Configuration, DefinePlugin} from 'webpack'
 
-const devServer: DevServerConfiguration = {};
+const devServer: DevServerConfiguration = {}
 
 const config: Configuration = {
-  mode: "development",
+  mode: 'development',
   devServer,
-  entry: "./src/index.ts",
+  entry: './src/index.ts',
   output: {
-    filename: "./public/output/index.js",
+    filename: './public/output/index.js',
   },
   resolve: {
     // Add `.ts` and `.tsx` as a resolvable extension.
-    extensions: [".ts", ".tsx", ".js"],
+    extensions: ['.ts', '.tsx', '.js'],
   },
-  devtool: true ? "eval-cheap-module-source-map" : undefined,
+  devtool: true ? 'eval-cheap-module-source-map' : undefined,
   module: {
     rules: [
       // all files with a `.ts` or `.tsx` extension will be handled by `ts-loader`
-      { test: /\.tsx?$/, loader: "ts-loader" },
+      {test: /\.tsx?$/, loader: 'ts-loader'},
       {
         test: /\.js$/,
-        enforce: "pre",
-        use: ["source-map-loader"],
+        enforce: 'pre',
+        use: ['source-map-loader'],
       },
       {
         test: /\.css$/i,
-        use: ["style-loader", "css-loader"],
+        use: ['style-loader', 'css-loader'],
       },
     ],
   },
@@ -36,7 +36,7 @@ const config: Configuration = {
       __FIEND_DEV__: false,
     }),
   ],
-};
+}
 
 // module.exports
-export default config;
+export default config

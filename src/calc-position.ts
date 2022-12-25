@@ -1,4 +1,4 @@
-import { Position } from "./store";
+import {Position} from './store/store'
 
 export function calcPosition(
   from: Position,
@@ -8,7 +8,7 @@ export function calcPosition(
   return {
     x: from.x + (to.x - from.x) * progress,
     y: from.y + (to.y - from.y) * progress,
-  };
+  }
 }
 
 export function calcProgress(
@@ -16,11 +16,11 @@ export function calcProgress(
   to: Position,
   elapsed: number
 ): number {
-  const distance = Math.sqrt((to.x - from.x) ** 2 + (to.y - from.y) ** 2);
+  const distance = Math.sqrt((to.x - from.x) ** 2 + (to.y - from.y) ** 2)
 
-  const distanceMoved = speed(elapsed) * elapsed;
+  const distanceMoved = speed(elapsed) * elapsed
 
-  return Math.min(distanceMoved / distance, 1);
+  return Math.min(distanceMoved / distance, 1)
 }
 
 function speed(currentTime: number) {
@@ -33,5 +33,5 @@ function speed(currentTime: number) {
   //   return ((endTime - currentTime) / 500) * 0.5;
   // }
 
-  return 0.5;
+  return 0.5
 }
