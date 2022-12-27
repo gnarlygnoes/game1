@@ -7,15 +7,16 @@ export class Mc extends $Component<{
 }> {
   render(): FiendNode | FiendNode[] {
     const {
-      mc: {
-        pos: {x, y},
-      },
-      $angle,
+      mc: {pos},
     } = this.props.store
+
+    const {
+      position: {x, y},
+    } = pos
 
     return Div({
       className: `Mc`,
-      style: s`transform: translate(${x}px, ${y}px) rotate(${$angle}deg);`,
+      style: s`transform: translate(${x}px, ${y}px) rotate(${pos.getAngle()}deg);`,
       children: [],
     })
   }
@@ -26,9 +27,13 @@ export class Mc extends $Component<{
 
   back() {}
 
-  left() {}
+  left() {
+    this.props.store.mc.pos.rotate(-0.1)
+  }
 
-  right() {}
+  right() {
+    this.props.store.mc.pos.rotate(0.1)
+  }
 
   componentDidMount() {
     addEventListener('keydown', e => {

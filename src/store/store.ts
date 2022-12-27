@@ -12,7 +12,7 @@ export class Store extends $Model {
 
   $starsYPosition = 0
 
-  $angle = 0
+  // $angle = 0
 
   mc = new McStore()
 
