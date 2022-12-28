@@ -43,7 +43,7 @@ export class Player implements GameObject {
     // this.m.position.y -= 1
 
     this.m.position = addV2(this.m.position, reverseV2(this.m.direction))
-    this.m.addAcceleration(1, 0)
+    // this.m.addAcceleration(1, 0)
   }
 
   back() {

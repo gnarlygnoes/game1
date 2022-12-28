@@ -29,10 +29,6 @@ export class Mover implements Updatable {
         Math.sin(degrees) * x + Math.cos(degrees) * y
       )
     )
-
-    const {x: x2, y: y2} = this.direction
-
-    console.log('direction added: ', Math.sqrt(x2 ** 2 + y ** 2))
   }
 
   getAngle(): number {

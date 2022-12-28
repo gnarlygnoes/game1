@@ -39,7 +39,7 @@ export class Stars implements GameObject {
     const h = pageHeight / 2
 
     ctx.translate(w, h)
-    ctx.rotate(angle)
+    ctx.rotate(-angle)
 
     for (const {x, y, size, colour} of this.stars) {
       const currentX = (x + xPos / 1000) % 1
@@ -56,7 +56,7 @@ export class Stars implements GameObject {
       )
       ctx.fill()
     }
-    ctx.rotate(-angle)
+    ctx.rotate(angle)
     ctx.translate(-w, -h)
   }
 
