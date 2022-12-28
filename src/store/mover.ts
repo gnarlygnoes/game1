@@ -26,16 +26,12 @@ export class Mover {
       Math.cos(degrees) * x - Math.sin(degrees) * y,
       Math.sin(degrees) * x + Math.cos(degrees) * y
     )
-
-    console.log(this.$direction, this.getAngle())
   }
 
   getAngle(): number {
     const {x, y} = this.$direction
 
-    console.log(Math.atan2(y, x))
-
-    return Math.atan2(y, x) * (180 / Math.PI) + 90
+    return Math.atan2(y, x) * (180 / Math.PI) - 90
   }
 
   update(now: number, last: number) {

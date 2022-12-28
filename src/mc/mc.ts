@@ -40,6 +40,9 @@ export class Mc extends $Component<{
       console.log(e.key)
 
       switch (e.key) {
+        case 'p':
+          this.props.store.paused = !this.props.store.paused
+          break
         case 'ArrowUp':
           this.forward()
           break

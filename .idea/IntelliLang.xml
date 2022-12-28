@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="LanguageInjectionConfiguration">
+    <injection language="HTML" injector-id="js">
+      <display-name>Template embedded classes</display-name>
+      <prefix>&lt;div class=&quot;</prefix>
+      <suffix>&quot;&gt;&lt;/div&gt;</suffix>
+      <single-file value="true" />
+      <place><![CDATA[taggedString("c")]]></place>
+      <templateTag>c</templateTag>
+    </injection>
+    <injection language="CSS" injector-id="js">
+      <display-name>Template string styles</display-name>
+      <prefix>body {</prefix>
+      <suffix>}</suffix>
+      <single-file value="true" />
+      <place><![CDATA[taggedString("s")]]></place>
+      <templateTag>s</templateTag>
+    </injection>
+  </component>
+</project>

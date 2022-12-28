@@ -1,16 +1,13 @@
 import './index.css'
 import {$Component, c, Div, render} from '../fiend-ui/src'
-import {Mc} from './mc/mc'
-import {Store} from './store/store'
-import {Stars} from './stars/stars'
+import {Stage} from './stage/stage'
 
 class Main extends $Component {
-  store = new Store()
-
   render() {
     return Div({
       className: c`Main`,
-      children: [Stars.$({store: this.store}), Mc.$({store: this.store})],
+      // children: [Stars.$({store: this.store}), Mc.$({store: this.store})],
+      children: [Stage.$({})],
     })
   }
 }

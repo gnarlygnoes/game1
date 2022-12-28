@@ -1,43 +1,32 @@
 import './stars.css'
-import {$Component, c, Canvas, createRef} from '../../fiend-ui/src'
 import {Store} from '../store/store'
 import {generateStars} from './star-data'
+import {Drawable, GameObject} from '../store/data-types'
 
-export class Stars extends $Component<{store: Store}> {
-  ref = createRef<HTMLCanvasElement>()
-
+export class Stars implements GameObject {
   stars = generateStars()
 
-  render() {
-    const {
-      store: {$pageWidth, $pageHeight},
-    } = this.props
+  starsYPosition = 0
 
-    return Canvas({
-      className: c`Stars`,
-      ref: this.ref,
-      width: $pageWidth,
-      height: $pageHeight,
-    })
+  constructor(public store: Store) {}
+
+  draw(
+    context: CanvasRenderingContext2D,
+    pageWidth: number,
+    pageHeight: number
+  ) {
+    this.drawBackground(context, pageWidth, pageHeight)
+
+    this.drawStars(context, pageWidth, pageHeight, this.starsYPosition)
   }
 
-  draw() {
-    const {current} = this.ref
-
-    if (current) {
-      const context = current.getContext('2d')
-
-      if (context) {
-        const {
-          store: {$pageWidth, $pageHeight, $starsYPosition},
-        } = this.props
-
-        context.fillStyle = `rgb(0, 0, 0)`
-        context.fillRect(0, 0, $pageWidth, $pageHeight)
-
-        this.drawStars(context, $pageWidth, $pageHeight, $starsYPosition)
-      }
-    }
+  drawBackground(
+    context: CanvasRenderingContext2D,
+    pageWidth: number,
+    pageHeight: number
+  ) {
+    context.fillStyle = `rgb(0, 0, 0)`
+    context.fillRect(0, 0, pageWidth, pageHeight)
   }
 
   drawStars(
@@ -47,7 +36,7 @@ export class Stars extends $Component<{store: Store}> {
     starsYPosition: number
   ) {
     for (const {x, y, size, colour} of this.stars) {
-      const currentY = (y + starsYPosition) % 2
+      const currentY = (y + starsYPosition) % 1
 
       context.beginPath()
       context.fillStyle = colour
@@ -62,9 +51,7 @@ export class Stars extends $Component<{store: Store}> {
     }
   }
 
-  componentDidMount() {
-    this.$AutoRun(() => {
-      this.draw()
-    })
+  update(now: number, last: number): void {
+    this.starsYPosition = (this.starsYPosition + 0.00002 * (now - last)) % 1
   }
 }
