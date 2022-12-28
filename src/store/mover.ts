@@ -1,37 +1,30 @@
-import {v2, V2} from './data-types'
-import {makeObservable} from '../../fiend-ui/src'
+import {Updatable, v2, V2} from './data-types'
 
-export class Mover {
+export class Mover implements Updatable {
   acceleration: V2[] = []
 
-  $direction: V2 = v2(0, 1)
-  velocity: V2 = v2(0, 0)
+  direction = v2(0, 1)
+  velocity = v2(0, 0)
 
-  constructor(public turnSpeed: number, public position: V2) {
-    makeObservable(this)
-  }
+  constructor(public turnSpeed: number, public position: V2, public size: V2) {}
 
   addAcceleration(x: number, y: number) {
     this.acceleration.push(v2(x, y))
   }
 
-  /*
-  𝑥2=cos𝛽𝑥1−sin𝛽𝑦1
-  𝑦2=sin𝛽𝑥1+cos𝛽𝑦1
-   */
   rotate(degrees: number) {
-    const {x, y} = this.$direction
+    const {x, y} = this.direction
 
-    this.$direction = v2(
+    this.direction = v2(
       Math.cos(degrees) * x - Math.sin(degrees) * y,
       Math.sin(degrees) * x + Math.cos(degrees) * y
     )
   }
 
   getAngle(): number {
-    const {x, y} = this.$direction
+    const {x, y} = this.direction
 
-    return Math.atan2(y, x) * (180 / Math.PI) - 90
+    return Math.atan2(y, x) + (90 * Math.PI) / 180
   }
 
   update(now: number, last: number) {

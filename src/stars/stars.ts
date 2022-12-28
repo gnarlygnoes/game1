@@ -1,7 +1,6 @@
-import './stars.css'
 import {Store} from '../store/store'
 import {generateStars} from './star-data'
-import {Drawable, GameObject} from '../store/data-types'
+import {GameObject} from '../store/data-types'
 
 export class Stars implements GameObject {
   stars = generateStars()

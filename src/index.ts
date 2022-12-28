@@ -6,7 +6,6 @@ class Main extends $Component {
   render() {
     return Div({
       className: c`Main`,
-      // children: [Stars.$({store: this.store}), Mc.$({store: this.store})],
       children: [Stage.$({})],
     })
   }

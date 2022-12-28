@@ -1,4 +1,7 @@
-import {Position} from './store/store'
+interface Position {
+  x: number
+  y: number
+}
 
 export function calcPosition(
   from: Position,

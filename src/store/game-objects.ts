@@ -9,7 +9,7 @@ export class GameObjects implements Updatable, Drawable {
 
   constructor(public store: Store) {
     const stars = new Stars(store)
-    const player = new Player()
+    const player = new Player(store)
 
     this.updatable.push(stars, player)
     this.drawable.push(stars, player)
