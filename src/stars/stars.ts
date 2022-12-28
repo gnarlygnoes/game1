@@ -1,56 +1,66 @@
 import {Store} from '../store/store'
 import {generateStars} from './star-data'
-import {GameObject} from '../store/data-types'
+import {GameObject} from '../data-types/data-types'
+import {Mover} from '../store/mover'
 
 export class Stars implements GameObject {
   stars = generateStars()
 
-  starsYPosition = 0
-
   constructor(public store: Store) {}
 
-  draw(
-    context: CanvasRenderingContext2D,
-    pageWidth: number,
-    pageHeight: number
-  ) {
-    this.drawBackground(context, pageWidth, pageHeight)
+  draw(ctx: CanvasRenderingContext2D, pageWidth: number, pageHeight: number) {
+    this.drawBackground(ctx, pageWidth, pageHeight)
 
-    this.drawStars(context, pageWidth, pageHeight, this.starsYPosition)
+    this.drawStars(ctx, pageWidth, pageHeight, this.store.gameObjects.player.m)
   }
 
   drawBackground(
-    context: CanvasRenderingContext2D,
+    ctx: CanvasRenderingContext2D,
     pageWidth: number,
     pageHeight: number
   ) {
-    context.fillStyle = `rgb(0, 0, 0)`
-    context.fillRect(0, 0, pageWidth, pageHeight)
+    ctx.fillStyle = `rgb(0, 0, 0)`
+    ctx.fillRect(0, 0, pageWidth, pageHeight)
   }
 
   drawStars(
-    context: CanvasRenderingContext2D,
+    ctx: CanvasRenderingContext2D,
     pageWidth: number,
     pageHeight: number,
-    starsYPosition: number
+    mover: Mover
   ) {
-    for (const {x, y, size, colour} of this.stars) {
-      const currentY = (y + starsYPosition) % 1
+    const {
+      position: {x: xPos, y: yPos},
+    } = mover
 
-      context.beginPath()
-      context.fillStyle = colour
-      context.arc(
-        x * pageWidth,
-        currentY * pageHeight,
+    const angle = mover.getAngle()
+
+    const w = pageWidth / 2
+    const h = pageHeight / 2
+
+    ctx.translate(w, h)
+    ctx.rotate(angle)
+
+    for (const {x, y, size, colour} of this.stars) {
+      const currentX = (x + xPos / 1000) % 1
+      const currentY = (y + yPos / 1000) % 1
+
+      ctx.beginPath()
+      ctx.fillStyle = colour
+      ctx.arc(
+        -w + currentX * pageWidth * 2,
+        -h + currentY * pageHeight * 2,
         size * 5,
         0,
         Math.PI * 2
       )
-      context.fill()
+      ctx.fill()
     }
+    ctx.rotate(-angle)
+    ctx.translate(-w, -h)
   }
 
   update(now: number, last: number): void {
-    this.starsYPosition = (this.starsYPosition + 0.00002 * (now - last)) % 1
+    // this.starsYPosition = (this.starsYPosition + 0.00002 * (now - last)) % 1
   }
 }

@@ -7,7 +7,7 @@ export interface Star {
 
 export function generateStars(): Star[] {
   return [
-    ...generateStarTile(100, 0),
+    ...generateStarTile(1000, 0),
     // ...generateStarTile(200, 1),
     // ...generateStarTile(300, 2),
   ]

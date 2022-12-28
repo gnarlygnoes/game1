@@ -1,10 +1,11 @@
 import {Mover} from '../store/mover'
-import {GameObject, v2} from '../store/data-types'
+import {GameObject} from '../data-types/data-types'
 import {Store} from '../store/store'
+import {addV2, reverseV2, v2} from '../data-types/v2'
 const ship = require('./spaceShips_003.png')
 
 export class Player implements GameObject {
-  m = new Mover(1, v2(innerWidth / 2, innerHeight * 0.8), v2(40, 40))
+  m = new Mover(v2(innerWidth / 2, innerHeight * 0.7), v2(40, 40))
 
   shipImage = document.createElement('img')
 
@@ -18,15 +19,19 @@ export class Player implements GameObject {
         case 'p':
           this.store.paused = !this.store.paused
           break
+        case 'w':
         case 'ArrowUp':
           this.forward()
           break
+        case 's':
         case 'ArrowDown':
           this.back()
           break
+        case 'a':
         case 'ArrowLeft':
           this.left()
           break
+        case 'd':
         case 'ArrowRight':
           this.right()
           break
@@ -35,10 +40,15 @@ export class Player implements GameObject {
   }
 
   forward() {
+    // this.m.position.y -= 1
+
+    this.m.position = addV2(this.m.position, reverseV2(this.m.direction))
     this.m.addAcceleration(1, 0)
   }
 
-  back() {}
+  back() {
+    this.m.position.y += 1
+  }
 
   left() {
     this.m.rotate(-0.1)
@@ -54,22 +64,24 @@ export class Player implements GameObject {
     pageHeight: number
   ): void {
     const {
-      m: {
-        position: {x, y},
-        size,
-      },
+      m: {size},
     } = this
 
-    const angle = this.m.getAngle()
+    // const angle = this.m.getAngle()
 
-    ctx.fillStyle = 'grey'
+    // ctx.fillStyle = 'grey'
+
+    let x = innerWidth / 2
+    let y = innerHeight * 0.5
 
     ctx.translate(x, y)
-    ctx.rotate(angle)
+    ctx.rotate(Math.PI)
+    // ctx.rotate(angle)
 
     ctx.drawImage(this.shipImage, -size.x / 2, -size.y / 2, size.x, size.y)
 
-    ctx.rotate(-angle)
+    // ctx.rotate(-angle)
+    ctx.rotate(-Math.PI)
     ctx.translate(-x, -y)
   }
 

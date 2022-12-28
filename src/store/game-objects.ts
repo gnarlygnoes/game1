@@ -1,18 +1,19 @@
-import {Drawable, Updatable} from './data-types'
+import {Drawable, Updatable} from '../data-types/data-types'
 import {Stars} from '../stars/stars'
 import {Store} from './store'
 import {Player} from '../player/player'
 
 export class GameObjects implements Updatable, Drawable {
+  player = new Player(this.store)
+
   drawable: Drawable[] = [new Stars(this.store)]
   updatable: Updatable[] = []
 
   constructor(public store: Store) {
     const stars = new Stars(store)
-    const player = new Player(store)
 
-    this.updatable.push(stars, player)
-    this.drawable.push(stars, player)
+    this.updatable.push(stars, this.player)
+    this.drawable.push(stars, this.player)
   }
 
   update(now: number, last: number) {
