@@ -60,7 +60,7 @@ export class Stars implements GameObject {
     ctx.translate(-w, -h)
   }
 
-  update(now: number, last: number): void {
+  update(timeSince: number): void {
     // this.starsYPosition = (this.starsYPosition + 0.00002 * (now - last)) % 1
   }
 }

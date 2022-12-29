@@ -1,5 +1,9 @@
 import {Updatable} from '../data-types/data-types'
-import {normaliseV2, V2, v2} from '../data-types/v2'
+import {addV2, normaliseV2, V2, v2} from '../data-types/v2'
+
+export enum AccelerationType {
+  thrust,
+}
 
 export class Mover implements Updatable {
   constructor(
@@ -12,12 +16,12 @@ export class Mover implements Updatable {
     // Vector, ideally unit.
     public direction = v2(0, 1),
     public velocity = v2(0, 0),
-    public acceleration: V2[] = [],
+    public acceleration = new Map<AccelerationType, V2>(),
     public turnSpeed = 1
   ) {}
 
-  addAcceleration(x: number, y: number) {
-    this.acceleration.push(v2(x, y))
+  addAcceleration(type: AccelerationType, v: V2) {
+    this.acceleration.set(type, v)
   }
 
   rotate(degrees: number) {
@@ -37,9 +41,11 @@ export class Mover implements Updatable {
     return Math.atan2(y, x) + (90 * Math.PI) / 180
   }
 
-  update(now: number, last: number) {
-    // calculate velocity and position?
-    // If the current velocity direction and acceleration are different,
-    // adding them will be more complicated.
+  update(timeSince: number) {
+    const thrust = this.acceleration.get(AccelerationType.thrust)
+
+    if (thrust) {
+      this.position = addV2(this.position, thrust)
+    }
   }
 }

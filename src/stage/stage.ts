@@ -32,7 +32,7 @@ export class Stage extends $Component {
 
   gameLoop = () => {
     const now = Date.now()
-    this.store.gameObjects.update(now, this.timeOfLastFrame)
+    this.store.gameObjects.update(now - this.timeOfLastFrame)
 
     const {context, $pageWidth, $pageHeight} = this
 

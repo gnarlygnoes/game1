@@ -1,7 +1,8 @@
-import {Mover} from '../store/mover'
+import {AccelerationType, Mover} from '../store/mover'
 import {GameObject} from '../data-types/data-types'
 import {Store} from '../store/store'
 import {addV2, reverseV2, v2} from '../data-types/v2'
+
 const ship = require('./spaceShips_003.png')
 
 export class Player implements GameObject {
@@ -12,31 +13,35 @@ export class Player implements GameObject {
   constructor(public store: Store) {
     this.shipImage.src = ship
 
-    addEventListener('keydown', e => {
-      console.log(e.key)
-
-      switch (e.key) {
-        case 'p':
-          this.store.paused = !this.store.paused
-          break
-        case 'w':
-        case 'ArrowUp':
-          this.forward()
-          break
-        case 's':
-        case 'ArrowDown':
-          this.back()
-          break
-        case 'a':
-        case 'ArrowLeft':
-          this.left()
-          break
-        case 'd':
-        case 'ArrowRight':
-          this.right()
-          break
-      }
-    })
+    // addEventListener('keydown', e => {
+    //   console.log(e.key, ' down')
+    //
+    //   switch (e.key) {
+    //     case 'p':
+    //       this.store.paused = !this.store.paused
+    //       break
+    //     case 'w':
+    //     case 'ArrowUp':
+    //       this.forward()
+    //       break
+    //     case 's':
+    //     case 'ArrowDown':
+    //       this.back()
+    //       break
+    //     case 'a':
+    //     case 'ArrowLeft':
+    //       this.left()
+    //       break
+    //     case 'd':
+    //     case 'ArrowRight':
+    //       this.right()
+    //       break
+    //   }
+    // })
+    //
+    // addEventListener('keyup', e => {
+    //   console.log(e.key, ' up')
+    // })
   }
 
   forward() {
@@ -47,7 +52,7 @@ export class Player implements GameObject {
   }
 
   back() {
-    this.m.position.y += 1
+    this.m.position = addV2(this.m.position, this.m.direction)
   }
 
   left() {
@@ -69,10 +74,8 @@ export class Player implements GameObject {
 
     // const angle = this.m.getAngle()
 
-    // ctx.fillStyle = 'grey'
-
-    let x = innerWidth / 2
-    let y = innerHeight * 0.5
+    const x = innerWidth / 2
+    const y = innerHeight * 0.5
 
     ctx.translate(x, y)
     ctx.rotate(Math.PI)
@@ -85,7 +88,28 @@ export class Player implements GameObject {
     ctx.translate(-x, -y)
   }
 
-  update(now: number, last: number): void {
-    this.m.update(now, last)
+  update(timeSince: number): void {
+    const {
+      controls: {forward, back, left, right},
+    } = this.store
+
+    const diff = timeSince / 1000
+
+    if (left) {
+      this.m.rotate(diff * -this.m.turnSpeed)
+    }
+    if (right) {
+      this.m.rotate(diff * this.m.turnSpeed)
+    }
+    if (forward) {
+      this.m.addAcceleration(
+        AccelerationType.thrust,
+        reverseV2(this.m.direction)
+      )
+    }
+    if (back) {
+    }
+
+    this.m.update(timeSince)
   }
 }

@@ -1,5 +1,5 @@
 export interface Updatable {
-  update(now: number, last: number): void
+  update(timeSince: number): void
 }
 
 export interface Drawable {

@@ -16,9 +16,9 @@ export class GameObjects implements Updatable, Drawable {
     this.drawable.push(stars, this.player)
   }
 
-  update(now: number, last: number) {
+  update(timeSince: number) {
     for (const u of this.updatable) {
-      u.update(now, last)
+      u.update(timeSince)
     }
   }
 
