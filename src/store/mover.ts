@@ -1,5 +1,5 @@
 import {Updatable} from '../data-types/data-types'
-import {addV2, normaliseV2, V2, v2} from '../data-types/v2'
+import {addV2, normaliseV2, rotateV2, V2, v2} from '../data-types/v2'
 
 export enum AccelerationType {
   thrust,
@@ -17,22 +17,16 @@ export class Mover implements Updatable {
     public direction = v2(0, 1),
     public velocity = v2(0, 0),
     public acceleration = new Map<AccelerationType, V2>(),
-    public turnSpeed = 1
+    public turnSpeed = 2
   ) {}
 
   addAcceleration(type: AccelerationType, v: V2) {
     this.acceleration.set(type, v)
+    // this.direction = v
   }
 
-  rotate(degrees: number) {
-    const {x, y} = this.direction
-
-    this.direction = normaliseV2(
-      v2(
-        Math.cos(degrees) * x - Math.sin(degrees) * y,
-        Math.sin(degrees) * x + Math.cos(degrees) * y
-      )
-    )
+  rotate(angle: number) {
+    this.direction = normaliseV2(rotateV2(this.direction, angle))
   }
 
   getAngle(): number {

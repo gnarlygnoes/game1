@@ -1,7 +1,7 @@
 import {AccelerationType, Mover} from '../store/mover'
 import {GameObject} from '../data-types/data-types'
 import {Store} from '../store/store'
-import {addV2, reverseV2, v2} from '../data-types/v2'
+import {reverseV2, scaleV2, v2} from '../data-types/v2'
 
 const ship = require('./spaceShips_003.png')
 
@@ -12,55 +12,6 @@ export class Player implements GameObject {
 
   constructor(public store: Store) {
     this.shipImage.src = ship
-
-    // addEventListener('keydown', e => {
-    //   console.log(e.key, ' down')
-    //
-    //   switch (e.key) {
-    //     case 'p':
-    //       this.store.paused = !this.store.paused
-    //       break
-    //     case 'w':
-    //     case 'ArrowUp':
-    //       this.forward()
-    //       break
-    //     case 's':
-    //     case 'ArrowDown':
-    //       this.back()
-    //       break
-    //     case 'a':
-    //     case 'ArrowLeft':
-    //       this.left()
-    //       break
-    //     case 'd':
-    //     case 'ArrowRight':
-    //       this.right()
-    //       break
-    //   }
-    // })
-    //
-    // addEventListener('keyup', e => {
-    //   console.log(e.key, ' up')
-    // })
-  }
-
-  forward() {
-    // this.m.position.y -= 1
-
-    this.m.position = addV2(this.m.position, reverseV2(this.m.direction))
-    // this.m.addAcceleration(1, 0)
-  }
-
-  back() {
-    this.m.position = addV2(this.m.position, this.m.direction)
-  }
-
-  left() {
-    this.m.rotate(-0.1)
-  }
-
-  right() {
-    this.m.rotate(0.1)
   }
 
   draw(
@@ -102,12 +53,14 @@ export class Player implements GameObject {
       this.m.rotate(diff * this.m.turnSpeed)
     }
     if (forward) {
+      console.log(this.m.direction)
       this.m.addAcceleration(
         AccelerationType.thrust,
-        reverseV2(this.m.direction)
+        scaleV2(this.m.direction, 5)
       )
     }
     if (back) {
+      this.m.acceleration.delete(AccelerationType.thrust)
     }
 
     this.m.update(timeSince)

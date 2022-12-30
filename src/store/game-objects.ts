@@ -2,6 +2,7 @@ import {Drawable, Updatable} from '../data-types/data-types'
 import {Stars} from '../stars/stars'
 import {Store} from './store'
 import {Player} from '../player/player'
+import {Stats} from '../stats/stats'
 
 export class GameObjects implements Updatable, Drawable {
   player = new Player(this.store)
@@ -14,6 +15,7 @@ export class GameObjects implements Updatable, Drawable {
 
     this.updatable.push(stars, this.player)
     this.drawable.push(stars, this.player)
+    this.drawable.push(new Stats(this.store))
   }
 
   update(timeSince: number) {

@@ -1,7 +1,8 @@
 import {Store} from '../store/store'
-import {generateStars} from './star-data'
+import {generateStars, rotateStars, transformStars} from './star-data'
 import {GameObject} from '../data-types/data-types'
 import {Mover} from '../store/mover'
+import {reverseV2} from '../data-types/v2'
 
 export class Stars implements GameObject {
   stars = generateStars()
@@ -30,34 +31,32 @@ export class Stars implements GameObject {
     mover: Mover
   ) {
     const {
-      position: {x: xPos, y: yPos},
+      position: {x, y},
     } = mover
+
+    const xPos = (x / 1000) % 1000
+    const yPos = (y / 1000) % 1000
 
     const angle = mover.getAngle()
 
-    const w = pageWidth / 2
-    const h = pageHeight / 2
-
-    ctx.translate(w, h)
-    ctx.rotate(-angle)
-
-    for (const {x, y, size, colour} of this.stars) {
-      const currentX = (x + xPos / 1000) % 1
-      const currentY = (y + yPos / 1000) % 1
+    for (const {
+      v: {x, y},
+      size,
+      colour,
+    } of transformStars(
+      this.stars,
+      {x: 0.5, y: 0.5},
+      reverseV2({x: xPos, y: yPos}),
+      angle
+    )) {
+      const currentX = x * pageWidth
+      const currentY = y * pageHeight
 
       ctx.beginPath()
       ctx.fillStyle = colour
-      ctx.arc(
-        -w + currentX * pageWidth * 2,
-        -h + currentY * pageHeight * 2,
-        size * 5,
-        0,
-        Math.PI * 2
-      )
+      ctx.arc(currentX, currentY, size * 5, 0, Math.PI * 2)
       ctx.fill()
     }
-    ctx.rotate(angle)
-    ctx.translate(-w, -h)
   }
 
   update(timeSince: number): void {
