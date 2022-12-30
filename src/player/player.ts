@@ -6,7 +6,7 @@ import {reverseV2, scaleV2, v2} from '../data-types/v2'
 const ship = require('./spaceShips_003.png')
 
 export class Player implements GameObject {
-  m = new Mover(v2(innerWidth / 2, innerHeight * 0.7), v2(40, 40))
+  m = new Mover(v2(0, 0), v2(40, 40))
 
   shipImage = document.createElement('img')
 
@@ -47,10 +47,10 @@ export class Player implements GameObject {
     const diff = timeSince / 1000
 
     if (left) {
-      this.m.rotate(diff * -this.m.turnSpeed)
+      this.m.rotate(diff * this.m.turnSpeed)
     }
     if (right) {
-      this.m.rotate(diff * this.m.turnSpeed)
+      this.m.rotate(diff * -this.m.turnSpeed)
     }
     if (forward) {
       console.log(this.m.direction)
