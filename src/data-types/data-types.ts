@@ -4,7 +4,7 @@ export interface Updatable {
 
 export interface Drawable {
   draw(
-    context: CanvasRenderingContext2D,
+    ctx: CanvasRenderingContext2D,
     pageWidth: number,
     pageHeight: number
   ): void
