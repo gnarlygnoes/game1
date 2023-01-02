@@ -1,6 +1,5 @@
 import {Store} from '../store/store'
 import {Drawable, Updatable} from '../data-types/data-types'
-import {AccelerationType} from '../store/mover'
 
 export class Stats implements Drawable, Updatable {
   fps: number[] = []
@@ -11,20 +10,18 @@ export class Stats implements Drawable, Updatable {
     const {
       gameObjects: {
         player: {
-          m: {position, direction, acceleration},
+          m: {position, direction, thrust},
         },
       },
     } = this.store
-
-    const a = acceleration.get(AccelerationType.thrust)
 
     const str = (n: number) => n.toPrecision(4)
 
     return [
       `${this.getFps()} fps`,
-      `position x: ${str(position.x)}, y: ${str(position.y)}`,
-      `direction x: ${str(direction.x)}, y: ${str(direction.y)}`,
-      `acceleration x: ${str(a?.x ?? 0)}, y: ${str(a?.y ?? 0)}`,
+      `pos (${str(position.x)}, ${str(position.y)})`,
+      `dir (${str(direction.x)}, ${str(direction.y)})`,
+      `acc (${str(thrust?.x ?? 0)}, ${str(thrust?.y ?? 0)})`,
     ]
   }
 
@@ -33,13 +30,13 @@ export class Stats implements Drawable, Updatable {
     pageWidth: number,
     pageHeight: number
   ): void {
-    ctx.font = '16px sans'
+    ctx.font = '14px monospace'
     ctx.fillStyle = 'yellow'
 
-    const height = 24
+    const height = 22
 
     this.calcStats().forEach((row, i) => {
-      ctx.fillText(row, 10, height * (i + 1))
+      ctx.fillText(row, 8, height * (i + 1))
     })
   }
 

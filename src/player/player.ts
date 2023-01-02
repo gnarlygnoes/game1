@@ -1,8 +1,8 @@
-import {AccelerationType, Mover} from '../store/mover'
+import {Mover} from '../store/mover'
 import {GameObject} from '../data-types/data-types'
 import {Store} from '../store/store'
 import {addV2, scaleV2, v2} from '../data-types/v2'
-import {Thrust} from '../ships/parts/thrust'
+import {Thruster} from '../ships/parts/thruster'
 
 const ship = require('./spaceShips_003.png')
 
@@ -11,7 +11,7 @@ export class Player implements GameObject {
 
   shipImage = document.createElement('img')
 
-  thrust = new Thrust(addV2(this.m.position, {x: -1.5, y: 19}), 8, 13, 0)
+  thrust = new Thruster(addV2(this.m.position, {x: -1.5, y: 19}), 8, 13, 0)
 
   constructor(public store: Store) {
     this.shipImage.src = ship
@@ -58,13 +58,13 @@ export class Player implements GameObject {
     if (forward) {
       this.thrust.update(timeSince)
 
-      this.m.addAcceleration(
-        AccelerationType.thrust,
-        scaleV2(this.m.direction, 5)
-      )
+      this.m.thrust = scaleV2(this.m.direction, 5)
+    } else {
+      this.m.thrust = v2(0, 0)
     }
+
     if (back) {
-      this.m.acceleration.delete(AccelerationType.thrust)
+      this.m.velocity = v2(0, 0)
     }
 
     this.m.update(timeSince)

@@ -1,10 +1,11 @@
 import {Updatable} from '../data-types/data-types'
 import {addV2, normaliseV2, rotateV2, V2, v2} from '../data-types/v2'
 
-export enum AccelerationType {
-  thrust,
-}
+/*
 
+ Collisions should be applied to velocity instead of acceleration or thrust.
+
+ */
 export class Mover implements Updatable {
   constructor(
     // x and y ints
@@ -15,15 +16,13 @@ export class Mover implements Updatable {
 
     // Vector, ideally unit.
     public direction = v2(0, 1),
+
     public velocity = v2(0, 0),
-    public acceleration = new Map<AccelerationType, V2>(),
+
+    public thrust = v2(0, 0),
+
     public turnSpeed = 2
   ) {}
-
-  addAcceleration(type: AccelerationType, v: V2) {
-    this.acceleration.set(type, v)
-    // this.direction = v
-  }
 
   rotate(angle: number) {
     this.direction = normaliseV2(rotateV2(this.direction, angle))
@@ -36,10 +35,8 @@ export class Mover implements Updatable {
   }
 
   update(timeSince: number) {
-    const thrust = this.acceleration.get(AccelerationType.thrust)
+    const {thrust, velocity} = this
 
-    if (thrust) {
-      this.position = addV2(this.position, thrust)
-    }
+    this.position = addV2(this.position, thrust)
   }
 }

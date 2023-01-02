@@ -3,7 +3,7 @@ import {v2, V2} from '../../data-types/v2'
 
 const numParticles = 40
 
-export class Thrust implements GameObject {
+export class Thruster implements GameObject {
   particles: {colour: string; position: V2}[] = []
 
   constructor(
