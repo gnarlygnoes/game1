@@ -12,10 +12,10 @@ export class GameObjects implements Updatable, Drawable {
 
   constructor(public store: Store) {
     const stars = new Stars(store)
+    const stats = new Stats(store)
 
-    this.updatable.push(stars, this.player)
-    this.drawable.push(stars, this.player)
-    this.drawable.push(new Stats(this.store))
+    this.updatable.push(stars, this.player, stats)
+    this.drawable.push(stars, this.player, stats)
   }
 
   update(timeSince: number) {

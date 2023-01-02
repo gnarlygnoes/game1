@@ -1,15 +1,13 @@
 import {Store} from '../store/store'
-import {Drawable} from '../data-types/data-types'
+import {Drawable, Updatable} from '../data-types/data-types'
 import {AccelerationType} from '../store/mover'
 
-export class Stats implements Drawable {
+export class Stats implements Drawable, Updatable {
+  fps: number[] = []
+
   constructor(private store: Store) {}
 
-  draw(
-    ctx: CanvasRenderingContext2D,
-    pageWidth: number,
-    pageHeight: number
-  ): void {
+  calcStats() {
     const {
       gameObjects: {
         player: {
@@ -18,31 +16,47 @@ export class Stats implements Drawable {
       },
     } = this.store
 
-    ctx.font = '16px sans'
-    ctx.fillStyle = 'yellow'
-    ctx.fillText(
-      `position x: ${position.x.toPrecision(5)}, y: ${position.y.toPrecision(
-        5
-      )}`,
-      10,
-      24
-    )
-    ctx.fillText(
-      `direction x: ${direction.x.toPrecision(5)}, y: ${direction.y.toPrecision(
-        5
-      )}`,
-      10,
-      48
-    )
-
     const a = acceleration.get(AccelerationType.thrust)
 
-    ctx.fillText(
-      `acceleration x: ${a?.x.toPrecision(5) ?? 0}, y: ${
-        a?.y.toPrecision(5) ?? 0
-      }`,
-      10,
-      72
-    )
+    const str = (n: number) => n.toPrecision(4)
+
+    return [
+      `${this.getFps()} fps`,
+      `position x: ${str(position.x)}, y: ${str(position.y)}`,
+      `direction x: ${str(direction.x)}, y: ${str(direction.y)}`,
+      `acceleration x: ${str(a?.x ?? 0)}, y: ${str(a?.y ?? 0)}`,
+    ]
+  }
+
+  draw(
+    ctx: CanvasRenderingContext2D,
+    pageWidth: number,
+    pageHeight: number
+  ): void {
+    ctx.font = '16px sans'
+    ctx.fillStyle = 'yellow'
+
+    const height = 24
+
+    this.calcStats().forEach((row, i) => {
+      ctx.fillText(row, 10, height * (i + 1))
+    })
+  }
+
+  update(timeSince: number): void {
+    this.fps.push(timeSince)
+
+    if (this.fps.length > 10) {
+      this.fps.shift()
+    }
+  }
+
+  getFps(): number {
+    const av =
+      this.fps.reduce((prev, curr) => {
+        return prev + curr
+      }, 0) / this.fps.length
+
+    return Math.min(Math.round(1000 / av), 60)
   }
 }
