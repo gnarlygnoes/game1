@@ -10,7 +10,7 @@ export class Stats implements Drawable, Updatable {
     const {
       gameObjects: {
         player: {
-          m: {position, direction, thrust},
+          m: {position, direction, thrust, velocity},
         },
       },
     } = this.store
@@ -20,8 +20,8 @@ export class Stats implements Drawable, Updatable {
     return [
       `${this.getFps()} fps`,
       `pos (${str(position.x)}, ${str(position.y)})`,
-      `dir (${str(direction.x)}, ${str(direction.y)})`,
-      `acc (${str(thrust?.x ?? 0)}, ${str(thrust?.y ?? 0)})`,
+      `dir (${direction.x.toFixed(2)}, ${direction.y.toFixed(2)})`,
+      `vel (${velocity?.x.toFixed(1) ?? 0}, ${velocity?.y.toFixed(1) ?? 0})`,
     ]
   }
 
