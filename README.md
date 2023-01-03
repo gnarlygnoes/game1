@@ -2,6 +2,12 @@
 
 Trying out game ideas.
 
+This repo has submodules, so make sure to recursive clone:
+
+```
+git clone --recurse-submodules https://github.com/gnarlygnoes/game1.git
+```
+
 Install dependencies:
 
 ```
