@@ -7,10 +7,27 @@ export function v2(x: number, y: number): V2 {
   return {x, y}
 }
 
-export function normaliseV2({x, y}: V2): V2 {
+export function normaliseV2(v: V2): V2 {
+  const {x, y} = v
   const len = Math.sqrt(x ** 2 + y ** 2)
 
+  if (len === 0) return v
+
   const scale = 1 / len
+
+  return {
+    x: x * scale,
+    y: y * scale,
+  }
+}
+
+export function limitMagnitudeV2(v: V2, limit: number) {
+  const {x, y} = v
+  const len = Math.sqrt(x ** 2 + y ** 2)
+
+  if (len < limit) return v
+
+  const scale = limit / len
 
   return {
     x: x * scale,

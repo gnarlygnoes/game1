@@ -1,5 +1,13 @@
 import {Updatable} from '../data-types/data-types'
-import {addV2, normaliseV2, rotateV2, scaleV2, V2, v2} from '../data-types/v2'
+import {
+  addV2,
+  limitMagnitudeV2,
+  normaliseV2,
+  rotateV2,
+  scaleV2,
+  V2,
+  v2,
+} from '../data-types/v2'
 
 /*
 
@@ -21,7 +29,9 @@ export class Mover implements Updatable {
 
     public thrust = v2(0, 0),
 
-    public turnSpeed = 2
+    public turnSpeed = 2,
+
+    public maxVelocity = 10
   ) {}
 
   rotate(angle: number) {
@@ -35,7 +45,10 @@ export class Mover implements Updatable {
   }
 
   update(timeSince: number) {
-    this.velocity = addV2(this.velocity, scaleV2(this.thrust, timeSince / 100))
+    this.velocity = limitMagnitudeV2(
+      addV2(this.velocity, scaleV2(this.thrust, timeSince / 100)),
+      this.maxVelocity
+    )
     this.position = addV2(this.position, this.velocity)
   }
 }
