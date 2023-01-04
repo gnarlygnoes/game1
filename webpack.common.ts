@@ -1,6 +1,7 @@
 import {Configuration, DefinePlugin} from 'webpack'
 import type {Configuration as DevServerConfiguration} from 'webpack-dev-server'
 import ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
+import * as path from 'path'
 
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const OptimizeCSSAssetsPlugin = require('css-minimizer-webpack-plugin')
@@ -10,7 +11,11 @@ export function makeConfig({
 }: {
   mode: 'development' | 'production'
 }): Configuration {
-  const devServer: DevServerConfiguration = {}
+  const devServer: DevServerConfiguration = {
+    static: {
+      directory: path.join(__dirname, 'dist'),
+    },
+  }
 
   console.log({mode})
 
