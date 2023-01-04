@@ -19,7 +19,8 @@ export function makeConfig({
     devServer: mode === 'development' ? devServer : undefined,
     entry: './src/index.ts',
     output: {
-      filename: './index.js',
+      filename: 'output/index.js',
+      assetModuleFilename: 'output/[hash][ext][query]',
     },
     resolve: {
       // Add `.ts` and `.tsx` as a resolvable extension.
@@ -63,8 +64,8 @@ export function makeConfig({
     },
     plugins: [
       new MiniCssExtractPlugin({
-        filename: '[name].css',
-        chunkFilename: '[id].css',
+        filename: 'output/[name].css',
+        chunkFilename: 'output/[id].css',
       }),
       new DefinePlugin({
         __DEV__: mode === 'development',
