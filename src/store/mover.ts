@@ -5,7 +5,6 @@ import {
   normaliseV2,
   rotateV2,
   scaleV2,
-  V2,
   v2,
 } from '../data-types/v2'
 

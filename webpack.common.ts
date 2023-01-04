@@ -1,5 +1,9 @@
 import {Configuration, DefinePlugin} from 'webpack'
 import type {Configuration as DevServerConfiguration} from 'webpack-dev-server'
+import ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
+
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const OptimizeCSSAssetsPlugin = require('css-minimizer-webpack-plugin')
 
 export function makeConfig({
   mode,
@@ -25,24 +29,31 @@ export function makeConfig({
       mode === 'development' ? 'eval-cheap-module-source-map' : undefined,
     module: {
       rules: [
-        // all files with a `.ts` or `.tsx` extension will be handled by `ts-loader`
-        {
-          test: /\.ts$/,
-          loader: 'ts-loader',
-          options: {
-            compilerOptions: {
-              module: mode === 'development' ? 'commonjs' : 'esNext',
-            },
-          },
-        },
         // {
-        //   test: /\.js$/,
-        //   enforce: 'pre',
-        //   use: ['source-map-loader'],
+        //   test: /\.ts$/,
+        //   loader: 'ts-loader',
+        //   options: {
+        //     compilerOptions: {
+        //       module: mode === 'development' ? 'commonjs' : 'esNext',
+        //     },
+        //   },
         // },
         {
+          test: /\.ts$/,
+          exclude: /(node_modules)/,
+          use: {
+            // `.swcrc` can be used to configure swc
+            loader: 'swc-loader',
+          },
+        },
+        {
           test: /\.css$/i,
-          use: ['style-loader', 'css-loader'],
+          use: [
+            mode === 'development'
+              ? 'style-loader'
+              : MiniCssExtractPlugin.loader,
+            'css-loader',
+          ],
         },
         {
           test: /\.(png|svg|jpg|jpeg|gif)$/i,
@@ -51,18 +62,31 @@ export function makeConfig({
       ],
     },
     plugins: [
+      new MiniCssExtractPlugin({
+        filename: '[name].css',
+        chunkFilename: '[id].css',
+      }),
       new DefinePlugin({
         __DEV__: mode === 'development',
         __FIEND_DEV__: false,
       }),
     ],
+    optimization: {
+      minimizer: ['...', new OptimizeCSSAssetsPlugin({})],
+    },
   }
 
-  if (mode === 'production') {
-    config.plugins
-      ?.push
-      // new (require('webpack-bundle-analyzer').BundleAnalyzerPlugin)()
-      ()
+  switch (mode) {
+    case 'development':
+      config.plugins?.push(new ForkTsCheckerWebpackPlugin())
+      break
+    case 'production':
+      // Uncomment to investigate bundle size.
+
+      // config.plugins?.push(
+      //   new (require('webpack-bundle-analyzer').BundleAnalyzerPlugin)()
+      // )
+      break
   }
 
   return config
