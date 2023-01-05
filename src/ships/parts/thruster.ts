@@ -1,5 +1,6 @@
 import {GameObject} from '../../data-types/data-types'
 import {v2, V2} from '../../data-types/v2'
+import {Random} from '../../misc/random'
 
 const numParticles = 40
 
@@ -12,10 +13,12 @@ export class Thruster implements GameObject {
     public height: number,
     public angle: number
   ) {
-    for (let i = 0; i < numParticles; i++) {
-      const y = Math.random() * height
+    const r = new Random(0)
 
-      const x = (Math.random() - 0.5) * width
+    for (let i = 0; i < numParticles; i++) {
+      const y = r.nextFloat() * height
+
+      const x = (r.nextFloat() - 0.5) * width
 
       this.particles.push({
         colour: `#ffff7755`,
@@ -26,7 +29,7 @@ export class Thruster implements GameObject {
 
   update(timeSince: number) {
     for (const p of this.particles) {
-      p.position.y = (p.position.y + timeSince * 0.03) % this.height
+      p.position.y = (p.position.y + timeSince * 0.05) % this.height
     }
   }
 

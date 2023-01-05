@@ -71,7 +71,6 @@ function generateStarTile(numStars: number = 100): Star[] {
 
   const r = new Random(0)
 
-  // const next = () => Math.random()
   const next = () => r.nextFloat()
 
   for (let i = 0; i < numStars; i++) {

@@ -11,7 +11,7 @@ export class Player implements GameObject {
 
   shipImage = document.createElement('img')
 
-  thrust = new Thruster(addV2(this.m.position, {x: -1.5, y: 19}), 8, 13, 0)
+  thrust = new Thruster(addV2(this.m.position, {x: -1.5, y: 19}), 8, 10, 0)
 
   constructor(public store: Store) {
     this.shipImage.src = ship
