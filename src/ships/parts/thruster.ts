@@ -16,9 +16,9 @@ export class Thruster implements GameObject {
     const r = new Random(0)
 
     for (let i = 0; i < numParticles; i++) {
-      const y = r.nextFloat() * height
+      const y = r.next() * height
 
-      const x = (r.nextFloat() - 0.5) * width
+      const x = (r.next() - 0.5) * width
 
       this.particles.push({
         colour: `#ffff7755`,

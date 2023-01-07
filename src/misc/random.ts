@@ -5,11 +5,13 @@ export class Random {
     }
   }
 
-  nextInt(): number {
+  private nextInt(): number {
     return (this.seed = (this.seed * 48271) % 2147483647)
   }
 
-  nextFloat(): number {
+  next(): number {
     return (this.nextInt() - 1) / 2147483646
   }
 }
+
+export const Rand = new Random(0)

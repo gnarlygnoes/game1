@@ -58,7 +58,7 @@ export class Player implements GameObject {
     if (forward) {
       this.thrust.update(timeSince)
 
-      this.m.thrust = scaleV2(this.m.direction, 0.5)
+      this.m.thrust = scaleV2(this.m.direction, 0.9)
     } else {
       this.m.thrust = v2(0, 0)
     }

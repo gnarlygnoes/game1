@@ -3,6 +3,7 @@ import {Drawable, Updatable} from '../data-types/data-types'
 
 export class Stats implements Drawable, Updatable {
   fps: number[] = []
+  private frameDurations: number[] = []
 
   constructor(private store: Store) {}
 
@@ -10,7 +11,7 @@ export class Stats implements Drawable, Updatable {
     const {
       gameObjects: {
         player: {
-          m: {position, direction, thrust, velocity},
+          m: {position, direction, velocity},
         },
       },
     } = this.store
@@ -18,7 +19,7 @@ export class Stats implements Drawable, Updatable {
     const str = (n: number) => n.toPrecision(4)
 
     return [
-      `${this.getFps()} fps`,
+      `${this.getFps()} fps (${this.getAvFrame().toFixed(2)}ms frame)`,
       `pos (${str(position.x)}, ${str(position.y)})`,
       `dir (${direction.x.toFixed(2)}, ${direction.y.toFixed(2)})`,
       `vel (${velocity?.x.toFixed(1) ?? 0}, ${velocity?.y.toFixed(1) ?? 0})`,
@@ -55,5 +56,21 @@ export class Stats implements Drawable, Updatable {
       }, 0) / this.fps.length
 
     return Math.min(Math.round(1000 / av), 60)
+  }
+
+  addFrameDuration(duration: number) {
+    this.frameDurations.push(duration)
+
+    if (this.frameDurations.length > 100) {
+      this.frameDurations.shift()
+    }
+  }
+
+  getAvFrame(): number {
+    return (
+      this.frameDurations.reduce((prev, curr) => {
+        return prev + curr
+      }, 0) / this.frameDurations.length
+    )
   }
 }

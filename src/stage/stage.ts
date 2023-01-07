@@ -32,6 +32,7 @@ export class Stage extends $Component {
 
   gameLoop = () => {
     const now = Date.now()
+
     this.store.gameObjects.update(now - this.timeOfLastFrame)
 
     const {context, $pageWidth, $pageHeight} = this
@@ -40,7 +41,9 @@ export class Stage extends $Component {
       this.store.gameObjects.draw(context, $pageWidth, $pageHeight)
     }
 
+    this.store.gameObjects.stats.addFrameDuration(Date.now() - now)
     this.timeOfLastFrame = now
+
     requestAnimationFrame(this.gameLoop)
   }
 
