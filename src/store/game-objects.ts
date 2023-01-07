@@ -4,25 +4,29 @@ import {Store} from './store'
 import {Player} from '../player/player'
 import {Stats} from '../stats/stats'
 import {Asteroid} from '../objects/asteroids/asteroid'
-import {v2} from '../data-types/v2'
+import {Camera} from '../camera'
 
 export class GameObjects implements Updatable, Drawable {
-  player = new Player(this.store)
-
   objects: GameObject[] = []
 
+  player = new Player(this.store)
   stats = new Stats(this.store)
 
+  camera = new Camera(this.store)
+
   constructor(public store: Store) {
-    const stars = new Stars(store)
-
-    const a = new Asteroid(20, v2(300, 300))
-    const a2 = new Asteroid(16, v2(280, 420))
-
-    this.objects.push(stars, this.player, this.stats, a, a2)
+    this.objects.push(
+      new Stars(store),
+      this.player,
+      this.stats
+      // new Asteroid(20, [300, 300]),
+      // new Asteroid(16, [280, 420])
+    )
   }
 
   update(timeSince: number) {
+    this.camera.update(timeSince)
+
     for (const o of this.objects) {
       o.update(timeSince)
     }

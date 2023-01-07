@@ -1,6 +1,6 @@
 import {GameObject} from '../../data-types/data-types'
 import {Mover} from '../../store/mover'
-import {rotateV2, scaleV2, V2, v2} from '../../data-types/v2'
+import {rotateV2, scaleV2, V2} from '../../data-types/v2'
 import {Rand} from '../../misc/random'
 
 const numPoints = 13
@@ -19,16 +19,11 @@ export class Asteroid implements GameObject {
 
       this.points.push(
         scaleV2(
-          rotateV2(
-            v2(r1 * 0.25, 1 + r2 * 0.25),
-            ((2 * Math.PI) / numPoints) * i
-          ),
+          rotateV2([r1 * 0.25, 1 + r2 * 0.25], ((2 * Math.PI) / numPoints) * i),
           size
         )
       )
     }
-
-    console.log(this.points)
   }
 
   draw(
@@ -37,7 +32,7 @@ export class Asteroid implements GameObject {
     pageHeight: number
   ): void {
     const {
-      position: {x, y},
+      position: [x, y],
     } = this.p
 
     ctx.beginPath()
@@ -59,13 +54,13 @@ export class Asteroid implements GameObject {
     ctx.lineWidth = 4
 
     const first = this.points[0]
-    ctx.moveTo(x + first.x, y + first.y)
+    ctx.moveTo(x + first[0], y + first[1])
 
     for (const p of this.points) {
-      ctx.lineTo(x + p.x, y + p.y)
+      ctx.lineTo(x + p[0], y + p[1])
     }
 
-    ctx.lineTo(x + first.x, y + first.y)
+    ctx.lineTo(x + first[0], y + first[1])
 
     ctx.stroke()
     ctx.fill()

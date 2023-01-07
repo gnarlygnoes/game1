@@ -1,4 +1,4 @@
-import {rotateV2, v2, V2} from '../data-types/v2'
+import {rotateV2, V2} from '../data-types/v2'
 import {Random} from '../misc/random'
 
 export interface Star {
@@ -7,8 +7,8 @@ export interface Star {
   colour: string
 }
 
-export function generateStars(): Star[] {
-  return generateStarTile(100)
+export function generateStars(n: number): Star[] {
+  return generateStarTile(n)
 }
 
 export function transformStars(
@@ -17,10 +17,10 @@ export function transformStars(
   pos: V2,
   angle: number
 ) {
-  return rotateStars(moveStars(stars, centre, pos), centre, pos, angle)
+  return rotateStars(moveStars(stars, centre, pos), centre, angle)
 }
 
-export function moveStars(stars: Star[], centre: V2, pos: V2) {
+export function moveStars(stars: Star[], centre: V2, pos: V2): Star[] {
   return stars.map(({v, size, colour}) => {
     return {
       v: shift(v, pos),
@@ -30,19 +30,16 @@ export function moveStars(stars: Star[], centre: V2, pos: V2) {
   })
 }
 
-export function rotateStars(
-  stars: Star[],
-  centre: V2,
-  location: V2,
-  angle: number
-): Star[] {
+function rotateStars(stars: Star[], centre: V2, angle: number): Star[] {
   return stars.map(({v, size, colour}) => {
-    v = v2(v.x, v.y)
-    v.x = v.x - centre.x
-    v.y = v.y - centre.y
+    v = [...v]
+    v[0] = v[0] - centre[0]
+    v[1] = v[1] - centre[1]
+
     v = rotateV2(v, angle)
-    v.x = v.x + centre.x
-    v.y = v.y + centre.y
+
+    v[0] = v[0] + centre[0]
+    v[1] = v[1] + centre[1]
 
     return {
       v,
@@ -52,11 +49,8 @@ export function rotateStars(
   })
 }
 
-function shift(v: V2, amount: V2) {
-  return {
-    x: wrap(v.x - amount.x),
-    y: wrap(v.y + amount.y),
-  }
+function shift(v: V2, amount: V2): V2 {
+  return [wrap(v[0] - amount[0]), wrap(v[1] + amount[1])]
 }
 
 function wrap(n: number): number {
@@ -66,7 +60,7 @@ function wrap(n: number): number {
   return n % 1
 }
 
-function generateStarTile(numStars: number = 100): Star[] {
+function generateStarTile(numStars: number): Star[] {
   const stars: Star[] = []
 
   const r = new Random(0)
@@ -75,7 +69,7 @@ function generateStarTile(numStars: number = 100): Star[] {
 
   for (let i = 0; i < numStars; i++) {
     stars.push({
-      v: {x: next(), y: next()},
+      v: [next(), next()],
       size: next(),
       colour: `hsl(${Math.round(next() * 255)}, ${Math.round(
         next() * 20

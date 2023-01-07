@@ -1,55 +1,44 @@
-export interface V2 {
-  x: number
-  y: number
-}
-
-export function v2(x: number, y: number): V2 {
-  return {x, y}
-}
+export type V2 = [number, number]
 
 export function normaliseV2(v: V2): V2 {
-  const {x, y} = v
+  const [x, y] = v
   const len = Math.sqrt(x ** 2 + y ** 2)
 
   if (len === 0) return v
 
   const scale = 1 / len
 
-  return {
-    x: x * scale,
-    y: y * scale,
-  }
+  return [x * scale, y * scale]
 }
 
-export function limitMagnitudeV2(v: V2, limit: number) {
-  const {x, y} = v
+export const emptyV2: Readonly<V2> = [0, 0]
+
+export function limitMagnitudeV22(v: V2, limit: number): V2 {
+  const [x, y] = v
   const len = Math.sqrt(x ** 2 + y ** 2)
 
   if (len < limit) return v
 
   const scale = limit / len
 
-  return {
-    x: x * scale,
-    y: y * scale,
-  }
+  return [x * scale, y * scale]
 }
 
-export function addV2(a: V2, b: V2): V2 {
-  return {x: a.x + b.x, y: a.y + b.y}
+export function addV2(a: Readonly<V2>, b: Readonly<V2>): V2 {
+  return [a[0] + b[0], a[1] + b[1]]
 }
 
-export function reverseV2({x, y}: V2): V2 {
-  return {x: -x, y: -y}
+export function reverseV2([a, b]: V2): V2 {
+  return [-a, -b]
 }
 
-export function scaleV2({x, y}: V2, scale: number): V2 {
-  return {x: x * scale, y: y * scale}
+export function scaleV2([a, b]: Readonly<V2>, scale: number): V2 {
+  return [a * scale, b * scale]
 }
 
-export function rotateV2({x, y}: V2, angle: number): V2 {
+export function rotateV2([x, y]: V2, angle: number): V2 {
   const s = Math.sin(angle)
   const c = Math.cos(angle)
 
-  return v2(c * x - s * y, s * x + c * y)
+  return [c * x - s * y, s * x + c * y]
 }

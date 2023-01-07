@@ -1,20 +1,18 @@
 import {Mover} from '../store/mover'
 import {GameObject} from '../data-types/data-types'
 import {Store} from '../store/store'
-import {addV2, scaleV2, v2} from '../data-types/v2'
+import {addV2, emptyV2, scaleV2} from '../data-types/v2'
 import {Thruster} from '../ships/parts/thruster'
 
-const ship = require('./spaceShips_003.png')
-
 export class Player implements GameObject {
-  m = new Mover(v2(0, 0), v2(40, 40))
+  m = new Mover(emptyV2, [40, 40])
 
   shipImage = document.createElement('img')
 
-  thrust = new Thruster(addV2(this.m.position, {x: -1.5, y: 19}), 8, 10, 0)
+  thrust = new Thruster(addV2(this.m.position, [-1.5, 19]), 8, 10, 0)
 
   constructor(public store: Store) {
-    this.shipImage.src = ship
+    this.shipImage.src = require('./spaceShips_003.png')
   }
 
   draw(
@@ -32,7 +30,7 @@ export class Player implements GameObject {
     ctx.translate(x, y)
     ctx.rotate(Math.PI)
 
-    ctx.drawImage(this.shipImage, -size.x / 2, -size.y / 2, size.x, size.y)
+    ctx.drawImage(this.shipImage, -size[0] / 2, -size[1] / 2, size[0], size[1])
 
     ctx.rotate(-Math.PI)
 
@@ -60,11 +58,11 @@ export class Player implements GameObject {
 
       this.m.thrust = scaleV2(this.m.direction, 0.9)
     } else {
-      this.m.thrust = v2(0, 0)
+      this.m.thrust = emptyV2
     }
 
     if (back) {
-      this.m.velocity = v2(0, 0)
+      this.m.velocity = emptyV2
     }
 
     this.m.update(timeSince)

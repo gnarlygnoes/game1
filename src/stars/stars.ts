@@ -1,11 +1,11 @@
 import {Store} from '../store/store'
-import {generateStars, rotateStars, transformStars} from './star-data'
+import {generateStars, transformStars} from './star-data'
 import {GameObject} from '../data-types/data-types'
 import {Mover} from '../store/mover'
 import {reverseV2} from '../data-types/v2'
 
 export class Stars implements GameObject {
-  stars = generateStars()
+  stars = generateStars(100)
 
   constructor(public store: Store) {}
 
@@ -31,7 +31,7 @@ export class Stars implements GameObject {
     mover: Mover
   ) {
     const {
-      position: {x, y},
+      position: [x, y],
     } = mover
 
     const xPos = (x / 1000) % 1000
@@ -40,13 +40,13 @@ export class Stars implements GameObject {
     const angle = mover.getAngle()
 
     for (const {
-      v: {x, y},
+      v: [x, y],
       size,
       colour,
     } of transformStars(
       this.stars,
-      {x: 0.5, y: 0.5},
-      reverseV2({x: xPos, y: yPos}),
+      [0.5, 0.5],
+      reverseV2([xPos, yPos]),
       angle
     )) {
       const currentX = x * pageWidth

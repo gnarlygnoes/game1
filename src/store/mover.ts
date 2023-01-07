@@ -1,11 +1,12 @@
 import {Updatable} from '../data-types/data-types'
 import {
   addV2,
-  limitMagnitudeV2,
+  emptyV2,
+  limitMagnitudeV22,
   normaliseV2,
   rotateV2,
   scaleV2,
-  v2,
+  V2,
 } from '../data-types/v2'
 
 /*
@@ -16,17 +17,17 @@ import {
 export class Mover implements Updatable {
   constructor(
     // x and y ints
-    public position = v2(0, 0),
+    public position = emptyV2,
 
     // Pixels
-    public size = v2(0, 0),
+    public size = emptyV2,
 
     // Vector, ideally unit.
-    public direction = v2(0, 1),
+    public direction: V2 = [0, 1],
 
-    public velocity = v2(0, 0),
+    public velocity = emptyV2,
 
-    public thrust = v2(0, 0),
+    public thrust = emptyV2,
 
     public turnSpeed = 2,
 
@@ -38,13 +39,13 @@ export class Mover implements Updatable {
   }
 
   getAngle(): number {
-    const {x, y} = this.direction
+    const [x, y] = this.direction
 
     return Math.atan2(y, x) + (90 * Math.PI) / 180
   }
 
   update(timeSince: number) {
-    this.velocity = limitMagnitudeV2(
+    this.velocity = limitMagnitudeV22(
       addV2(this.velocity, scaleV2(this.thrust, timeSince / 100)),
       this.maxVelocity
     )
