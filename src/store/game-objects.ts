@@ -15,11 +15,10 @@ export class GameObjects implements Updatable, Drawable {
   constructor(public store: Store) {
     this.objects.push(
       new Stars(store),
-      this.player,
       this.stats,
-      new Asteroid(20, [600, 600]),
-      new Asteroid(18, [740, 580]),
-      new Asteroid(16, [900, 900])
+      new Asteroid(20, [100, 100]),
+      new Asteroid(18, [240, 180]),
+      new Asteroid(16, [300, 200])
     )
   }
 

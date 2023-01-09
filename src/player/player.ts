@@ -3,7 +3,7 @@ import {GameObject} from '../data-types/data-types'
 import {Store} from '../store/store'
 import {addV2, emptyV2, scaleV2} from '../data-types/v2'
 import {Thruster} from '../ships/parts/thruster'
-import {Camera, MoverPixels} from '../camera'
+import {Camera} from '../camera'
 
 export class Player implements GameObject {
   m = new Mover(emptyV2, [40, 40])
@@ -22,32 +22,30 @@ export class Player implements GameObject {
     pageHeight: number,
     camera: Camera
   ): void {
-    const {
-      m,
-      // m: {
-      //   size: [w, h],
-      //   position: [x, y],
-      // },
-    } = this
-
-    const wx = pageWidth / 2
-    const wy = pageHeight / 2
+    const {m} = this
 
     const {
-      position: [x, y],
+      position: [xi, yi],
       size: [w, h],
-    } = camera.cameraTransform(m)
+    } = m
+
+    const {
+      shift: [xShift, yShift],
+    } = camera
+
+    const x = xShift + xi
+    const y = yShift + yi
 
     const angle = Math.PI + m.getAngle()
 
     // slowDrawImage(ctx, this.shipImage, wx - w / 2, wy - h / 2, w, h, angle)
 
     ctx.save()
-    ctx.translate(wx + w / 2, wy + h / 2)
+    ctx.translate(x + w / 2, y + h / 2)
     ctx.rotate(angle)
-    ctx.translate(-wx - w / 2, -wy - h / 2)
+    ctx.translate(-x - w / 2, -y - h / 2)
 
-    ctx.drawImage(this.shipImage, wx, wy, w, h)
+    ctx.drawImage(this.shipImage, x, y, w, h)
 
     if (this.store.controls.forward)
       this.thrust.draw(ctx, pageWidth, pageHeight)

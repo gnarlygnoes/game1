@@ -47,10 +47,12 @@ export class Stage extends $Component {
 
     if (!context) return
 
-    // TODO: Update player before camera?
+    gameObjects.player.update(timeSince)
     this.camera.update()
     gameObjects.update(timeSince)
+
     gameObjects.draw(context, width, height, this.camera)
+    gameObjects.player.draw(context, width, height, this.camera)
 
     stats.addFrameDuration(Date.now() - now)
     this.timeOfLastFrame = now

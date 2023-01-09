@@ -2,7 +2,7 @@ import {GameObject} from '../../data-types/data-types'
 import {Mover} from '../../store/mover'
 import {rotateV2, scaleV2, V2} from '../../data-types/v2'
 import {Rand} from '../../misc/random'
-import {Camera, MoverPixels} from '../../camera'
+import {Camera} from '../../camera'
 
 const numPoints = 13
 
@@ -33,13 +33,18 @@ export class Asteroid implements GameObject {
     pageHeight: number,
     camera: Camera
   ): void {
-    // const {position} = this.p
+    const {
+      position: [xi, yi],
+    } = this.p
 
     const {
-      position: [x, y],
-    } = camera.cameraTransform(this.p)
+      shift: [xShift, yShift],
+    } = camera
 
     ctx.beginPath()
+
+    const x = xi + xShift
+    const y = yi + yShift
 
     const gradient = ctx.createRadialGradient(
       x,
