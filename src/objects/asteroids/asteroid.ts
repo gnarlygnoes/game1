@@ -1,6 +1,6 @@
 import {GameObject} from '../../data-types/data-types'
 import {Mover} from '../../store/mover'
-import {rotateV2, scaleV2, V2} from '../../data-types/v2'
+import {V2} from '../../data-types/v2'
 import {Rand} from '../../misc/random'
 import {Camera} from '../../camera'
 
@@ -19,8 +19,11 @@ export class Asteroid implements GameObject {
       const r2 = Rand.next() - 0.5
 
       this.points.push(
-        scaleV2(
-          rotateV2([r1 * 0.25, 1 + r2 * 0.25], ((2 * Math.PI) / numPoints) * i),
+        V2.scale(
+          V2.rotate(
+            [r1 * 0.25, 1 + r2 * 0.25],
+            ((2 * Math.PI) / numPoints) * i
+          ),
           size
         )
       )

@@ -1,4 +1,4 @@
-import {normaliseV2, V2} from './v2'
+import {V2} from './v2'
 
 describe('normaliseV2', () => {
   function len([x, y]: V2): number {
@@ -50,19 +50,19 @@ describe('normaliseV2', () => {
   })
 
   test('(1, 2)', () => {
-    const v = normaliseV2([1, 2])
+    const v = V2.normalise([1, 2])
 
     expect(len(v)).toBeCloseTo(1)
   })
 
   test('(0.5, 100)', () => {
-    const v = normaliseV2([0.5, 100])
+    const v = V2.normalise([0.5, 100])
 
     expect(len(v)).toBeCloseTo(1)
   })
 
   test('(-5, 10)', () => {
-    const v = normaliseV2([-5, 10])
+    const v = V2.normalise([-5, 10])
 
     expect(len(v)).toBeCloseTo(1)
   })

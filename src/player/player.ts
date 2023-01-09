@@ -1,16 +1,16 @@
 import {Mover} from '../store/mover'
 import {GameObject} from '../data-types/data-types'
 import {Store} from '../store/store'
-import {addV2, emptyV2, scaleV2} from '../data-types/v2'
+import {V2} from '../data-types/v2'
 import {Thruster} from '../ships/parts/thruster'
 import {Camera} from '../camera'
 
 export class Player implements GameObject {
-  m = new Mover(emptyV2, [40, 40])
+  m = new Mover(V2.empty, [40, 40])
 
   shipImage = document.createElement('img')
 
-  thruster = new Thruster(addV2(this.m.position, [19, 38]), 8, 10, this.m)
+  thruster = new Thruster(V2.add(this.m.position, [19, 38]), 8, 10, this.m)
 
   constructor(public store: Store) {
     this.shipImage.src = require('./spaceShips_003.png')
@@ -32,13 +32,13 @@ export class Player implements GameObject {
 
     if (forward) {
       this.thruster.update(timeSince)
-      this.m.thrust = scaleV2(this.m.direction, 0.9)
+      this.m.thrust = V2.scale(this.m.direction, 0.9)
     } else {
-      this.m.thrust = emptyV2
+      this.m.thrust = V2.empty
     }
 
     if (back) {
-      this.m.velocity = emptyV2
+      this.m.velocity = V2.empty
     }
 
     this.m.update(timeSince)
@@ -56,8 +56,8 @@ export class Player implements GameObject {
       shift: [xShift, yShift],
     } = camera
 
-    const x = Math.round(xShift + xi)
-    const y = Math.round(yShift + yi)
+    const x = xShift + xi
+    const y = yShift + yi
 
     const angle = m.getAngle()
 

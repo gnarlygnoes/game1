@@ -1,4 +1,4 @@
-import {rotateV2, V2} from '../data-types/v2'
+import {V2} from '../data-types/v2'
 import {Random} from '../misc/random'
 
 export interface Star {
@@ -36,7 +36,7 @@ function rotateStars(stars: Star[], centre: V2, angle: number): Star[] {
     v[0] = v[0] - centre[0]
     v[1] = v[1] - centre[1]
 
-    v = rotateV2(v, angle)
+    v = V2.rotate(v, angle)
 
     v[0] = v[0] + centre[0]
     v[1] = v[1] + centre[1]

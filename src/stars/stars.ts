@@ -2,7 +2,6 @@ import {Store} from '../store/store'
 import {generateStars, transformStars} from './star-data'
 import {GameObject} from '../data-types/data-types'
 import {Mover} from '../store/mover'
-import {reverseV2} from '../data-types/v2'
 import {Camera} from '../camera'
 
 export class Stars implements GameObject {

@@ -1,10 +1,10 @@
-import {emptyV2} from './data-types/v2'
 import {Store} from './store/store'
+import {V2} from './data-types/v2'
 
 export class Camera {
   scale = 1
 
-  shift = emptyV2
+  shift = V2.empty
 
   constructor(
     private store: Store,
