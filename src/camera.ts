@@ -1,21 +1,86 @@
-import {emptyV2} from './data-types/v2'
+import {
+  addV2,
+  emptyV2,
+  rotateV2,
+  scaleV2,
+  subtractV2,
+  V2,
+  V2RO,
+} from './data-types/v2'
 import {Store} from './store/store'
-import {Updatable} from './data-types/data-types'
+import {Mover} from './store/mover'
 
-export class Camera implements Updatable {
-  position = emptyV2
-  zoom = 1
-  angle = 0
+/*
+Mapping game coordinates to canvas:
 
-  constructor(private store: Store) {}
+Game centre is [0, 0]
+Assume screen 1200 x 800
 
-  update(timeSince: number): void {
-    this.position = {...this.store.gameObjects.player.m.position}
+Where is player ship?
+[0, 0]
+
+Where is camera? Camera centre? Camera top-left?
+
+top-left: [-600, -400]
+
+How does this effect canvas drawing?
+
+Draw ship at [600, 400]?
+
+ */
+
+export class Camera {
+  position: V2RO = emptyV2
+
+  // Coordinate conversion to pixels?
+  scale = 1
+
+  constructor(
+    private store: Store,
+    public width: number,
+    public height: number
+  ) {}
+
+  update(): void {
+    const {scale, width, height} = this
+
+    const {m} = this.store.gameObjects.player
+
+    const [x, y] = m.position
+
+    // Move camera based on screen size
+    this.position = [-x - (width * scale) / 2, -y - (height * scale) / 2]
+
+    // this.angle = -m.getAngle()
   }
 
-  cameraTransform = () => {
-    //
+  cameraTransform = (m: Mover) => {
+    return transformObjects(m, this.position, 0, this.scale)
   }
 }
 
-export function transformObjects() {}
+export function transformObjects(
+  m: Mover,
+  cameraPosition: V2RO,
+  angle: number,
+  zoom: number
+): MoverPixels {
+  const {position, size} = m
+  let p = addV2(position, cameraPosition)
+
+  // p = rotateV2(p, angle)
+  //
+  // p = subtractV2(p, cameraPosition)
+
+  return {
+    position: p,
+    size: scaleV2(size, zoom),
+    angle: angle + m.getAngle(),
+  }
+}
+
+export interface MoverPixels {
+  position: V2
+  size: V2
+  angle: number
+}

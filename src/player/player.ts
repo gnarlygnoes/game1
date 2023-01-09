@@ -3,6 +3,7 @@ import {GameObject} from '../data-types/data-types'
 import {Store} from '../store/store'
 import {addV2, emptyV2, scaleV2} from '../data-types/v2'
 import {Thruster} from '../ships/parts/thruster'
+import {Camera, MoverPixels} from '../camera'
 
 export class Player implements GameObject {
   m = new Mover(emptyV2, [40, 40])
@@ -18,26 +19,40 @@ export class Player implements GameObject {
   draw(
     ctx: CanvasRenderingContext2D,
     pageWidth: number,
-    pageHeight: number
+    pageHeight: number,
+    camera: Camera
   ): void {
     const {
-      m: {size},
+      m,
+      // m: {
+      //   size: [w, h],
+      //   position: [x, y],
+      // },
     } = this
 
-    const x = innerWidth / 2
-    const y = innerHeight * 0.5
+    const wx = pageWidth / 2
+    const wy = pageHeight / 2
 
-    ctx.translate(x, y)
-    ctx.rotate(Math.PI)
+    const {
+      position: [x, y],
+      size: [w, h],
+    } = camera.cameraTransform(m)
 
-    ctx.drawImage(this.shipImage, -size[0] / 2, -size[1] / 2, size[0], size[1])
+    const angle = Math.PI + m.getAngle()
 
-    ctx.rotate(-Math.PI)
+    // slowDrawImage(ctx, this.shipImage, wx - w / 2, wy - h / 2, w, h, angle)
+
+    ctx.save()
+    ctx.translate(wx + w / 2, wy + h / 2)
+    ctx.rotate(angle)
+    ctx.translate(-wx - w / 2, -wy - h / 2)
+
+    ctx.drawImage(this.shipImage, wx, wy, w, h)
 
     if (this.store.controls.forward)
       this.thrust.draw(ctx, pageWidth, pageHeight)
 
-    ctx.translate(-x, -y)
+    ctx.restore()
   }
 
   update(timeSince: number): void {
@@ -48,10 +63,10 @@ export class Player implements GameObject {
     const diff = timeSince / 1000
 
     if (left) {
-      this.m.rotate(diff * this.m.turnSpeed)
+      this.m.rotate(diff * -this.m.turnSpeed)
     }
     if (right) {
-      this.m.rotate(diff * -this.m.turnSpeed)
+      this.m.rotate(diff * this.m.turnSpeed)
     }
     if (forward) {
       this.thrust.update(timeSince)
@@ -67,4 +82,23 @@ export class Player implements GameObject {
 
     this.m.update(timeSince)
   }
+}
+
+// TODO: Try get this working without the save and restore.
+// (Apparently save and restore is slow)
+function slowDrawImage(
+  ctx: CanvasRenderingContext2D,
+  img: HTMLImageElement,
+  x: number,
+  y: number,
+  w: number,
+  h: number,
+  angle = 0
+) {
+  ctx.save()
+  ctx.translate(x + w / 2, y + h / 2)
+  ctx.rotate(angle)
+  ctx.translate(-x - w / 2, -y - h / 2)
+  ctx.drawImage(img, x, y, w, h)
+  ctx.restore()
 }

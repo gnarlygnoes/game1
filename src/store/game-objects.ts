@@ -12,21 +12,18 @@ export class GameObjects implements Updatable, Drawable {
   player = new Player(this.store)
   stats = new Stats(this.store)
 
-  camera = new Camera(this.store)
-
   constructor(public store: Store) {
     this.objects.push(
       new Stars(store),
       this.player,
-      this.stats
-      // new Asteroid(20, [300, 300]),
-      // new Asteroid(16, [280, 420])
+      this.stats,
+      new Asteroid(20, [600, 600]),
+      new Asteroid(18, [740, 580]),
+      new Asteroid(16, [900, 900])
     )
   }
 
   update(timeSince: number) {
-    this.camera.update(timeSince)
-
     for (const o of this.objects) {
       o.update(timeSince)
     }
@@ -35,10 +32,21 @@ export class GameObjects implements Updatable, Drawable {
   draw(
     context: CanvasRenderingContext2D,
     pageWidth: number,
-    pageHeight: number
+    pageHeight: number,
+    camera: Camera
   ): void {
     for (const o of this.objects) {
-      o.draw(context, pageWidth, pageHeight)
+      o.draw(context, pageWidth, pageHeight, camera)
     }
   }
 }
+
+type V3 = [number, number, number]
+
+namespace V3 {
+  export function add(a: V3, b: V3): V3 {
+    return [a[0] + b[0], a[1] + b[1], a[2] + b[2]]
+  }
+}
+
+V3.add([1, 1, 1], [2, 2, 2])

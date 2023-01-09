@@ -2,6 +2,7 @@ import {GameObject} from '../../data-types/data-types'
 import {Mover} from '../../store/mover'
 import {rotateV2, scaleV2, V2} from '../../data-types/v2'
 import {Rand} from '../../misc/random'
+import {Camera, MoverPixels} from '../../camera'
 
 const numPoints = 13
 
@@ -29,11 +30,14 @@ export class Asteroid implements GameObject {
   draw(
     ctx: CanvasRenderingContext2D,
     pageWidth: number,
-    pageHeight: number
+    pageHeight: number,
+    camera: Camera
   ): void {
+    // const {position} = this.p
+
     const {
       position: [x, y],
-    } = this.p
+    } = camera.cameraTransform(this.p)
 
     ctx.beginPath()
 

@@ -34,21 +34,16 @@ export class Stars implements GameObject {
       position: [x, y],
     } = mover
 
-    const xPos = (x / 1000) % 1000
-    const yPos = (y / 1000) % 1000
+    const xPos = (x / 10000) % 10000
+    const yPos = (y / 10000) % 10000
 
-    const angle = mover.getAngle()
+    // const angle = -mover.getAngle()
 
     for (const {
       v: [x, y],
       size,
       colour,
-    } of transformStars(
-      this.stars,
-      [0.5, 0.5],
-      reverseV2([xPos, yPos]),
-      angle
-    )) {
+    } of transformStars(this.stars, [0.5, 0.5], [xPos, -yPos], 0)) {
       const currentX = x * pageWidth
       const currentY = y * pageHeight
 

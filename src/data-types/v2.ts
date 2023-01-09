@@ -1,4 +1,5 @@
 export type V2 = [number, number]
+export type V2RO = Readonly<V2>
 
 export function normaliseV2(v: V2): V2 {
   const [x, y] = v
@@ -11,9 +12,9 @@ export function normaliseV2(v: V2): V2 {
   return [x * scale, y * scale]
 }
 
-export const emptyV2: Readonly<V2> = [0, 0]
+export const emptyV2: V2RO = [0, 0]
 
-export function limitMagnitudeV22(v: V2, limit: number): V2 {
+export function limitMagnitudeV2(v: V2, limit: number): V2 {
   const [x, y] = v
   const len = Math.sqrt(x ** 2 + y ** 2)
 
@@ -24,19 +25,27 @@ export function limitMagnitudeV22(v: V2, limit: number): V2 {
   return [x * scale, y * scale]
 }
 
-export function addV2(a: Readonly<V2>, b: Readonly<V2>): V2 {
+export function addV2(a: V2RO, b: V2RO): V2 {
   return [a[0] + b[0], a[1] + b[1]]
 }
 
-export function reverseV2([a, b]: V2): V2 {
+export function subtractV2(a: V2RO, b: V2RO): V2 {
+  return [a[0] - b[0], a[1] - b[1]]
+}
+
+export function reverseV2([a, b]: V2RO): V2 {
   return [-a, -b]
 }
 
-export function scaleV2([a, b]: Readonly<V2>, scale: number): V2 {
+export function angleV2([x, y]: V2RO): number {
+  return Math.atan2(y, x) + (90 * Math.PI) / 180
+}
+
+export function scaleV2([a, b]: V2RO, scale: number): V2 {
   return [a * scale, b * scale]
 }
 
-export function rotateV2([x, y]: V2, angle: number): V2 {
+export function rotateV2([x, y]: V2RO, angle: number): V2 {
   const s = Math.sin(angle)
   const c = Math.cos(angle)
 

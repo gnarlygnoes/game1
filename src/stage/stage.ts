@@ -1,12 +1,7 @@
 import './stage.css'
-import {
-  $Component,
-  $RunInAction,
-  c,
-  Canvas,
-  createRef,
-} from '../../fiend-ui/src'
+import {$Component, c, Canvas, createRef} from '../../fiend-ui/src'
 import {Store} from '../store/store'
+import {Camera} from '../camera'
 
 export class Stage extends $Component {
   store = new Store()
@@ -14,34 +9,50 @@ export class Stage extends $Component {
   ref = createRef<HTMLCanvasElement>()
   context: CanvasRenderingContext2D | null = null
 
-  $pageWidth = window.innerWidth
-  $pageHeight = window.innerHeight
+  $size = {
+    width: window.innerWidth,
+    height: window.innerHeight,
+  }
+
+  camera = new Camera(this.store, this.$size.width, this.$size.height)
 
   timeOfLastFrame = Date.now()
 
   render() {
-    const {$pageWidth, $pageHeight} = this
+    const {
+      $size: {width, height},
+    } = this
 
     return Canvas({
       ref: this.ref,
       className: c`Stage`,
-      width: $pageWidth,
-      height: $pageHeight,
+      width,
+      height,
     })
   }
 
   gameLoop = () => {
     const now = Date.now()
+    const {
+      gameObjects,
+      gameObjects: {stats},
+    } = this.store
 
-    this.store.gameObjects.update(now - this.timeOfLastFrame)
+    const timeSince = now - this.timeOfLastFrame
 
-    const {context, $pageWidth, $pageHeight} = this
+    const {
+      context,
+      $size: {width, height},
+    } = this
 
-    if (context) {
-      this.store.gameObjects.draw(context, $pageWidth, $pageHeight)
-    }
+    if (!context) return
 
-    this.store.gameObjects.stats.addFrameDuration(Date.now() - now)
+    // TODO: Update player before camera?
+    this.camera.update()
+    gameObjects.update(timeSince)
+    gameObjects.draw(context, width, height, this.camera)
+
+    stats.addFrameDuration(Date.now() - now)
     this.timeOfLastFrame = now
 
     requestAnimationFrame(this.gameLoop)
@@ -57,10 +68,13 @@ export class Stage extends $Component {
     }
 
     addEventListener('resize', () => {
-      $RunInAction(() => {
-        this.$pageWidth = window.innerWidth
-        this.$pageHeight = window.innerHeight
-      })
+      const {innerWidth: w, innerHeight: h} = window
+      this.$size = {
+        width: w,
+        height: h,
+      }
+      this.camera.width = w
+      this.camera.height = h
     })
   }
 }

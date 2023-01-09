@@ -17,10 +17,10 @@ export function transformStars(
   pos: V2,
   angle: number
 ) {
-  return rotateStars(moveStars(stars, centre, pos), centre, angle)
+  return rotateStars(moveStars(stars, pos), centre, angle)
 }
 
-export function moveStars(stars: Star[], centre: V2, pos: V2): Star[] {
+export function moveStars(stars: Star[], pos: V2): Star[] {
   return stars.map(({v, size, colour}) => {
     return {
       v: shift(v, pos),
