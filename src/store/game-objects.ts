@@ -18,7 +18,16 @@ export class GameObjects implements Updatable, Drawable {
       this.stats,
       new Asteroid(20, [100, 100]),
       new Asteroid(18, [240, 180]),
-      new Asteroid(16, [300, 200])
+      new Asteroid(16, [300, 200]),
+      new Asteroid(26, [-300, -200]),
+      new Asteroid(6, [-100, -200]),
+      new Asteroid(36, [300, -200]),
+      new Asteroid(20, [1000, 100]),
+      new Asteroid(18, [240, 1800]),
+      new Asteroid(16, [3000, 200]),
+      new Asteroid(26, [-300, -2000]),
+      new Asteroid(60, [-1000, -200]),
+      new Asteroid(36, [300, -2000])
     )
   }
 
