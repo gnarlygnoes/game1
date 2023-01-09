@@ -1,5 +1,6 @@
 import {Store} from '../store/store'
 import {Drawable, Updatable} from '../data-types/data-types'
+import {Camera} from '../camera'
 
 export class Stats implements Drawable, Updatable {
   fps: number[] = []
@@ -28,11 +29,7 @@ export class Stats implements Drawable, Updatable {
     ]
   }
 
-  draw(
-    ctx: CanvasRenderingContext2D,
-    pageWidth: number,
-    pageHeight: number
-  ): void {
+  draw(ctx: CanvasRenderingContext2D, camera: Camera): void {
     ctx.font = '14px monospace'
     ctx.fillStyle = 'yellow'
 

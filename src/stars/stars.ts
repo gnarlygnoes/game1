@@ -3,16 +3,18 @@ import {generateStars, transformStars} from './star-data'
 import {GameObject} from '../data-types/data-types'
 import {Mover} from '../store/mover'
 import {reverseV2} from '../data-types/v2'
+import {Camera} from '../camera'
 
 export class Stars implements GameObject {
   stars = generateStars(100)
 
   constructor(public store: Store) {}
 
-  draw(ctx: CanvasRenderingContext2D, pageWidth: number, pageHeight: number) {
-    this.drawBackground(ctx, pageWidth, pageHeight)
+  draw(ctx: CanvasRenderingContext2D, camera: Camera) {
+    const {width, height} = camera
+    this.drawBackground(ctx, width, height)
 
-    this.drawStars(ctx, pageWidth, pageHeight, this.store.gameObjects.player.m)
+    this.drawStars(ctx, width, height, this.store.gameObjects.player.m)
   }
 
   drawBackground(

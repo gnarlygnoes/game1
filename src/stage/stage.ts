@@ -40,19 +40,16 @@ export class Stage extends $Component {
 
     const timeSince = now - this.timeOfLastFrame
 
-    const {
-      context,
-      $size: {width, height},
-    } = this
+    const {context, camera} = this
 
     if (!context) return
 
     gameObjects.player.update(timeSince)
-    this.camera.update()
+    camera.update()
     gameObjects.update(timeSince)
 
-    gameObjects.draw(context, width, height, this.camera)
-    gameObjects.player.draw(context, width, height, this.camera)
+    gameObjects.draw(context, camera)
+    gameObjects.player.draw(context, camera)
 
     stats.addFrameDuration(Date.now() - now)
     this.timeOfLastFrame = now

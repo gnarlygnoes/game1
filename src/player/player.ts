@@ -10,47 +10,10 @@ export class Player implements GameObject {
 
   shipImage = document.createElement('img')
 
-  thrust = new Thruster(addV2(this.m.position, [-1.5, 19]), 8, 10, 0)
+  thruster = new Thruster(addV2(this.m.position, [19, 38]), 8, 10, this.m)
 
   constructor(public store: Store) {
     this.shipImage.src = require('./spaceShips_003.png')
-  }
-
-  draw(
-    ctx: CanvasRenderingContext2D,
-    pageWidth: number,
-    pageHeight: number,
-    camera: Camera
-  ): void {
-    const {m} = this
-
-    const {
-      position: [xi, yi],
-      size: [w, h],
-    } = m
-
-    const {
-      shift: [xShift, yShift],
-    } = camera
-
-    const x = xShift + xi
-    const y = yShift + yi
-
-    const angle = Math.PI + m.getAngle()
-
-    // slowDrawImage(ctx, this.shipImage, wx - w / 2, wy - h / 2, w, h, angle)
-
-    ctx.save()
-    ctx.translate(x + w / 2, y + h / 2)
-    ctx.rotate(angle)
-    ctx.translate(-x - w / 2, -y - h / 2)
-
-    ctx.drawImage(this.shipImage, x, y, w, h)
-
-    if (this.store.controls.forward)
-      this.thrust.draw(ctx, pageWidth, pageHeight)
-
-    ctx.restore()
   }
 
   update(timeSince: number): void {
@@ -66,9 +29,9 @@ export class Player implements GameObject {
     if (right) {
       this.m.rotate(diff * this.m.turnSpeed)
     }
-    if (forward) {
-      this.thrust.update(timeSince)
 
+    if (forward) {
+      this.thruster.update(timeSince)
       this.m.thrust = scaleV2(this.m.direction, 0.9)
     } else {
       this.m.thrust = emptyV2
@@ -79,6 +42,35 @@ export class Player implements GameObject {
     }
 
     this.m.update(timeSince)
+  }
+
+  draw(ctx: CanvasRenderingContext2D, camera: Camera): void {
+    const {m} = this
+
+    const {
+      position: [xi, yi],
+      size: [w, h],
+    } = m
+
+    const {
+      shift: [xShift, yShift],
+    } = camera
+
+    const x = Math.round(xShift + xi)
+    const y = Math.round(yShift + yi)
+
+    const angle = m.getAngle()
+
+    ctx.save()
+    ctx.translate(x + w / 2, y + h / 2)
+    ctx.rotate(angle)
+    ctx.translate(-x - w / 2, -y - h / 2)
+
+    ctx.drawImage(this.shipImage, x, y, w, h)
+
+    if (this.store.controls.forward) this.thruster.draw(ctx, camera)
+
+    ctx.restore()
   }
 }
 

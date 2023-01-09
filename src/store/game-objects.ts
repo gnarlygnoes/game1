@@ -28,14 +28,9 @@ export class GameObjects implements Updatable, Drawable {
     }
   }
 
-  draw(
-    context: CanvasRenderingContext2D,
-    pageWidth: number,
-    pageHeight: number,
-    camera: Camera
-  ): void {
+  draw(context: CanvasRenderingContext2D, camera: Camera): void {
     for (const o of this.objects) {
-      o.draw(context, pageWidth, pageHeight, camera)
+      o.draw(context, camera)
     }
   }
 }

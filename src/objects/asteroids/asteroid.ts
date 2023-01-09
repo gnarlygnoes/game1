@@ -27,12 +27,7 @@ export class Asteroid implements GameObject {
     }
   }
 
-  draw(
-    ctx: CanvasRenderingContext2D,
-    pageWidth: number,
-    pageHeight: number,
-    camera: Camera
-  ): void {
+  draw(ctx: CanvasRenderingContext2D, camera: Camera): void {
     const {
       position: [xi, yi],
     } = this.p

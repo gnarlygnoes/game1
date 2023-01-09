@@ -5,12 +5,7 @@ export interface Updatable {
 }
 
 export interface Drawable {
-  draw(
-    ctx: CanvasRenderingContext2D,
-    pageWidth: number,
-    pageHeight: number,
-    camera: Camera
-  ): void
+  draw(ctx: CanvasRenderingContext2D, camera: Camera): void
 }
 
 export interface GameObject extends Updatable, Drawable {}
