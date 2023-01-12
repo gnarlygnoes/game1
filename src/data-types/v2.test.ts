@@ -21,8 +21,30 @@ describe('normaliseV2', () => {
     return sum
   }
 
+  function typed2(n: number) {
+    let sum = 0
+
+    const len = 2 * n
+    const a = new Float64Array(len)
+
+    for (let i = 0; i < len - 1; i++) {
+      if (i % 2 === 0) {
+        a[i] = 100
+      } else {
+        a[i + 1] = 12
+      }
+
+      sum += a[i]
+      sum += a[i + 1]
+    }
+
+    return sum
+  }
+
   function normal(n: number) {
     let sum = 0
+
+    const normy = []
 
     for (let i = 0; i < n; i++) {
       const a: number[] = [100, 12]
@@ -32,6 +54,8 @@ describe('normaliseV2', () => {
       const [x, y] = a
       sum += x
       sum += y
+
+      normy.push(a)
     }
 
     return sum
@@ -47,6 +71,11 @@ describe('normaliseV2', () => {
     let r2 = typed(10_000_000)
     console.timeEnd('typed')
     console.log(r2)
+
+    console.time('typed')
+    let r3 = typed2(10_000_000)
+    console.timeEnd('typed')
+    console.log(r3)
   })
 
   test('(1, 2)', () => {

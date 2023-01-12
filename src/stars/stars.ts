@@ -11,7 +11,10 @@ export class Stars implements GameObject {
 
   draw(ctx: CanvasRenderingContext2D, camera: Camera) {
     const {width, height} = camera
+
     this.drawBackground(ctx, width, height)
+
+    // ctx.clearRect(0, 0, width, height)
 
     this.drawStars(ctx, width, height, this.store.gameObjects.player.m)
   }

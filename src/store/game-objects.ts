@@ -3,8 +3,8 @@ import {Stars} from '../stars/stars'
 import {Store} from './store'
 import {Player} from '../player/player'
 import {Stats} from '../stats/stats'
-import {Asteroid} from '../objects/asteroids/asteroid'
 import {Camera} from '../camera'
+import {Asteroids} from '../objects/asteroids/asteroids'
 
 export class GameObjects implements Updatable, Drawable {
   objects: GameObject[] = []
@@ -13,22 +13,7 @@ export class GameObjects implements Updatable, Drawable {
   stats = new Stats(this.store)
 
   constructor(public store: Store) {
-    this.objects.push(
-      new Stars(store),
-      this.stats,
-      new Asteroid(20, [100, 100]),
-      new Asteroid(18, [240, 180]),
-      new Asteroid(16, [300, 200]),
-      new Asteroid(26, [-300, -200]),
-      new Asteroid(6, [-100, -200]),
-      new Asteroid(36, [300, -200]),
-      new Asteroid(20, [1000, 100]),
-      new Asteroid(18, [240, 1800]),
-      new Asteroid(16, [3000, 200]),
-      new Asteroid(26, [-300, -2000]),
-      new Asteroid(60, [-1000, -200]),
-      new Asteroid(36, [300, -2000])
-    )
+    this.objects.push(new Stars(store), new Asteroids(), this.stats)
   }
 
   update(timeSince: number) {
