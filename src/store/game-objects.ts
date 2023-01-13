@@ -13,7 +13,7 @@ export class GameObjects implements Updatable, Drawable {
   stats = new Stats(this.store)
 
   constructor(public store: Store) {
-    this.objects.push(new Stars(store), new Asteroids(), this.stats)
+    this.objects.push(new Stars(store), new Asteroids(store), this.stats)
   }
 
   update(timeSince: number) {
@@ -28,13 +28,3 @@ export class GameObjects implements Updatable, Drawable {
     }
   }
 }
-
-type V3 = [number, number, number]
-
-namespace V3 {
-  export function add(a: V3, b: V3): V3 {
-    return [a[0] + b[0], a[1] + b[1], a[2] + b[2]]
-  }
-}
-
-V3.add([1, 1, 1], [2, 2, 2])

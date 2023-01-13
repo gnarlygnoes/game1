@@ -1,18 +1,28 @@
 import {GameObject} from '../../data-types/data-types'
 import {Camera} from '../../camera'
-import {Asteroid} from './asteroid'
+import {Asteroid, Asteroid2} from './asteroid'
 import {Rand} from '../../misc/random'
+import {Store} from '../../store/store'
 
 export class Asteroids implements GameObject {
-  asteroids: Asteroid[] = []
+  asteroids: Asteroid2[] = []
 
-  constructor() {
+  constructor(public store: Store) {
     const d = 9000
-    const n = 800
+    const n = 1_000
+
+    const {components} = store
 
     for (let i = 0; i < n; i++) {
+      // this.asteroids.push(
+      //   new Asteroid(5 + Rand.next() * 40, [
+      //     -(d / 2) + Rand.next() * d,
+      //     -(d / 2) + Rand.next() * d,
+      //   ])
+      // )
+
       this.asteroids.push(
-        new Asteroid(5 + Rand.next() * 40, [
+        new Asteroid2(store, components.getNextId(), 5 + Rand.next() * 40, [
           -(d / 2) + Rand.next() * d,
           -(d / 2) + Rand.next() * d,
         ])
