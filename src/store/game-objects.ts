@@ -16,11 +16,11 @@ export class GameObjects implements Updatable, Drawable {
     this.objects.push(new Stars(store), new Asteroids(store), this.stats)
   }
 
-  update(timeSince: number) {
-    this.store.components.update(timeSince)
+  update(timeSince: number, camera: Camera) {
+    this.store.components.update(timeSince, camera)
 
     for (const o of this.objects) {
-      o.update(timeSince)
+      o.update(timeSince, camera)
     }
   }
 

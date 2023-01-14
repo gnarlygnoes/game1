@@ -1,7 +1,7 @@
 import {Camera} from '../camera'
 
 export interface Updatable {
-  update(timeSince: number): void
+  update(timeSince: number, camera: Camera): void
 }
 
 export interface Drawable {

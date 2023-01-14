@@ -25,7 +25,7 @@ export class Asteroids implements GameObject {
     this.asteroids.forEach(a => a.draw(ctx, camera))
   }
 
-  update(timeSince: number): void {
-    this.asteroids.forEach(a => a.update(timeSince))
+  update(timeSince: number, camera: Camera): void {
+    // this.asteroids.forEach(a => a.update(timeSince, camera))
   }
 }

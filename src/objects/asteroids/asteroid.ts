@@ -1,4 +1,4 @@
-import {Entity, GameObject} from '../../data-types/data-types'
+import {Drawable, Entity, GameObject} from '../../data-types/data-types'
 import {V2} from '../../data-types/v2'
 import {Rand} from '../../misc/random'
 import {Camera} from '../../camera'
@@ -8,14 +8,16 @@ import {Mover2} from '../../store/mover'
 
 const numPoints = 13
 
-export class Asteroid implements GameObject, Entity {
+export class Asteroid implements Drawable, Entity {
   points: V2[] = []
 
   id = nextEntityId()
 
-  canvas = new OffscreenCanvas(this.size, this.size)
+  canvas = new OffscreenCanvas(this.size * 3, this.size * 3)
 
   first = true
+
+  bitmap: ImageBitmap | null = null
 
   constructor(public store: Store, public size = 20, pos: V2) {
     const {movers} = store.components
@@ -37,11 +39,9 @@ export class Asteroid implements GameObject, Entity {
         )
       )
     }
-
-    // console.log(this.points)
   }
 
-  draw2(camera: Camera): void {
+  drawBitMap(): void {
     const ctx = this.canvas.getContext(
       '2d'
     ) as OffscreenCanvasRenderingContext2D | null
@@ -53,25 +53,16 @@ export class Asteroid implements GameObject, Entity {
     const m = movers.get(this.id)
     if (!m) return
 
-    const {
-      position: [xi, yi],
-    } = m
-
-    const {
-      shift: [xShift, yShift],
-    } = camera
-
     ctx.beginPath()
 
-    const x = xi + xShift
-    const y = yi + yShift
+    const c = this.size * 1.5
 
     const gradient = ctx.createRadialGradient(
-      x,
-      y,
+      c,
+      c,
       this.size / 10,
-      x,
-      y,
+      c,
+      c,
       this.size
     )
 
@@ -83,35 +74,61 @@ export class Asteroid implements GameObject, Entity {
     ctx.lineWidth = 4
 
     const first = this.points[0]
-    ctx.moveTo(x + first[0], y + first[1])
+    ctx.moveTo(c + first[0], c + first[1])
 
     for (const p of this.points) {
-      ctx.lineTo(x + p[0], y + p[1])
+      ctx.lineTo(c + p[0], c + p[1])
     }
 
-    ctx.lineTo(x + first[0], y + first[1])
+    ctx.lineTo(c + first[0], c + first[1])
 
     ctx.stroke()
     ctx.fill()
 
     this.first = false
+
+    this.bitmap = this.canvas.transferToImageBitmap()
   }
 
-  altDraw(ctx: CanvasRenderingContext2D, camera: Camera): void {
-    if (this.first) {
-      this.draw2(camera)
+  drawCached(ctx: CanvasRenderingContext2D, camera: Camera): void {
+    if (!this.bitmap) {
+      this.drawBitMap()
     }
 
-    const osCtx = this.canvas.getContext(
-      '2d'
-    ) as OffscreenCanvasRenderingContext2D | null
+    if (this.bitmap) {
+      const {id, size} = this
+      const {movers} = this.store.components
+
+      const m = movers.get(id)
+      if (!m || !m.visible) return
+
+      const {
+        position: [xi, yi],
+      } = m
+
+      const {
+        shift: [xShift, yShift],
+      } = camera
+
+      ctx.beginPath()
+
+      const x = xi + xShift
+      const y = yi + yShift
+
+      ctx.drawImage(this.bitmap, x - size * 1.5, y - size * 1.5)
+    }
   }
 
-  draw(ctx: CanvasRenderingContext2D, camera: Camera): void {
+  draw(ctx: CanvasRenderingContext2D, camera: Camera) {
+    this.drawCached(ctx, camera)
+    // this.drawUnCached(ctx, camera)
+  }
+
+  drawUnCached(ctx: CanvasRenderingContext2D, camera: Camera): void {
     const {movers} = this.store.components
 
     const m = movers.get(this.id)
-    if (!m) return
+    if (!m || !m.visible) return
 
     const {
       position: [xi, yi],
@@ -154,6 +171,4 @@ export class Asteroid implements GameObject, Entity {
     ctx.stroke()
     ctx.fill()
   }
-
-  update(timeSince: number): void {}
 }
