@@ -1,5 +1,4 @@
 import {Store} from '../store/store'
-import {V2} from '../data-types/v2'
 
 type UsedKeys =
   | 'ArrowUp'
@@ -47,8 +46,9 @@ export class Controls {
     addEventListener('keyup', e => {
       switch (e.key as UsedKeys) {
         case 'r':
-          this.store.gameObjects.player.m.position = V2.empty
-          this.store.gameObjects.player.m.velocity = V2.empty
+          this.store.gameObjects.player.resetPosition()
+          // this.store.gameObjects.player.m.position = V2.empty
+          // this.store.gameObjects.player.m.velocity = V2.empty
           break
         case 'p':
           break

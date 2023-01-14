@@ -1,6 +1,39 @@
 import {Updatable} from '../data-types/data-types'
 import {V2} from '../data-types/v2'
 
+export class Mover2 {
+  constructor(
+    public position = V2.empty,
+
+    public size = V2.empty,
+
+    // Ideally unit vector
+    public direction = V2.empty,
+
+    public velocity = V2.empty,
+
+    public thrust = V2.empty,
+
+    public rotation = 0,
+
+    public maxVelocity = 10
+  ) {}
+}
+
+export function updateMover(mover: Mover2, timeSince: number) {
+  if (mover.rotation !== 0) {
+    const angle = (timeSince / 1000) * mover.rotation
+
+    mover.direction = V2.normalise(V2.rotate(mover.direction, angle))
+  }
+
+  mover.velocity = V2.limitMagnitude(
+    V2.add(mover.velocity, V2.scale(mover.thrust, timeSince / 100)),
+    mover.maxVelocity
+  )
+  mover.position = V2.add(mover.position, mover.velocity)
+}
+
 /*
 
  Collisions should be applied to velocity instead of acceleration or thrust.

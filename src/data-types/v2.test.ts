@@ -96,3 +96,42 @@ describe('normaliseV2', () => {
     expect(len(v)).toBeCloseTo(1)
   })
 })
+
+describe('Try find best struct', () => {
+  const n = 1000_000
+
+  class S {
+    constructor(a: number, b: V2, c: V2, d: V2) {}
+  }
+
+  test('class', () => {
+    console.time('class')
+    const structs: S[] = []
+
+    for (let i = 0; i < n; i++) {
+      structs.push(new S(3, [1, 2], [2, 3], [3, 4]))
+    }
+
+    console.log(structs.length)
+    console.timeEnd('class')
+  })
+
+  interface S2 {
+    a: number
+    b: V2
+    c: V2
+    d: V2
+  }
+
+  test('object', () => {
+    console.time('object')
+    const structs: S2[] = []
+
+    for (let i = 0; i < n; i++) {
+      structs.push({a: 3, b: [1, 2], c: [2, 3], d: [3, 4]})
+    }
+
+    console.log(structs.length)
+    console.timeEnd('object')
+  })
+})

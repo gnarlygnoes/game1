@@ -17,6 +17,8 @@ export class GameObjects implements Updatable, Drawable {
   }
 
   update(timeSince: number) {
+    this.store.components.update(timeSince)
+
     for (const o of this.objects) {
       o.update(timeSince)
     }

@@ -1,8 +1,8 @@
 import {Store} from '../store/store'
 import {generateStars, transformStars} from './star-data'
 import {GameObject} from '../data-types/data-types'
-import {Mover} from '../store/mover'
 import {Camera} from '../camera'
+import {Mover2} from '../store/mover'
 
 export class Stars implements GameObject {
   stars = generateStars(100)
@@ -16,7 +16,12 @@ export class Stars implements GameObject {
 
     // ctx.clearRect(0, 0, width, height)
 
-    this.drawStars(ctx, width, height, this.store.gameObjects.player.m)
+    const {id} = this.store.gameObjects.player
+
+    const p = this.store.components.movers.get(id)
+    if (!p) return
+
+    this.drawStars(ctx, width, height, p)
   }
 
   drawBackground(
@@ -32,7 +37,7 @@ export class Stars implements GameObject {
     ctx: CanvasRenderingContext2D,
     pageWidth: number,
     pageHeight: number,
-    mover: Mover
+    mover: Mover2
   ) {
     const {
       position: [x, y],

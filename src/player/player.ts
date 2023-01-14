@@ -1,19 +1,27 @@
-import {Mover} from '../store/mover'
-import {GameObject} from '../data-types/data-types'
+import {Mover2} from '../store/mover'
+import {Entity, GameObject} from '../data-types/data-types'
 import {Store} from '../store/store'
 import {V2} from '../data-types/v2'
 import {Thruster} from '../ships/parts/thruster'
 import {Camera} from '../camera'
+import {nextEntityId} from '../store/components'
 
-export class Player implements GameObject {
-  m = new Mover(V2.empty, [40, 40])
+export class Player implements GameObject, Entity {
+  id = nextEntityId()
 
   shipImage = document.createElement('img')
 
-  thruster = new Thruster(V2.add(this.m.position, [19, 38]), 8, 10, this.m)
+  thruster: Thruster
 
   constructor(public store: Store) {
     this.shipImage.src = require('./spaceShips_003.png')
+
+    const {movers} = store.components
+    const m = new Mover2(V2.empty, [40, 40], [0, -1])
+
+    movers.set(this.id, m)
+
+    this.thruster = new Thruster(V2.add(m.position, [19, 38]), 8, 10, m)
   }
 
   update(timeSince: number): void {
@@ -21,31 +29,34 @@ export class Player implements GameObject {
       controls: {forward, back, left, right},
     } = this.store
 
-    const diff = timeSince / 1000
+    const {movers} = this.store.components
+
+    const m = movers.get(this.id)
+
+    if (!m) return
 
     if (left) {
-      this.m.rotate(diff * -this.m.turnSpeed)
+      m.rotation = -4
+    } else if (right) {
+      m.rotation = 4
+    } else {
+      m.rotation = 0
     }
-    if (right) {
-      this.m.rotate(diff * this.m.turnSpeed)
-    }
-
     if (forward) {
       this.thruster.update(timeSince)
-      this.m.thrust = V2.scale(this.m.direction, 0.9)
+      m.thrust = V2.scale(m.direction, 0.9)
     } else {
-      this.m.thrust = V2.empty
+      m.thrust = V2.empty
     }
-
     if (back) {
-      this.m.velocity = V2.empty
+      m.velocity = V2.empty
     }
-
-    this.m.update(timeSince)
   }
 
   draw(ctx: CanvasRenderingContext2D, camera: Camera): void {
-    const {m} = this
+    const {movers} = this.store.components
+    const m = movers.get(this.id)
+    if (!m) return
 
     const {
       position: [xi, yi],
@@ -59,7 +70,7 @@ export class Player implements GameObject {
     const x = xShift + xi
     const y = yShift + yi
 
-    const angle = m.getAngle()
+    const angle = V2.angle(m.direction)
 
     ctx.save()
     ctx.translate(x + w / 2, y + h / 2)
@@ -71,6 +82,17 @@ export class Player implements GameObject {
     if (this.store.controls.forward) this.thruster.draw(ctx, camera)
 
     ctx.restore()
+  }
+
+  resetPosition(): void {
+    const {movers} = this.store.components
+
+    const m = movers.get(this.id)
+
+    if (!m) return
+
+    m.position = V2.empty
+    m.velocity = V2.empty
   }
 }
 

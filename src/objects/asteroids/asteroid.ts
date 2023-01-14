@@ -1,28 +1,27 @@
-import {GameObject} from '../../data-types/data-types'
-import {Mover} from '../../store/mover'
+import {Entity, GameObject} from '../../data-types/data-types'
 import {V2} from '../../data-types/v2'
 import {Rand} from '../../misc/random'
 import {Camera} from '../../camera'
 import {Store} from '../../store/store'
-import {MIds} from '../../store/movers'
+import {nextEntityId} from '../../store/components'
+import {Mover2} from '../../store/mover'
 
 const numPoints = 13
 
-export class Asteroid2 implements GameObject {
+export class Asteroid implements GameObject, Entity {
   points: V2[] = []
 
-  constructor(
-    public store: Store,
-    public id: number,
-    public size = 20,
-    pos: V2
-  ) {
-    const {data, len} = store.components.movers
+  id = nextEntityId()
 
-    const shift = len * id
+  canvas = new OffscreenCanvas(this.size, this.size)
 
-    data[shift + MIds.dirX] = pos[0]
-    data[shift + MIds.dirY] = pos[1]
+  first = true
+
+  constructor(public store: Store, public size = 20, pos: V2) {
+    const {movers} = store.components
+
+    const m = new Mover2(pos)
+    movers.set(this.id, m)
 
     for (let i = 0; i < numPoints; i++) {
       const r1 = Rand.next() - 0.5
@@ -38,18 +37,25 @@ export class Asteroid2 implements GameObject {
         )
       )
     }
+
+    // console.log(this.points)
   }
 
-  draw(ctx: CanvasRenderingContext2D, camera: Camera): void {
-    // const {
-    //   position: [xi, yi],
-    // } = this.p
+  draw2(camera: Camera): void {
+    const ctx = this.canvas.getContext(
+      '2d'
+    ) as OffscreenCanvasRenderingContext2D | null
 
-    const {data, len} = this.store.components.movers
+    if (!ctx) return
 
-    const shift = len * this.id
-    const xi = data[shift + MIds.dirX]
-    const yi = data[shift + MIds.dirY]
+    const {movers} = this.store.components
+
+    const m = movers.get(this.id)
+    if (!m) return
+
+    const {
+      position: [xi, yi],
+    } = m
 
     const {
       shift: [xShift, yShift],
@@ -87,39 +93,29 @@ export class Asteroid2 implements GameObject {
 
     ctx.stroke()
     ctx.fill()
+
+    this.first = false
   }
 
-  update(timeSince: number): void {}
-}
-
-export class Asteroid implements GameObject {
-  p: Mover
-
-  points: V2[] = []
-
-  constructor(public size = 20, pos: V2) {
-    this.p = new Mover(pos)
-
-    for (let i = 0; i < numPoints; i++) {
-      const r1 = Rand.next() - 0.5
-      const r2 = Rand.next() - 0.5
-
-      this.points.push(
-        V2.scale(
-          V2.rotate(
-            [r1 * 0.25, 1 + r2 * 0.25],
-            ((2 * Math.PI) / numPoints) * i
-          ),
-          size
-        )
-      )
+  altDraw(ctx: CanvasRenderingContext2D, camera: Camera): void {
+    if (this.first) {
+      this.draw2(camera)
     }
+
+    const osCtx = this.canvas.getContext(
+      '2d'
+    ) as OffscreenCanvasRenderingContext2D | null
   }
 
   draw(ctx: CanvasRenderingContext2D, camera: Camera): void {
+    const {movers} = this.store.components
+
+    const m = movers.get(this.id)
+    if (!m) return
+
     const {
       position: [xi, yi],
-    } = this.p
+    } = m
 
     const {
       shift: [xShift, yShift],

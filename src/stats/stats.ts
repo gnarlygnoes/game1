@@ -10,12 +10,17 @@ export class Stats implements Drawable, Updatable {
 
   calcStats() {
     const {
+      components: {movers},
       gameObjects: {
-        player: {
-          m: {position, direction, velocity},
-        },
+        player: {id},
       },
     } = this.store
+
+    const m = movers.get(id)
+
+    if (!m) return
+
+    const {position, direction, velocity} = m
 
     const str = (n: number) => n.toPrecision(4)
 
@@ -35,7 +40,7 @@ export class Stats implements Drawable, Updatable {
 
     const height = 22
 
-    this.calcStats().forEach((row, i) => {
+    this.calcStats()?.forEach((row, i) => {
       ctx.fillText(row, 8, height * (i + 1))
     })
   }

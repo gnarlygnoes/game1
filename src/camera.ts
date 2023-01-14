@@ -15,11 +15,16 @@ export class Camera {
   ) {}
 
   update(): void {
-    const {scale, width, height} = this
+    const {width, height, store} = this
 
-    const {m} = this.store.gameObjects.player
+    const {movers} = store.components
 
-    const [x, y] = m.position
+    const {id} = this.store.gameObjects.player
+
+    const p = movers.get(id)
+    if (!p) return
+
+    const [x, y] = p.position
 
     this.shift = [-x + width / 2, -y + height / 2]
   }
