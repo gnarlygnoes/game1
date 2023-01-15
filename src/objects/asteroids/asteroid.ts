@@ -1,10 +1,10 @@
-import {Drawable, Entity, GameObject} from '../../data-types/data-types'
+import {Drawable, Entity} from '../../data-types/data-types'
 import {V2} from '../../data-types/v2'
 import {Rand} from '../../misc/random'
 import {Camera} from '../../camera'
 import {Store} from '../../store/store'
 import {nextEntityId} from '../../store/components'
-import {Mover2} from '../../store/mover'
+import {Mover} from '../../store/mover'
 
 const numPoints = 13
 
@@ -22,7 +22,7 @@ export class Asteroid implements Drawable, Entity {
   constructor(public store: Store, public size = 20, pos: V2) {
     const {movers} = store.components
 
-    const m = new Mover2(pos)
+    const m = new Mover(pos)
     movers.set(this.id, m)
 
     for (let i = 0; i < numPoints; i++) {

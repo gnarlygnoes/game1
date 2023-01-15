@@ -1,4 +1,4 @@
-import {Mover2} from '../store/mover'
+import {Mover} from '../store/mover'
 import {Entity, GameObject} from '../data-types/data-types'
 import {Store} from '../store/store'
 import {V2} from '../data-types/v2'
@@ -17,7 +17,7 @@ export class Player implements GameObject, Entity {
     this.shipImage.src = require('./spaceShips_003.png')
 
     const {movers} = store.components
-    const m = new Mover2(V2.empty, [40, 40], [0, -1])
+    const m = new Mover(V2.empty, [40, 40], [0, -1])
 
     movers.set(this.id, m)
 

@@ -2,7 +2,7 @@ import {GameObject} from '../../data-types/data-types'
 import {V2} from '../../data-types/v2'
 import {Random} from '../../misc/random'
 import {Camera} from '../../camera'
-import {Mover2} from '../../store/mover'
+import {Mover} from '../../store/mover'
 
 const numParticles = 40
 
@@ -13,7 +13,7 @@ export class Thruster implements GameObject {
     public pos: V2,
     public width: number,
     public height: number,
-    public parent: Mover2
+    public parent: Mover
   ) {
     const r = new Random(0)
 

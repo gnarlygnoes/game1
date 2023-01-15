@@ -44,9 +44,9 @@ export class Stage extends $Component {
 
     if (!context) return
 
+    gameObjects.update(timeSince, camera)
     gameObjects.player.update(timeSince)
     camera.update()
-    gameObjects.update(timeSince, camera)
 
     gameObjects.draw(context, camera)
     gameObjects.player.draw(context, camera)

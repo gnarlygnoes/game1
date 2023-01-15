@@ -2,7 +2,7 @@ import {Store} from '../store/store'
 import {generateStars, transformStars} from './star-data'
 import {GameObject} from '../data-types/data-types'
 import {Camera} from '../camera'
-import {Mover2} from '../store/mover'
+import {Mover} from '../store/mover'
 
 export class Stars implements GameObject {
   stars = generateStars(100)
@@ -13,7 +13,6 @@ export class Stars implements GameObject {
     const {width, height} = camera
 
     this.drawBackground(ctx, width, height)
-
     // ctx.clearRect(0, 0, width, height)
 
     const {id} = this.store.gameObjects.player
@@ -37,7 +36,7 @@ export class Stars implements GameObject {
     ctx: CanvasRenderingContext2D,
     pageWidth: number,
     pageHeight: number,
-    mover: Mover2
+    mover: Mover
   ) {
     const {
       position: [x, y],
@@ -45,8 +44,6 @@ export class Stars implements GameObject {
 
     const xPos = (x / 10000) % 10000
     const yPos = (y / 10000) % 10000
-
-    // const angle = -mover.getAngle()
 
     for (const {
       v: [x, y],
