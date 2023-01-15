@@ -1,4 +1,4 @@
-import {Mover, updateMover} from './mover'
+import {Mover, updateMover} from './mover/mover'
 import {Updatable} from '../data-types/data-types'
 import {Camera} from '../camera'
 

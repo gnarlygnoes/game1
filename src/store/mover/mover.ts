@@ -1,5 +1,5 @@
-import {V2, V2RO} from '../data-types/v2'
-import {Camera} from '../camera'
+import {V2, V2RO} from '../../data-types/v2'
+import {Camera} from '../../camera'
 
 export class Mover {
   constructor(

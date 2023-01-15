@@ -2,7 +2,7 @@ import {GameObject} from '../../data-types/data-types'
 import {V2} from '../../data-types/v2'
 import {Random} from '../../misc/random'
 import {Camera} from '../../camera'
-import {Mover} from '../../store/mover'
+import {Mover} from '../../store/mover/mover'
 
 const numParticles = 40
 

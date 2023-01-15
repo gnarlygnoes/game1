@@ -4,9 +4,10 @@ import {Rand} from '../../misc/random'
 import {Camera} from '../../camera'
 import {Store} from '../../store/store'
 import {nextEntityId} from '../../store/components'
-import {Mover} from '../../store/mover'
+import {Mover} from '../../store/mover/mover'
 
 const numPoints = 13
+const useCache = true
 
 export class Asteroid implements Drawable, Entity {
   points: V2[] = []
@@ -120,8 +121,11 @@ export class Asteroid implements Drawable, Entity {
   }
 
   draw(ctx: CanvasRenderingContext2D, camera: Camera) {
-    this.drawCached(ctx, camera)
-    // this.drawUnCached(ctx, camera)
+    if (useCache) {
+      this.drawCached(ctx, camera)
+    } else {
+      this.drawUnCached(ctx, camera)
+    }
   }
 
   drawUnCached(ctx: CanvasRenderingContext2D, camera: Camera): void {

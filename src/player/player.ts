@@ -1,4 +1,4 @@
-import {Mover} from '../store/mover'
+import {Mover} from '../store/mover/mover'
 import {Entity, GameObject} from '../data-types/data-types'
 import {Store} from '../store/store'
 import {V2} from '../data-types/v2'

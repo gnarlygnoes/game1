@@ -2,7 +2,7 @@ import {Store} from '../store/store'
 import {generateStars, transformStars} from './star-data'
 import {GameObject} from '../data-types/data-types'
 import {Camera} from '../camera'
-import {Mover} from '../store/mover'
+import {Mover} from '../store/mover/mover'
 
 export class Stars implements GameObject {
   stars = generateStars(100)
