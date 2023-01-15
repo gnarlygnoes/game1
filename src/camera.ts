@@ -1,10 +1,11 @@
 import {Store} from './store/store'
-import {V2} from './data-types/v2'
+import {V2, V2RO} from './data-types/v2'
 
 export class Camera {
   scale = 1
 
   shift = V2.empty
+  points: [V2RO, V2RO] = [V2.empty, V2.empty]
 
   constructor(
     private store: Store,
@@ -26,6 +27,14 @@ export class Camera {
 
     const [x, y] = p.position
 
-    this.shift = [-x + width / 2, -y + height / 2]
+    const w2 = width / 2
+    const h2 = height / 2
+
+    this.shift = [-x + w2, -y + h2]
+
+    this.points = [
+      [x - w2, y - h2],
+      [x + w2, y + h2],
+    ]
   }
 }

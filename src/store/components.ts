@@ -1,6 +1,7 @@
 import {Mover, updateMover} from './mover/mover'
 import {Updatable} from '../data-types/data-types'
 import {Camera} from '../camera'
+import {detectCollisions} from './mover/collisions'
 
 export class Components implements Updatable {
   movers = new Map<number, Mover>()
@@ -9,6 +10,11 @@ export class Components implements Updatable {
     for (const m of this.movers.values()) {
       updateMover(m, timeSince, camera)
     }
+
+    const {
+      points: [a, b],
+    } = camera
+    detectCollisions(this.movers, a, b)
   }
 }
 

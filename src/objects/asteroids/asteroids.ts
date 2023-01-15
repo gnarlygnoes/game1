@@ -8,8 +8,11 @@ export class Asteroids implements GameObject {
   asteroids: Asteroid[] = []
 
   constructor(public store: Store) {
-    const d = 9000
-    const n = 1_000
+    // const d = 9000
+    // const n = 1_000
+
+    const d = 300
+    const n = 6
 
     for (let i = 0; i < n; i++) {
       this.asteroids.push(

@@ -23,7 +23,7 @@ export class Asteroid implements Drawable, Entity {
   constructor(public store: Store, public size = 20, pos: V2) {
     const {movers} = store.components
 
-    const m = new Mover(pos)
+    const m = new Mover(pos, [size, size])
     movers.set(this.id, m)
 
     for (let i = 0; i < numPoints; i++) {
@@ -48,11 +48,6 @@ export class Asteroid implements Drawable, Entity {
     ) as OffscreenCanvasRenderingContext2D | null
 
     if (!ctx) return
-
-    const {movers} = this.store.components
-
-    const m = movers.get(this.id)
-    if (!m) return
 
     ctx.beginPath()
 
