@@ -10,7 +10,7 @@ export function detectCollisions(
 ) {
   const b = fillBuckets(x1, x2, INCREMENT_SIZE, movers)
 
-  console.log(b)
+  // console.log(b)
 }
 
 // Note: min and max could be negative.
