@@ -13,6 +13,7 @@ export function detectCollisions(
   console.log(b)
 }
 
+// Note: min and max could be negative.
 export function fillBuckets(
   min: number,
   max: number,
@@ -20,6 +21,7 @@ export function fillBuckets(
   movers: Map<number, Mover>
 ) {
   const buckets = createBuckets(min, max, incrementSize)
+  const numBuckets = buckets.length
 
   const shift = Math.abs(Math.ceil(min / incrementSize))
 
@@ -29,7 +31,7 @@ export function fillBuckets(
   } of movers.values()) {
     for (let c = x; c < x + w; c += incrementSize) {
       if (c >= min && c <= max) {
-        const i = Math.floor(c / incrementSize) + shift
+        const i = Math.floor((c + shift) / incrementSize)
 
         buckets[i]++
       }
