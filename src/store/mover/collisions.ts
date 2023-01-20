@@ -1,5 +1,6 @@
 import {Mover} from './mover'
 import {V2RO} from '../../data-types/v2'
+import {assert, time, timeEnd} from '../../misc/util'
 
 const INCREMENT_SIZE = 100
 
@@ -8,7 +9,9 @@ export function detectCollisions(
   [x1, y1]: V2RO,
   [x2, y2]: V2RO
 ) {
+  time(detectCollisions.name)
   const b = fillBuckets(x1, x2, INCREMENT_SIZE, movers)
+  timeEnd(detectCollisions.name)
 
   // console.log(b)
 }
@@ -22,6 +25,9 @@ export function fillBuckets(
 ) {
   const buckets = createBuckets(min, max, incrementSize)
 
+  const {length} = buckets
+  if (length === 0) return buckets
+
   const pixelShift = -min
   min += pixelShift
   max += pixelShift
@@ -34,12 +40,17 @@ export function fillBuckets(
 
     for (let c = x; c < x + w; c += incrementSize) {
       if (c >= min && c <= max) {
-        const i = Math.round(c / incrementSize)
+        const i = Math.floor(c / incrementSize)
 
         buckets[i]++
       }
     }
   }
+
+  assert(
+    buckets.length === length,
+    `Expected bucket length not to grow ${JSON.stringify(buckets)}`
+  )
 
   return buckets
 }
