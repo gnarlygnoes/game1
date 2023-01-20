@@ -21,17 +21,20 @@ export function fillBuckets(
   movers: Map<number, Mover>
 ) {
   const buckets = createBuckets(min, max, incrementSize)
-  const numBuckets = buckets.length
 
-  const shift = Math.abs(Math.ceil(min / incrementSize))
+  const pixelShift = -min
+  min += pixelShift
+  max += pixelShift
 
   for (const {
-    position: [x],
+    position,
     size: [w],
   } of movers.values()) {
+    const x = position[0] + pixelShift
+
     for (let c = x; c < x + w; c += incrementSize) {
       if (c >= min && c <= max) {
-        const i = Math.floor((c + shift) / incrementSize)
+        const i = Math.round(c / incrementSize)
 
         buckets[i]++
       }
