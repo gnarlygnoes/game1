@@ -48,19 +48,19 @@ export class Asteroid implements Drawable, Entity {
     ) as OffscreenCanvasRenderingContext2D | null
 
     if (!ctx) return
+    const {
+      size,
+      store: {movers},
+      id,
+    } = this
+    const m = movers.get(id)
+    if (!m || !m.visible) return
 
     ctx.beginPath()
 
-    const c = this.size * 1.5
+    const c = size * 1.5
 
-    const gradient = ctx.createRadialGradient(
-      c,
-      c,
-      this.size / 10,
-      c,
-      c,
-      this.size
-    )
+    const gradient = ctx.createRadialGradient(c, c, size / 10, c, c, size)
 
     gradient.addColorStop(0, '#7e7e7e')
     gradient.addColorStop(0.9, '#5d5d5d')
@@ -80,6 +80,14 @@ export class Asteroid implements Drawable, Entity {
 
     ctx.stroke()
     ctx.fill()
+
+    ctx.font = '14px monospace'
+    ctx.fillStyle = 'yellow'
+    // ctx.lineWidth = 2
+    // ctx.strokeStyle = 'yellow'
+
+    ctx.fillText(this.id.toString(), first[0] + c / 2, first[1] + c / 2)
+    // ctx.strokeRect(m.position[0], m.position[1], size, size)
 
     this.first = false
 
@@ -112,6 +120,10 @@ export class Asteroid implements Drawable, Entity {
       const y = yi + yShift
 
       ctx.drawImage(this.bitmap, x - size * 1.5, y - size * 1.5)
+
+      ctx.lineWidth = 1
+      ctx.strokeStyle = 'yellow'
+      ctx.strokeRect(x, y, size, size)
     }
   }
 

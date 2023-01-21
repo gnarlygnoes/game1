@@ -40,8 +40,8 @@ export class Stats implements Drawable, Updatable {
 
     const height = 22
 
-    this.calcStats()?.forEach((row, i) => {
-      ctx.fillText(row, 8, height * (i + 1))
+    this.calcStats()?.forEach((statText, i) => {
+      ctx.fillText(statText, 8, height * (i + 1))
     })
   }
 

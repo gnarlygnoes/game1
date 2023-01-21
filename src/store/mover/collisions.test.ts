@@ -1,5 +1,5 @@
 import {Mover} from './mover'
-import {createBuckets, detectCollisions, fillBuckets} from './collisions'
+import {createBuckets, detectCollisions, fillXBuckets} from './collisions'
 
 describe(detectCollisions.name, () => {
   const movers = new Map<number, Mover>()
@@ -28,7 +28,7 @@ describe(createBuckets.name, () => {
   })
 })
 
-describe(fillBuckets.name, () => {
+describe(fillXBuckets.name, () => {
   test('2 colliding boxes', () => {
     const movers = new Map<number, Mover>()
 
@@ -37,7 +37,7 @@ describe(fillBuckets.name, () => {
     movers.set(id++, new Mover([20, 20], [20, 20]))
     movers.set(id++, new Mover([30, 30], [20, 20]))
 
-    const b = fillBuckets(0, 1000, 100, movers)
+    const b = fillXBuckets(0, 1000, 100, movers)
 
     expect(b[0]).toEqual(2)
   })
@@ -50,7 +50,7 @@ describe(fillBuckets.name, () => {
     movers.set(id++, new Mover([0, 0], [40, 40]))
     movers.set(id++, new Mover([124.5, 40], [20, 20]))
 
-    const b = fillBuckets(-390.5, 390.5, 100, movers)
+    const b = fillXBuckets(-390.5, 390.5, 100, movers)
 
     console.log(b)
 
