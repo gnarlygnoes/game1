@@ -1,8 +1,8 @@
 import {Mover} from './mover'
-import {V2RO} from '../../data-types/v2'
+import {V2, V2RO} from '../../data-types/v2'
 import {assert, time, timeEnd} from '../../misc/util'
 
-const INCREMENT_SIZE = 4
+const INCREMENT_SIZE = 10
 
 export function detectCollisions(
   movers: Map<number, Mover>,
@@ -14,12 +14,13 @@ export function detectCollisions(
   const xBuckets = fillXBuckets(x1, x2, INCREMENT_SIZE, movers)
   const yBuckets = fillYBuckets(y1, y2, INCREMENT_SIZE, movers)
 
+  const intersecting = bucketIntersection(xBuckets, yBuckets)
+
   timeEnd(detectCollisions.name)
 
-  // console.log(bucketIntersection(xBuckets, yBuckets))
-  // console.log(xBuckets, yBuckets)
-  // console.log(xBuckets, yBuckets, getPossibleCollisions(yBuckets))
-  // console.log(getPossibleCollisions(yBuckets))
+  if (intersecting.length > 0) {
+    console.log(intersecting.map(([a, b]) => `(${a}, ${b})`).join(', '))
+  }
 }
 
 // Note: min and max could be negative.
@@ -99,20 +100,77 @@ export function fillYBuckets(
   return buckets
 }
 
-function bucketIntersection(xBuckets: number[][], yBuckets: number[][]) {
+export function bucketIntersection(xBuckets: number[][], yBuckets: number[][]) {
   xBuckets = xBuckets.filter(b => b.length > 1)
   yBuckets = yBuckets.filter(b => b.length > 1)
 
-  return [xBuckets, yBuckets]
+  const xSet = new Set<string>()
 
-  // const set = new Map<number, number[]>()
-  //
-  // for (const x of xBuckets) {
-  //   // yBuckets.some()
-  //
-  //
-  // }
+  for (const x of xBuckets) {
+    for (const id of getAllPairsAsStrings(x)) {
+      xSet.add(id)
+    }
+  }
+
+  const set = new Set<string>()
+
+  for (const y of yBuckets) {
+    for (const id of getAllPairsAsStrings(y)) {
+      if (xSet.has(id)) {
+        set.add(id)
+      }
+    }
+  }
+
+  const pairs: V2[] = []
+
+  for (const id of set.values()) {
+    pairs.push(id.split('-').map(n => parseInt(n)) as V2)
+  }
+
+  return pairs
 }
+
+export function getAllPairs(ids: number[]): V2[] {
+  const pairs: V2[] = []
+
+  for (let i = 0; i < ids.length; i++) {
+    const id1 = ids[i]
+    for (let j = i + 1; j < ids.length; j++) {
+      const id2 = ids[j]
+      pairs.push([id1, id2])
+    }
+  }
+
+  return pairs
+}
+
+export function getAllPairsAsStrings(ids: number[]) {
+  const pairs: string[] = []
+
+  for (let i = 0; i < ids.length; i++) {
+    const id1 = ids[i]
+    for (let j = i + 1; j < ids.length; j++) {
+      const id2 = ids[j]
+
+      pairs.push(`${id1}-${id2}`)
+    }
+  }
+
+  return pairs
+}
+
+export function numDigits(n: number): number {
+  return (Math.log10((n ^ (n >> 31)) - (n >> 31)) | 0) + 1
+}
+
+export function pairToFloat(a: number, b: number) {
+  const n = 10 ** numDigits(b)
+
+  return a + b / n
+}
+
+export function floatToPair(f: number) {}
 
 export function createBuckets2(
   min: number,
@@ -130,24 +188,6 @@ export function createBuckets2(
 
   return a
 }
-
-// function getPossibleCollisions(buckets: number[][]): Set<number> {
-//   const set = new Set<number>()
-//
-//   for (const b of buckets) {
-//     if (b.length > 1) {
-//       for (const id of b) {
-//         set.add(id)
-//       }
-//     }
-//   }
-//
-//   return set
-// }
-
-// function getPossibleCollisions(buckets: number[][]): number[][] {
-//   return buckets.filter(b => b.length > 1)
-// }
 
 // TODO: Remove and update tests
 export function createBuckets(

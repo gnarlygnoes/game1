@@ -14,7 +14,8 @@ export class Asteroid implements Drawable, Entity {
 
   id: number
 
-  canvas = new OffscreenCanvas(this.size * 3, this.size * 3)
+  canvas = new OffscreenCanvas(this.size * 1.2, this.size * 1.2)
+  ctx: OffscreenCanvasRenderingContext2D | null
 
   bitmap: ImageBitmap | null = null
 
@@ -26,6 +27,10 @@ export class Asteroid implements Drawable, Entity {
     movers.add(m)
 
     this.generatePoints()
+
+    this.ctx = this.canvas.getContext(
+      '2d'
+    ) as OffscreenCanvasRenderingContext2D | null
   }
 
   generatePoints() {
@@ -48,18 +53,9 @@ export class Asteroid implements Drawable, Entity {
   }
 
   drawToCanvasAndCreateBitMap(): void {
-    const ctx = this.canvas.getContext(
-      '2d'
-    ) as OffscreenCanvasRenderingContext2D | null
+    const {size, ctx} = this
 
     if (!ctx) return
-    const {
-      size,
-      store: {movers},
-      id,
-    } = this
-    const m = movers.get(id)
-    if (!m || !m.visible) return
 
     ctx.beginPath()
 
@@ -89,18 +85,12 @@ export class Asteroid implements Drawable, Entity {
     this.bitmap = this.canvas.transferToImageBitmap()
   }
 
-  drawCached(ctx: CanvasRenderingContext2D, camera: Camera): void {
+  drawCached(ctx: CanvasRenderingContext2D, camera: Camera, m: Mover): void {
     if (!this.bitmap) {
       this.drawToCanvasAndCreateBitMap()
     }
 
     if (this.bitmap) {
-      const {id} = this
-      const {movers} = this.store
-
-      const m = movers.get(id)
-      if (!m || !m.visible) return
-
       const {
         position: [xi, yi],
       } = m
@@ -121,19 +111,19 @@ export class Asteroid implements Drawable, Entity {
   }
 
   draw(ctx: CanvasRenderingContext2D, camera: Camera) {
-    if (useCache) {
-      this.drawCached(ctx, camera)
-    } else {
-      this.drawUnCached(ctx, camera)
-    }
-  }
-
-  drawUnCached(ctx: CanvasRenderingContext2D, camera: Camera): void {
     const {movers} = this.store
 
     const m = movers.get(this.id)
     if (!m || !m.visible) return
 
+    if (useCache) {
+      this.drawCached(ctx, camera, m)
+    } else {
+      this.drawUnCached(ctx, camera, m)
+    }
+  }
+
+  drawUnCached(ctx: CanvasRenderingContext2D, camera: Camera, m: Mover): void {
     const {
       position: [xi, yi],
     } = m
