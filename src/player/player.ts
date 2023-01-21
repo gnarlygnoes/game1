@@ -4,6 +4,7 @@ import {Store} from '../store/store'
 import {V2} from '../data-types/v2'
 import {Thruster} from '../ships/parts/thruster'
 import {Camera} from '../camera'
+import {MoverBoxes} from '../stats/boxes'
 
 export class Player implements GameObject, Entity {
   id: number
@@ -82,6 +83,8 @@ export class Player implements GameObject, Entity {
     if (this.store.controls.forward) this.thruster.draw(ctx, camera)
 
     ctx.restore()
+
+    MoverBoxes.draw(ctx, m, camera)
   }
 
   resetPosition(): void {

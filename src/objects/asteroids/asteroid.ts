@@ -4,6 +4,7 @@ import {Rand} from '../../misc/random'
 import {Camera} from '../../camera'
 import {Store} from '../../store/store'
 import {Mover} from '../../store/mover/mover'
+import {MoverBoxes} from '../../stats/boxes'
 
 const numPoints = 13
 const useCache = true
@@ -121,9 +122,7 @@ export class Asteroid implements Drawable, Entity {
 
       ctx.drawImage(this.bitmap, x - size * 1.5, y - size * 1.5)
 
-      ctx.lineWidth = 1
-      ctx.strokeStyle = 'yellow'
-      ctx.strokeRect(x, y, size, size)
+      MoverBoxes.draw(ctx, m, camera)
     }
   }
 

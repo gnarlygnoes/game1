@@ -1,4 +1,5 @@
 import {Store} from '../store/store'
+import {MoverBoxes} from '../stats/boxes'
 
 type UsedKeys =
   | 'ArrowUp'
@@ -23,6 +24,9 @@ export class Controls {
       switch (e.key as UsedKeys) {
         case 'p':
           this.store.paused = !this.store.paused
+          break
+        case 'b':
+          MoverBoxes.enable(!MoverBoxes.enabled)
           break
         case 'w':
         case 'ArrowUp':
