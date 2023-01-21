@@ -1,10 +1,12 @@
 import {Mover} from './mover'
 import {V2, V2RO} from '../../data-types/v2'
 import {assert, time, timeEnd} from '../../misc/util'
+import {Store} from '../store'
 
 const INCREMENT_SIZE = 10
 
 export function detectCollisions(
+  store: Store,
   movers: Map<number, Mover>,
   [x1, y1]: V2RO,
   [x2, y2]: V2RO
@@ -19,7 +21,13 @@ export function detectCollisions(
   timeEnd(detectCollisions.name)
 
   if (intersecting.length > 0) {
-    console.log(intersecting.map(([a, b]) => `(${a}, ${b})`).join(', '))
+    const {id} = store.gameObjects.player
+
+    if (intersecting.some(([a, b]) => a === id || b === id)) {
+      store.gameObjects.player.stopMovement()
+    }
+
+    // console.log(intersecting.map(([a, b]) => `(${a}, ${b})`).join(', '))
   }
 }
 
@@ -170,7 +178,7 @@ export function pairToFloat(a: number, b: number) {
   return a + b / n
 }
 
-export function floatToPair(f: number) {}
+// export function floatToPair(f: number) {}
 
 export function createBuckets2(
   min: number,

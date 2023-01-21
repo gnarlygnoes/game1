@@ -114,7 +114,9 @@ export class Asteroid implements Drawable, Entity {
     const {movers} = this.store
 
     const m = movers.get(this.id)
-    if (!m || !m.visible) return
+    if (!m || !m.visible) {
+      return
+    }
 
     if (useCache) {
       this.drawCached(ctx, camera, m)

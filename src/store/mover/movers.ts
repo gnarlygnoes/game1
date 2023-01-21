@@ -15,7 +15,7 @@ export class Movers implements Updatable {
       points: [a, b],
     } = camera
 
-    detectCollisions(this.map, a, b)
+    detectCollisions(camera.store, this.map, a, b)
   }
 
   add(mover: Mover): void {

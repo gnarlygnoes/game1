@@ -8,7 +8,7 @@ export class Camera {
   points: [V2RO, V2RO] = [V2.empty, V2.empty]
 
   constructor(
-    private store: Store,
+    public store: Store,
 
     // Always kept up to date.
     public width: number,

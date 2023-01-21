@@ -9,6 +9,7 @@ import {
   numDigits,
   pairToFloat,
 } from './collisions'
+import {Store} from '../store'
 
 describe(detectCollisions.name, () => {
   const movers = new Map<number, Mover>()
@@ -17,7 +18,7 @@ describe(detectCollisions.name, () => {
   movers.set(0, new Mover([20, 20]))
 
   test('simple', () => {
-    detectCollisions(movers, [0, 0], [1000, 600])
+    detectCollisions(new Store(0, 0), movers, [0, 0], [1000, 600])
 
     expect(true).toBe(true)
   })

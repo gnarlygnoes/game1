@@ -99,6 +99,16 @@ export class Player implements GameObject, Entity {
     m.position = V2.empty
     m.velocity = V2.empty
   }
+
+  stopMovement() {
+    const {movers} = this.store
+
+    const m = movers.get(this.id)
+
+    if (!m) return
+
+    m.velocity = V2.empty
+  }
 }
 
 // TODO: Try get this working without the save and restore.
