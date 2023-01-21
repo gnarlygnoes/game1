@@ -10,7 +10,7 @@ export class Stats implements Drawable, Updatable {
 
   calcStats() {
     const {
-      components: {movers},
+      movers,
       gameObjects: {
         player: {id},
       },

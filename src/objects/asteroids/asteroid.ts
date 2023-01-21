@@ -3,7 +3,6 @@ import {V2} from '../../data-types/v2'
 import {Rand} from '../../misc/random'
 import {Camera} from '../../camera'
 import {Store} from '../../store/store'
-import {nextEntityId} from '../../store/components'
 import {Mover} from '../../store/mover/mover'
 
 const numPoints = 13
@@ -12,7 +11,7 @@ const useCache = true
 export class Asteroid implements Drawable, Entity {
   points: V2[] = []
 
-  id = nextEntityId()
+  id: number
 
   canvas = new OffscreenCanvas(this.size * 3, this.size * 3)
 
@@ -21,10 +20,11 @@ export class Asteroid implements Drawable, Entity {
   bitmap: ImageBitmap | null = null
 
   constructor(public store: Store, public size = 20, pos: V2) {
-    const {movers} = store.components
+    const {movers} = store
 
     const m = new Mover(pos, [size, size])
-    movers.set(this.id, m)
+    this.id = m.id
+    movers.add(m)
 
     for (let i = 0; i < numPoints; i++) {
       const r1 = Rand.next() - 0.5
@@ -93,7 +93,7 @@ export class Asteroid implements Drawable, Entity {
 
     if (this.bitmap) {
       const {id, size} = this
-      const {movers} = this.store.components
+      const {movers} = this.store
 
       const m = movers.get(id)
       if (!m || !m.visible) return
@@ -124,7 +124,7 @@ export class Asteroid implements Drawable, Entity {
   }
 
   drawUnCached(ctx: CanvasRenderingContext2D, camera: Camera): void {
-    const {movers} = this.store.components
+    const {movers} = this.store
 
     const m = movers.get(this.id)
     if (!m || !m.visible) return

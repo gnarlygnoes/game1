@@ -18,7 +18,7 @@ export class Camera {
   update(): void {
     const {width, height, store} = this
 
-    const {movers} = store.components
+    const {movers} = store
 
     const {id} = this.store.gameObjects.player
 

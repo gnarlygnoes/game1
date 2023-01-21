@@ -11,13 +11,13 @@ export function makeConfig({
 }: {
   mode: 'development' | 'production'
 }): Configuration {
+  console.log({mode})
+
   const devServer: DevServerConfiguration = {
     static: {
       directory: path.join(__dirname, 'dist'),
     },
   }
-
-  console.log({mode})
 
   const config: Configuration = {
     mode,
@@ -28,22 +28,12 @@ export function makeConfig({
       assetModuleFilename: 'output/[hash][ext][query]',
     },
     resolve: {
-      // Add `.ts` and `.tsx` as a resolvable extension.
       extensions: ['.ts', '.js'],
     },
     devtool:
       mode === 'development' ? 'eval-cheap-module-source-map' : undefined,
     module: {
       rules: [
-        // {
-        //   test: /\.ts$/,
-        //   loader: 'ts-loader',
-        //   options: {
-        //     compilerOptions: {
-        //       module: mode === 'development' ? 'commonjs' : 'esNext',
-        //     },
-        //   },
-        // },
         {
           test: /\.ts$/,
           exclude: /(node_modules)/,

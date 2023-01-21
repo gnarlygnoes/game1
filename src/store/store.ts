@@ -1,11 +1,11 @@
 import {GameObjects} from './game-objects'
 import {Controls} from '../player/controls'
-import {Components} from './components'
+import {Movers} from './mover/movers'
 
 export class Store {
   paused = false
 
-  components = new Components()
+  movers = new Movers()
 
   gameObjects = new GameObjects(this)
 

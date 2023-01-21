@@ -1,7 +1,10 @@
 import {V2, V2RO} from '../../data-types/v2'
 import {Camera} from '../../camera'
+import {nextEntityId} from './movers'
 
 export class Mover {
+  id = nextEntityId()
+
   constructor(
     public position = V2.empty,
 

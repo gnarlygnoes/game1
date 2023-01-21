@@ -17,7 +17,7 @@ export class Stars implements GameObject {
 
     const {id} = this.store.gameObjects.player
 
-    const p = this.store.components.movers.get(id)
+    const p = this.store.movers.get(id)
     if (!p) return
 
     this.drawStars(ctx, width, height, p)

@@ -4,10 +4,9 @@ import {Store} from '../store/store'
 import {V2} from '../data-types/v2'
 import {Thruster} from '../ships/parts/thruster'
 import {Camera} from '../camera'
-import {nextEntityId} from '../store/components'
 
 export class Player implements GameObject, Entity {
-  id = nextEntityId()
+  id: number
 
   shipImage = document.createElement('img')
 
@@ -16,10 +15,11 @@ export class Player implements GameObject, Entity {
   constructor(public store: Store) {
     this.shipImage.src = require('./spaceShips_003.png')
 
-    const {movers} = store.components
+    const {movers} = store
     const m = new Mover(V2.empty, [40, 40], [0, -1])
+    this.id = m.id
 
-    movers.set(this.id, m)
+    movers.add(m)
 
     this.thruster = new Thruster(V2.add(m.position, [19, 38]), 8, 10, m)
   }
@@ -29,7 +29,7 @@ export class Player implements GameObject, Entity {
       controls: {forward, back, left, right},
     } = this.store
 
-    const {movers} = this.store.components
+    const {movers} = this.store
 
     const m = movers.get(this.id)
 
@@ -54,7 +54,7 @@ export class Player implements GameObject, Entity {
   }
 
   draw(ctx: CanvasRenderingContext2D, camera: Camera): void {
-    const {movers} = this.store.components
+    const {movers} = this.store
     const m = movers.get(this.id)
     if (!m) return
 
@@ -85,7 +85,7 @@ export class Player implements GameObject, Entity {
   }
 
   resetPosition(): void {
-    const {movers} = this.store.components
+    const {movers} = this.store
 
     const m = movers.get(this.id)
 
