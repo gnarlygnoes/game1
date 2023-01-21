@@ -2,7 +2,7 @@ import {Mover} from '../store/mover/mover'
 import {Camera} from '../camera'
 
 export const MoverBoxes = new (class {
-  enabled = __DEV__
+  enabled = false
 
   enable(on: boolean) {
     this.enabled = on

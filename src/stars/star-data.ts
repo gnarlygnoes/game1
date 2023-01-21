@@ -11,13 +11,9 @@ export function generateStars(n: number): Star[] {
   return generateStarTile(n)
 }
 
-export function transformStars(
-  stars: Star[],
-  centre: V2,
-  pos: V2,
-  angle: number
-) {
-  return rotateStars(moveStars(stars, pos), centre, angle)
+export function transformStars(stars: Star[], centre: V2, pos: V2) {
+  // return rotateStars(moveStars(stars, pos), centre, angle)
+  return moveStars(stars, pos)
 }
 
 export function moveStars(stars: Star[], pos: V2): Star[] {

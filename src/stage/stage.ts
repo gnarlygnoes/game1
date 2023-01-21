@@ -1,11 +1,8 @@
 import './stage.css'
 import {$Component, c, Canvas, createRef} from '../../fiend-ui/src'
 import {Store} from '../store/store'
-import {Camera} from '../camera'
 
 export class Stage extends $Component {
-  store = new Store()
-
   ref = createRef<HTMLCanvasElement>()
   context: CanvasRenderingContext2D | null = null
 
@@ -14,7 +11,7 @@ export class Stage extends $Component {
     height: window.innerHeight,
   }
 
-  camera = new Camera(this.store, this.$size.width, this.$size.height)
+  store = new Store(this.$size.width, this.$size.height)
 
   timeOfLastFrame = Date.now()
 
@@ -36,11 +33,12 @@ export class Stage extends $Component {
     const {
       gameObjects,
       gameObjects: {stats},
+      camera,
     } = this.store
 
     const timeSince = now - this.timeOfLastFrame
 
-    const {context, camera} = this
+    const {context} = this
 
     if (!context) return
 
@@ -72,8 +70,8 @@ export class Stage extends $Component {
         width: w,
         height: h,
       }
-      this.camera.width = w
-      this.camera.height = h
+      this.store.camera.width = w
+      this.store.camera.height = h
     })
   }
 }

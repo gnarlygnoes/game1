@@ -25,19 +25,25 @@ export class Asteroid implements Drawable, Entity {
     this.id = m.id
     movers.add(m)
 
+    this.generatePoints()
+  }
+
+  generatePoints() {
+    const {size} = this
+
     for (let i = 0; i < numPoints; i++) {
       const r1 = Rand.next() - 0.5
       const r2 = Rand.next() - 0.5
 
-      this.points.push(
-        V2.scale(
-          V2.rotate(
-            [r1 * 0.25, 1 + r2 * 0.25],
-            ((2 * Math.PI) / numPoints) * i
-          ),
-          size
-        )
+      const p = V2.scale(
+        V2.rotate([r1 * 0.25, 1 + r2 * 0.25], ((2 * Math.PI) / numPoints) * i),
+        size / 2.2
       )
+
+      p[0] += 0.03
+      p[1] += 0.03
+
+      this.points.push(p)
     }
   }
 
@@ -57,9 +63,9 @@ export class Asteroid implements Drawable, Entity {
 
     ctx.beginPath()
 
-    const c = size * 1.5
+    const c = size / 2
 
-    const gradient = ctx.createRadialGradient(c, c, size / 10, c, c, size)
+    const gradient = ctx.createRadialGradient(c, c, size / 20, c, c, size / 2)
 
     gradient.addColorStop(0, '#7e7e7e')
     gradient.addColorStop(0.9, '#5d5d5d')
@@ -89,7 +95,7 @@ export class Asteroid implements Drawable, Entity {
     }
 
     if (this.bitmap) {
-      const {id, size} = this
+      const {id} = this
       const {movers} = this.store
 
       const m = movers.get(id)
@@ -108,7 +114,7 @@ export class Asteroid implements Drawable, Entity {
       const x = xi + xShift
       const y = yi + yShift
 
-      ctx.drawImage(this.bitmap, x - size * 1.5, y - size * 1.5)
+      ctx.drawImage(this.bitmap, x, y)
 
       MoverBoxes.draw(ctx, m, camera)
     }

@@ -16,7 +16,7 @@ export class Asteroids implements GameObject {
 
     for (let i = 0; i < n; i++) {
       this.asteroids.push(
-        new Asteroid(store, 5 + Rand.next() * 40, [
+        new Asteroid(store, 10 + Rand.next() * 40, [
           -(d / 2) + Rand.next() * d,
           -(d / 2) + Rand.next() * d,
         ])

@@ -19,18 +19,19 @@ export class Camera {
     const {width, height, store} = this
 
     const {movers} = store
-
     const {id} = this.store.gameObjects.player
+    const m = movers.get(id)
+    if (!m) return
 
-    const p = movers.get(id)
-    if (!p) return
-
-    const [x, y] = p.position
+    const {
+      position: [x, y],
+      size: [pw, ph],
+    } = m
 
     const w2 = width / 2
     const h2 = height / 2
 
-    this.shift = [-x + w2, -y + h2]
+    this.shift = [-x + w2 - pw / 2, -y + h2 - ph / 2]
 
     this.points = [
       [x - w2, y - h2],

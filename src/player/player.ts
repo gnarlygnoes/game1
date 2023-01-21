@@ -68,15 +68,17 @@ export class Player implements GameObject, Entity {
       shift: [xShift, yShift],
     } = camera
 
+    const angle = V2.angle(m.direction)
+    const w2 = w / 2
+    const h2 = h / 2
+
     const x = xShift + xi
     const y = yShift + yi
 
-    const angle = V2.angle(m.direction)
-
     ctx.save()
-    ctx.translate(x + w / 2, y + h / 2)
+    ctx.translate(x + w2, y + h2)
     ctx.rotate(angle)
-    ctx.translate(-x - w / 2, -y - h / 2)
+    ctx.translate(-x - w2, -y - h2)
 
     ctx.drawImage(this.shipImage, x, y, w, h)
 

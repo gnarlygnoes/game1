@@ -49,7 +49,7 @@ export class Stars implements GameObject {
       v: [x, y],
       size,
       colour,
-    } of transformStars(this.stars, [0.5, 0.5], [xPos, -yPos], 0)) {
+    } of transformStars(this.stars, [0.5, 0.5], [xPos, -yPos])) {
       const currentX = x * pageWidth
       const currentY = y * pageHeight
 
