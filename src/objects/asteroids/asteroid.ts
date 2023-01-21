@@ -16,8 +16,6 @@ export class Asteroid implements Drawable, Entity {
 
   canvas = new OffscreenCanvas(this.size * 3, this.size * 3)
 
-  first = true
-
   bitmap: ImageBitmap | null = null
 
   constructor(public store: Store, public size = 20, pos: V2) {
@@ -43,7 +41,7 @@ export class Asteroid implements Drawable, Entity {
     }
   }
 
-  drawBitMap(): void {
+  drawToCanvasAndCreateBitMap(): void {
     const ctx = this.canvas.getContext(
       '2d'
     ) as OffscreenCanvasRenderingContext2D | null
@@ -82,22 +80,12 @@ export class Asteroid implements Drawable, Entity {
     ctx.stroke()
     ctx.fill()
 
-    ctx.font = '14px monospace'
-    ctx.fillStyle = 'yellow'
-    // ctx.lineWidth = 2
-    // ctx.strokeStyle = 'yellow'
-
-    ctx.fillText(this.id.toString(), first[0] + c / 2, first[1] + c / 2)
-    // ctx.strokeRect(m.position[0], m.position[1], size, size)
-
-    this.first = false
-
     this.bitmap = this.canvas.transferToImageBitmap()
   }
 
   drawCached(ctx: CanvasRenderingContext2D, camera: Camera): void {
     if (!this.bitmap) {
-      this.drawBitMap()
+      this.drawToCanvasAndCreateBitMap()
     }
 
     if (this.bitmap) {
