@@ -24,7 +24,7 @@ export function detectCollisions(
     const {id} = store.gameObjects.player
 
     if (intersecting.some(([a, b]) => a === id || b === id)) {
-      store.gameObjects.player.stopMovement()
+      store.gameObjects.player.reduceMovement()
     }
 
     // console.log(intersecting.map(([a, b]) => `(${a}, ${b})`).join(', '))

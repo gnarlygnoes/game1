@@ -6,6 +6,7 @@
   position: absolute;
   bottom: 0;
   margin: auto;
+  user-select: none;
 }
 
 .Converse-showButton {
@@ -21,6 +22,6 @@
 }
 
 .Converse-options {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }

@@ -15,10 +15,10 @@ type UsedKeys =
   | unknown
 
 export class Controls {
-  forward = false
+  // 0 - 1
+  thrust = 0
   back = false
-  left = false
-  right = false
+  rotation = 0
 
   constructor(private store: Store) {
     new TouchControls(this)
@@ -33,7 +33,7 @@ export class Controls {
           break
         case 'w':
         case 'ArrowUp':
-          this.forward = true
+          this.thrust = 0.9
           break
         case 's':
         case 'ArrowDown':
@@ -41,11 +41,11 @@ export class Controls {
           break
         case 'a':
         case 'ArrowLeft':
-          this.left = true
+          this.rotation = -4
           break
         case 'd':
         case 'ArrowRight':
-          this.right = true
+          this.rotation = 4
           break
       }
     })
@@ -59,7 +59,7 @@ export class Controls {
           break
         case 'w':
         case 'ArrowUp':
-          this.forward = false
+          this.thrust = 0
           break
         case 's':
         case 'ArrowDown':
@@ -67,11 +67,11 @@ export class Controls {
           break
         case 'a':
         case 'ArrowLeft':
-          this.left = false
+          this.rotation = 0
           break
         case 'd':
         case 'ArrowRight':
-          this.right = false
+          this.rotation = 0
           break
       }
     })

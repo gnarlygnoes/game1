@@ -27,7 +27,7 @@ export class Player implements GameObject, Entity {
 
   update(timeSince: number): void {
     const {
-      controls: {forward, back, left, right},
+      controls: {thrust, rotation, back},
     } = this.store
 
     const {movers} = this.store
@@ -36,16 +36,11 @@ export class Player implements GameObject, Entity {
 
     if (!m) return
 
-    if (left) {
-      m.rotation = -4
-    } else if (right) {
-      m.rotation = 4
-    } else {
-      m.rotation = 0
-    }
-    if (forward) {
-      this.thruster.update(timeSince)
-      m.thrust = V2.scale(m.direction, 0.9)
+    m.rotation = rotation
+
+    if (thrust > 0) {
+      this.thruster.update(timeSince, thrust)
+      m.thrust = V2.scale(m.direction, thrust)
     } else {
       m.thrust = V2.empty
     }
@@ -82,7 +77,7 @@ export class Player implements GameObject, Entity {
 
     ctx.drawImage(this.shipImage, x, y, w, h)
 
-    if (this.store.controls.forward) this.thruster.draw(ctx, camera)
+    if (this.store.controls.thrust > 0) this.thruster.draw(ctx, camera)
 
     ctx.restore()
 
@@ -100,32 +95,32 @@ export class Player implements GameObject, Entity {
     m.velocity = V2.empty
   }
 
-  stopMovement() {
+  reduceMovement() {
     const {movers} = this.store
 
     const m = movers.get(this.id)
 
     if (!m) return
 
-    m.velocity = V2.empty
+    m.velocity = V2.scale(m.velocity, 0.85)
   }
 }
 
-// TODO: Try get this working without the save and restore.
-// (Apparently save and restore is slow)
-function slowDrawImage(
-  ctx: CanvasRenderingContext2D,
-  img: HTMLImageElement,
-  x: number,
-  y: number,
-  w: number,
-  h: number,
-  angle = 0
-) {
-  ctx.save()
-  ctx.translate(x + w / 2, y + h / 2)
-  ctx.rotate(angle)
-  ctx.translate(-x - w / 2, -y - h / 2)
-  ctx.drawImage(img, x, y, w, h)
-  ctx.restore()
-}
+// // TODO: Try get this working without the save and restore.
+// // (Apparently save and restore is slow)
+// function slowDrawImage(
+//   ctx: CanvasRenderingContext2D,
+//   img: HTMLImageElement,
+//   x: number,
+//   y: number,
+//   w: number,
+//   h: number,
+//   angle = 0
+// ) {
+//   ctx.save()
+//   ctx.translate(x + w / 2, y + h / 2)
+//   ctx.rotate(angle)
+//   ctx.translate(-x - w / 2, -y - h / 2)
+//   ctx.drawImage(img, x, y, w, h)
+//   ctx.restore()
+// }

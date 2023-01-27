@@ -1,4 +1,3 @@
-import {GameObject} from '../../data-types/data-types'
 import {V2} from '../../data-types/v2'
 import {Random} from '../../misc/random'
 import {Camera} from '../../camera'
@@ -6,8 +5,10 @@ import {Mover} from '../../store/mover/mover'
 
 const numParticles = 40
 
-export class Thruster implements GameObject {
+export class Thruster {
   particles: {colour: string; position: V2}[] = []
+
+  thrust = 1
 
   constructor(
     public pos: V2,
@@ -29,7 +30,9 @@ export class Thruster implements GameObject {
     }
   }
 
-  update(timeSince: number) {
+  update(timeSince: number, thrust: number) {
+    this.thrust = thrust
+
     for (const p of this.particles) {
       p.position[1] = (p.position[1] + timeSince * 0.05) % this.height
     }
@@ -41,6 +44,7 @@ export class Thruster implements GameObject {
         position: [px, py],
       },
       pos: [lx, ly],
+      thrust,
     } = this
 
     const {
@@ -48,13 +52,21 @@ export class Thruster implements GameObject {
     } = camera
 
     for (const p of this.particles) {
-      const [x, y] = p.position
+      let [x, y] = p.position
+
+      // x *= thrust
+      y *= thrust
 
       ctx.fillStyle = `rgba(256, 256, 150, ${1 / (0.5 * y)})`
 
       let xPos = y > 4 ? x / (y / 4) : x
 
-      ctx.fillRect(px + xShift + lx + xPos, py + yShift + ly + y, 2, 2)
+      ctx.fillRect(
+        px + xShift + lx + xPos,
+        py + yShift + ly + y,
+        2 * (0.1 + thrust),
+        2 * (0.1 + thrust)
+      )
     }
   }
 }

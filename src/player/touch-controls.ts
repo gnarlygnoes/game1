@@ -4,11 +4,6 @@ import {V2, V2RO} from '../data-types/v2'
 export class TouchControls {
   startPos: V2RO = V2.empty
 
-  // Decimals from 0-1
-  forward = 0
-  left = 0
-  right = 0
-
   constructor(private controls: Controls) {
     addEventListener('pointerdown', e => {
       if (e.currentTarget instanceof Window) {
@@ -31,23 +26,20 @@ export class TouchControls {
       const dx = clientX - x
       const dy = clientY - y
 
-      // console.log(dx, dy)
+      const scale = Math.min(Math.abs(dx) / 20, 4)
 
       if (dx < -10) {
-        this.controls.left = true
-        this.controls.right = false
+        this.controls.rotation = -scale
       } else if (dx > 10) {
-        this.controls.right = true
-        this.controls.left = false
+        this.controls.rotation = scale
       } else {
-        this.controls.left = false
-        this.controls.right = false
+        this.controls.rotation = 0
       }
 
       if (dy < -10) {
-        this.controls.forward = true
+        this.controls.thrust = Math.min(Math.abs(dy) / 50, 0.9)
       } else {
-        this.controls.forward = false
+        this.controls.thrust = 0
       }
     }
   }
@@ -55,8 +47,7 @@ export class TouchControls {
   onUp = () => {
     removeEventListener('pointermove', this.onMove)
 
-    this.controls.left = false
-    this.controls.right = false
-    this.controls.forward = false
+    this.controls.rotation = 0
+    this.controls.thrust = 0
   }
 }
