@@ -1,5 +1,6 @@
 import {Store} from '../store/store'
 import {MoverBoxes} from '../stats/boxes'
+import {TouchControls} from './touch-controls'
 
 type UsedKeys =
   | 'ArrowUp'
@@ -20,6 +21,8 @@ export class Controls {
   right = false
 
   constructor(private store: Store) {
+    new TouchControls(this)
+
     addEventListener('keydown', e => {
       switch (e.key as UsedKeys) {
         case 'p':
@@ -51,8 +54,6 @@ export class Controls {
       switch (e.key as UsedKeys) {
         case 'r':
           this.store.gameObjects.player.resetPosition()
-          // this.store.gameObjects.player.m.position = V2.empty
-          // this.store.gameObjects.player.m.velocity = V2.empty
           break
         case 'p':
           break
