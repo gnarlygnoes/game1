@@ -40,7 +40,7 @@ export class Player {
 
     if (thrust > 0) {
       this.thruster.update(timeSince, thrust)
-      m.thrust = V2.scale(m.direction, thrust)
+      m.thrust = V2.scale(m.direction, thrust / 1.5)
     } else {
       m.thrust = V2.empty
     }

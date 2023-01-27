@@ -29,8 +29,8 @@ export class TouchControls2 {
 
       const magnitude = V2.magnitude(dx, dy)
 
-      if (magnitude > 10) {
-        this.controls.thrust = Math.min(0.9, (magnitude - 10) / 50)
+      if (magnitude > 15) {
+        this.controls.thrust = Math.min(0.9, (magnitude - 15) / 50)
       } else {
         this.controls.thrust = 0
       }
@@ -39,7 +39,7 @@ export class TouchControls2 {
 
       // this.controls.rotation = angle
 
-      if (magnitude > 10) {
+      if (magnitude > 5) {
         this.store.gameObjects.player.m.direction = V2.normalise([dx, dy])
       }
 
