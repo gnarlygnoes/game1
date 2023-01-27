@@ -1,12 +1,12 @@
 import {Mover} from '../store/mover/mover'
-import {Entity, GameObject} from '../data-types/data-types'
 import {Store} from '../store/store'
 import {V2} from '../data-types/v2'
 import {Thruster} from '../ships/parts/thruster'
 import {Camera} from '../camera'
 import {MoverBoxes} from '../stats/boxes'
+import {assert} from '../misc/util'
 
-export class Player implements GameObject, Entity {
+export class Player {
   id: number
 
   shipImage = document.createElement('img')
@@ -50,8 +50,7 @@ export class Player implements GameObject, Entity {
   }
 
   draw(ctx: CanvasRenderingContext2D, camera: Camera): void {
-    const {movers} = this.store
-    const m = movers.get(this.id)
+    const {m} = this
     if (!m) return
 
     const {
@@ -96,13 +95,21 @@ export class Player implements GameObject, Entity {
   }
 
   reduceMovement() {
-    const {movers} = this.store
-
-    const m = movers.get(this.id)
+    const {m} = this
 
     if (!m) return
 
     m.velocity = V2.scale(m.velocity, 0.85)
+  }
+
+  get m(): Mover {
+    const {movers} = this.store
+
+    const m = movers.get(this.id)
+
+    assert(m)
+
+    return m
   }
 }
 

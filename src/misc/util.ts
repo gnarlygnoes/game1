@@ -1,4 +1,4 @@
-export function assert(condition: boolean, msg?: string): asserts condition {
+export function assert(condition: unknown, msg?: string): asserts condition {
   if (!__DEV__) return
 
   if (!condition) {

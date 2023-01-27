@@ -1,6 +1,7 @@
 import {Store} from '../store/store'
 import {MoverBoxes} from '../stats/boxes'
 import {TouchControls} from './touch-controls'
+import {TouchControls2} from './touch-controls2'
 
 type UsedKeys =
   | 'ArrowUp'
@@ -21,7 +22,8 @@ export class Controls {
   rotation = 0
 
   constructor(private store: Store) {
-    new TouchControls(this)
+    // new TouchControls(this)
+    new TouchControls2(store, this)
 
     addEventListener('keydown', e => {
       switch (e.key as UsedKeys) {
