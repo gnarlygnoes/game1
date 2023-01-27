@@ -18,3 +18,18 @@ export function timeEnd(name: string): void {
     performance.measure(name, `${name} start`, `${name} end`)
   }
 }
+
+export function makeCanvas(
+  width: number,
+  height: number
+): {canvas: HTMLCanvasElement; ctx: CanvasRenderingContext2D} {
+  const canvas = document.createElement('canvas')
+  canvas.width = width
+  canvas.height = height
+
+  const ctx = canvas.getContext('2d')
+
+  assert(ctx !== null)
+
+  return {canvas, ctx}
+}

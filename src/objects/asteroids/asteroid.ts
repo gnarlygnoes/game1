@@ -5,6 +5,7 @@ import {Camera} from '../../camera'
 import {Store} from '../../store/store'
 import {Mover} from '../../store/mover/mover'
 import {MoverBoxes} from '../../stats/boxes'
+import {makeCanvas} from '../../misc/util'
 
 const numPoints = 13
 const useCache = true
@@ -14,12 +15,17 @@ export class Asteroid implements Drawable, Entity {
 
   id: number
 
-  canvas = new OffscreenCanvas(this.size * 1.2, this.size * 1.2)
-  ctx: OffscreenCanvasRenderingContext2D | null
+  canvas: HTMLCanvasElement
+  ctx: CanvasRenderingContext2D
 
-  bitmap: ImageBitmap | null = null
+  cached = false
 
   constructor(public store: Store, public size = 20, pos: V2) {
+    const {ctx, canvas} = makeCanvas(size * 1.2, size * 1.2)
+
+    this.ctx = ctx
+    this.canvas = canvas
+
     const {movers} = store
 
     const m = new Mover(pos, [size, size])
@@ -27,10 +33,6 @@ export class Asteroid implements Drawable, Entity {
     movers.add(m)
 
     this.generatePoints()
-
-    this.ctx = this.canvas.getContext(
-      '2d'
-    ) as OffscreenCanvasRenderingContext2D | null
   }
 
   generatePoints() {
@@ -82,15 +84,15 @@ export class Asteroid implements Drawable, Entity {
     ctx.stroke()
     ctx.fill()
 
-    this.bitmap = this.canvas.transferToImageBitmap()
+    this.cached = true
   }
 
   drawCached(ctx: CanvasRenderingContext2D, camera: Camera, m: Mover): void {
-    if (!this.bitmap) {
+    if (!this.cached) {
       this.drawToCanvasAndCreateBitMap()
     }
 
-    if (this.bitmap) {
+    if (this.cached) {
       const {
         position: [xi, yi],
       } = m
@@ -104,7 +106,7 @@ export class Asteroid implements Drawable, Entity {
       const x = xi + xShift
       const y = yi + yShift
 
-      ctx.drawImage(this.bitmap, x, y)
+      ctx.drawImage(this.canvas, x, y)
 
       MoverBoxes.draw(ctx, m, camera)
     }
