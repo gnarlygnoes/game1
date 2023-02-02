@@ -25,6 +25,10 @@ export class Movers implements Updatable {
   get(id: number): Mover | undefined {
     return this.map.get(id)
   }
+
+  delete(id: number) {
+    this.map.delete(id)
+  }
 }
 
 let nextId = 0

@@ -5,6 +5,7 @@ import {Thruster} from '../ships/parts/thruster'
 import {Camera} from '../camera'
 import {MoverBoxes} from '../stats/boxes'
 import {assert} from '../misc/util'
+import {Projectile} from '../objects/projectile'
 
 export class Player {
   id: number
@@ -23,6 +24,12 @@ export class Player {
     movers.add(m)
 
     this.thruster = new Thruster(V2.add(m.position, [19, 38]), 8, 10, m)
+  }
+
+  shoot() {
+    const p = new Projectile(this.store)
+
+    this.store.gameObjects.objects.set(p.id, p)
   }
 
   update(timeSince: number): void {

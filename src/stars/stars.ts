@@ -3,8 +3,11 @@ import {generateStars, transformStars} from './star-data'
 import {GameObject} from '../data-types/data-types'
 import {Camera} from '../camera'
 import {Mover} from '../store/mover/mover'
+import {nextEntityId} from '../store/mover/movers'
 
 export class Stars implements GameObject {
+  id = nextEntityId()
+
   stars = generateStars(100)
 
   constructor(public store: Store) {}

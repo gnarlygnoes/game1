@@ -3,8 +3,11 @@ import {Camera} from '../../camera'
 import {Asteroid} from './asteroid'
 import {Rand} from '../../misc/random'
 import {Store} from '../../store/store'
+import {nextEntityId} from '../../store/mover/movers'
 
 export class Asteroids implements GameObject {
+  id = nextEntityId()
+
   asteroids: Asteroid[] = []
 
   constructor(public store: Store) {

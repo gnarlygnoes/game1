@@ -7,26 +7,35 @@ import {Camera} from '../camera'
 import {Asteroids} from '../objects/asteroids/asteroids'
 
 export class GameObjects implements Updatable, Drawable {
-  objects: GameObject[] = []
+  objects: Map<number, GameObject> = new Map()
 
   player = new Player(this.store)
   stats = new Stats(this.store)
 
   constructor(public store: Store) {
-    this.objects.push(new Stars(store), new Asteroids(store), this.stats)
+    const stars = new Stars(store)
+    const asteroids = new Asteroids(store)
+
+    this.objects.set(stars.id, stars)
+    this.objects.set(asteroids.id, asteroids)
+    this.objects.set(this.stats.id, this.stats)
   }
 
   update(timeSince: number, camera: Camera) {
     this.store.movers.update(timeSince, camera)
 
-    for (const o of this.objects) {
+    for (const o of this.objects.values()) {
       o.update(timeSince, camera)
     }
   }
 
   draw(context: CanvasRenderingContext2D, camera: Camera): void {
-    for (const o of this.objects) {
+    for (const o of this.objects.values()) {
       o.draw(context, camera)
     }
+  }
+
+  delete(id: number) {
+    //
   }
 }

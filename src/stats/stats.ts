@@ -1,8 +1,11 @@
 import {Store} from '../store/store'
 import {Drawable, Updatable} from '../data-types/data-types'
 import {Camera} from '../camera'
+import {nextEntityId} from '../store/mover/movers'
 
 export class Stats implements Drawable, Updatable {
+  id = nextEntityId()
+
   fps: number[] = []
   private frameDurations: number[] = []
 

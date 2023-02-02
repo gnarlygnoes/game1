@@ -49,6 +49,9 @@ export class Controls {
         case 'ArrowRight':
           this.rotation = 4
           break
+        case ' ':
+          this.store.gameObjects.player.shoot()
+          break
       }
     })
 
