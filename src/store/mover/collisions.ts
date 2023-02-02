@@ -2,8 +2,10 @@ import {Mover} from './mover'
 import {V2, V2RO} from '../../data-types/v2'
 import {assert, time, timeEnd} from '../../misc/util'
 import {Store} from '../store'
+import {Projectile} from '../../objects/projectile'
+import {Asteroid} from '../../objects/asteroids/asteroid'
 
-const INCREMENT_SIZE = 10
+const INCREMENT_SIZE = 30
 
 export function detectCollisions(
   store: Store,
@@ -20,14 +22,26 @@ export function detectCollisions(
 
   timeEnd(detectCollisions.name)
 
-  if (intersecting.length > 0) {
-    const {id} = store.gameObjects.player
+  const {gameObjects} = store
+  const {id} = gameObjects.player
 
-    if (intersecting.some(([a, b]) => a === id || b === id)) {
-      store.gameObjects.player.reduceMovement()
+  for (const [idA, idB] of intersecting) {
+    if (idA === id || idB === id) {
+      gameObjects.player.reduceMovement()
     }
 
-    // console.log(intersecting.map(([a, b]) => `(${a}, ${b})`).join(', '))
+    const a = gameObjects.objects.get(idA)
+    const b = gameObjects.objects.get(idB)
+
+    if (a && b) {
+      if (a instanceof Projectile) {
+        gameObjects.objects.delete(idB)
+        movers.delete(idB)
+      } else if (b instanceof Projectile) {
+        gameObjects.objects.delete(idA)
+        movers.delete(idA)
+      }
+    }
   }
 }
 

@@ -169,4 +169,6 @@ export class Asteroid implements Drawable, Entity {
     ctx.stroke()
     ctx.fill()
   }
+
+  update() {}
 }

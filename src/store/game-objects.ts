@@ -4,7 +4,8 @@ import {Store} from './store'
 import {Player} from '../player/player'
 import {Stats} from '../stats/stats'
 import {Camera} from '../camera'
-import {Asteroids} from '../objects/asteroids/asteroids'
+import {Rand} from '../misc/random'
+import {Asteroid} from '../objects/asteroids/asteroid'
 
 export class GameObjects implements Updatable, Drawable {
   objects: Map<number, GameObject> = new Map()
@@ -14,11 +15,26 @@ export class GameObjects implements Updatable, Drawable {
 
   constructor(public store: Store) {
     const stars = new Stars(store)
-    const asteroids = new Asteroids(store)
 
     this.objects.set(stars.id, stars)
-    this.objects.set(asteroids.id, asteroids)
     this.objects.set(this.stats.id, this.stats)
+
+    // new Asteroids(store)
+
+    const d = 9000
+    const n = 2_000
+
+    // const d = 300
+    // const n = 6
+
+    for (let i = 0; i < n; i++) {
+      const a = new Asteroid(store, 10 + Rand.next() * 40, [
+        -(d / 2) + Rand.next() * d,
+        -(d / 2) + Rand.next() * d,
+      ])
+
+      this.objects.set(a.id, a)
+    }
   }
 
   update(timeSince: number, camera: Camera) {

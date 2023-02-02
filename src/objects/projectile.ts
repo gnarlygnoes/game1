@@ -46,7 +46,6 @@ export class Projectile {
     const m = this.store.movers.get(this.id)
     if (!m) return
 
-    console.log(m.visible)
     if (!m.visible) {
       this.store.gameObjects.objects.delete(m.id)
       this.store.movers.delete(m.id)
