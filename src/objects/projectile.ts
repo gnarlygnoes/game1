@@ -5,6 +5,8 @@ import {Camera} from '../camera'
 import {GoType} from '../data-types/data-types'
 import {GO} from '../store/game-objects'
 
+const size = 4
+
 export class Projectile {
   id: number
 
@@ -20,7 +22,7 @@ export class Projectile {
 
     const m = new Mover(
       V2.add(playerMover.position, V2.scale(playerMover.size, 0.5)),
-      [5, 5],
+      [size, size],
       playerMover.direction,
       V2.add(playerMover.velocity, V2.scale(playerMover.direction, 10)),
       V2.empty,
@@ -45,7 +47,7 @@ export class Projectile {
 
     ctx.fillStyle = 'red'
     ctx.beginPath()
-    ctx.arc(x + xShift, y + yShift, 4, 0, 2 * Math.PI)
+    ctx.arc(x + xShift, y + yShift, size, 0, 2 * Math.PI)
     ctx.fill()
   }
 
@@ -61,6 +63,7 @@ export class Projectile {
   hit(other: GO) {
     if (other.type === GoType.object) {
       this.store.gameObjects.delete(other.id)
+      this.store.gameObjects.delete(this.id)
     }
   }
 }

@@ -19,9 +19,10 @@ export class GameObjects {
     const stars = new Stars(store)
 
     this.objects.set(stars.id, stars)
-    this.objects.set(this.stats.id, this.stats)
 
     initAsteroids(store, this.objects)
+
+    this.objects.set(this.stats.id, this.stats)
   }
 
   update(timeSince: number, camera: Camera) {

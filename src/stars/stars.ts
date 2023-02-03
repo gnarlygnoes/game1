@@ -3,7 +3,7 @@ import {generateStars, transformStars} from './star-data'
 import {GoType} from '../data-types/data-types'
 import {Camera} from '../camera'
 import {Mover} from '../store/mover/mover'
-import {nextEntityId} from '../store/mover/movers'
+import {nextEntityId} from '../store/mover/mover-ids'
 
 export class Stars {
   id = nextEntityId()

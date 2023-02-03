@@ -24,7 +24,10 @@ export class Hud extends $Component<{uiStore: UiStore; store: Store}> {
     return null
   }
 
-  onClickShoot = () => {
+  onClickShoot = (e: MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+
     this.props.store.gameObjects.player.shoot()
   }
 

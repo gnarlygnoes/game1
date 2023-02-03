@@ -6,8 +6,6 @@ import {
   fillXBuckets,
   getAllPairs,
   getAllPairsAsStrings,
-  numDigits,
-  pairToFloat,
 } from './collisions'
 import {Store} from '../store'
 
@@ -139,24 +137,24 @@ describe(bucketIntersection.name, () => {
   })
 })
 
-describe(numDigits.name, () => {
-  test('124', () => {
-    expect(numDigits(124)).toEqual(3)
-  })
-
-  test('0.234', () => {
-    expect(numDigits(0.234)).toEqual(3)
-  })
-})
-
-describe(pairToFloat.name, () => {
-  test('12, 24', () => {
-    expect(pairToFloat(12, 24)).toEqual(12.24)
-  })
-})
-
+// describe(numDigits.name, () => {
+//   test('124', () => {
+//     expect(numDigits(124)).toEqual(3)
+//   })
 //
+//   test('0.234', () => {
+//     expect(numDigits(0.234)).toEqual(3)
+//   })
+// })
 
+// describe(pairToFloat.name, () => {
+//   test('12, 24', () => {
+//     expect(pairToFloat(12, 24)).toEqual(12.24)
+//   })
+// })
 //
-
+// //
 //
+// //
+//
+// //

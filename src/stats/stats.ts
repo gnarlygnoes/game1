@@ -1,7 +1,7 @@
 import {Store} from '../store/store'
 import {Drawable, GoType, Updatable} from '../data-types/data-types'
 import {Camera} from '../camera'
-import {nextEntityId} from '../store/mover/movers'
+import {nextEntityId} from '../store/mover/mover-ids'
 
 export class Stats implements Drawable, Updatable {
   id = nextEntityId()

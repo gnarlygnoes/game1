@@ -1,6 +1,6 @@
 import {V2, V2RO} from '../../data-types/v2'
 import {Camera} from '../../camera'
-import {nextEntityId} from './movers'
+import {nextEntityId} from './mover-ids'
 
 export class Mover {
   id = nextEntityId()
@@ -32,10 +32,13 @@ export function updateMover(mover: Mover, timeSince: number, camera: Camera) {
     mover.direction = V2.normalise(V2.rotate(mover.direction, angle))
   }
 
-  mover.velocity = V2.limitMagnitude(
-    V2.add(mover.velocity, V2.scale(mover.thrust, timeSince / 100)),
-    mover.maxVelocity
-  )
+  if (mover.thrust[0] !== 0 && mover.thrust[1] !== 0) {
+    mover.velocity = V2.limitMagnitude(
+      V2.add(mover.velocity, V2.scale(mover.thrust, timeSince / 100)),
+      mover.maxVelocity
+    )
+  }
+
   mover.position = V2.add(mover.position, mover.velocity)
 
   mover.visible = isVisible(mover.position, mover.size, camera)

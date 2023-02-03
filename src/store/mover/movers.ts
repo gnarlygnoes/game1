@@ -30,13 +30,3 @@ export class Movers implements Updatable {
     this.map.delete(id)
   }
 }
-
-let nextId = 0
-
-export function nextEntityId(): number {
-  const id = nextId
-
-  nextId++
-
-  return id
-}

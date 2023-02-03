@@ -22,7 +22,7 @@ export function detectCollisions(
   timeEnd(detectCollisions.name)
 
   const {gameObjects} = store
-  const {id} = gameObjects.player
+  // const {id} = gameObjects.player
 
   for (const [idA, idB] of intersecting) {
     const a = gameObjects.objects.get(idA)
@@ -165,7 +165,7 @@ export function getAllPairs(ids: number[]): V2[] {
   return pairs
 }
 
-export function getAllPairsAsStrings(ids: number[]) {
+export function getAllPairsAsStrings(ids: number[]): string[] {
   const pairs: string[] = []
 
   for (let i = 0; i < ids.length; i++) {
@@ -180,15 +180,15 @@ export function getAllPairsAsStrings(ids: number[]) {
   return pairs
 }
 
-export function numDigits(n: number): number {
-  return (Math.log10((n ^ (n >> 31)) - (n >> 31)) | 0) + 1
-}
+// export function numDigits(n: number): number {
+//   return (Math.log10((n ^ (n >> 31)) - (n >> 31)) | 0) + 1
+// }
 
-export function pairToFloat(a: number, b: number) {
-  const n = 10 ** numDigits(b)
-
-  return a + b / n
-}
+// export function pairToFloat(a: number, b: number) {
+//   const n = 10 ** numDigits(b)
+//
+//   return a + b / n
+// }
 
 // export function floatToPair(f: number) {}
 
