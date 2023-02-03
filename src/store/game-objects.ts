@@ -1,4 +1,3 @@
-import {Drawable, Updatable} from '../data-types/data-types'
 import {Stars} from '../stars/stars'
 import {Store} from './store'
 import {Player} from '../player/player'
@@ -10,7 +9,7 @@ import {Projectile} from '../objects/projectile'
 
 export type GO = Player | Stats | Stars | Asteroid | Projectile
 
-export class GameObjects implements Updatable, Drawable {
+export class GameObjects {
   objects: Map<number, GO> = new Map()
 
   player = new Player(this.store)

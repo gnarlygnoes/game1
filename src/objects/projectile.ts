@@ -22,7 +22,10 @@ export class Projectile {
       V2.add(playerMover.position, V2.scale(playerMover.size, 0.5)),
       [5, 5],
       playerMover.direction,
-      V2.add(playerMover.velocity, V2.scale(playerMover.direction, 7))
+      V2.add(playerMover.velocity, V2.scale(playerMover.direction, 10)),
+      V2.empty,
+      0,
+      100
     )
     this.id = m.id
     movers.add(m)

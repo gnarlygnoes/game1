@@ -35,15 +35,9 @@ export class TouchControls2 {
         this.controls.thrust = 0
       }
 
-      // const angle = V2.angle([dx, dy])
-
-      // this.controls.rotation = angle
-
       if (magnitude > 5) {
         this.store.gameObjects.player.m.direction = V2.normalise([dx, dy])
       }
-
-      // console.log(angle, [dx, dy])
     }
   }
 

@@ -17,7 +17,7 @@ export class Converse extends $Component {
 
   $prompt: Prompt[] = [
     {
-      npcText: '0: Are you feeling lucky punk?',
+      npcText: '0: Are you feeling lucky?',
       playerResponses: [
         {text: 'yes', next: 1},
         {text: 'no', next: 1},
@@ -25,7 +25,7 @@ export class Converse extends $Component {
       ],
     },
     {
-      npcText: 'That will do little good for you',
+      npcText: 'That will do you little good',
       playerResponses: [
         {text: 'yes', next: 0},
         {text: 'no', next: 0},
@@ -41,7 +41,7 @@ export class Converse extends $Component {
       className: 'Converse',
       children: [
         Button({
-          children: [$showingConverse ? 'Hide Converse' : 'Show Converse'],
+          children: [$showingConverse ? 'Hide hud' : 'Show hud'],
           className: 'Converse-showButton',
           onclick: this.onClickShow,
         }),

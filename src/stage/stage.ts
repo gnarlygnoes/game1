@@ -1,24 +1,21 @@
 import './stage.css'
 import {$Component, c, Canvas, createRef} from '../../fiend-ui/src'
 import {Store} from '../store/store'
+import {UiStore} from '../ui-store'
 
-export class Stage extends $Component {
+export class Stage extends $Component<{
+  uiStore: UiStore
+  store: Store
+}> {
   ref = createRef<HTMLCanvasElement>()
   context: CanvasRenderingContext2D | null = null
-
-  $size = {
-    width: window.innerWidth,
-    height: window.innerHeight,
-  }
-
-  store = new Store(this.$size.width, this.$size.height)
 
   timeOfLastFrame = Date.now()
 
   render() {
     const {
       $size: {width, height},
-    } = this
+    } = this.props.uiStore
 
     return Canvas({
       ref: this.ref,
@@ -29,18 +26,17 @@ export class Stage extends $Component {
   }
 
   gameLoop = () => {
+    const {context} = this
+    if (!context) return
+
     const now = Date.now()
     const {
       gameObjects,
       gameObjects: {stats},
       camera,
-    } = this.store
+    } = this.props.store
 
     const timeSince = now - this.timeOfLastFrame
-
-    const {context} = this
-
-    if (!context) return
 
     gameObjects.update(timeSince, camera)
     gameObjects.player.update(timeSince)
@@ -66,12 +62,18 @@ export class Stage extends $Component {
 
     addEventListener('resize', () => {
       const {innerWidth: w, innerHeight: h} = window
-      this.$size = {
+
+      const {
+        uiStore,
+        store: {camera},
+      } = this.props
+
+      uiStore.$size = {
         width: w,
         height: h,
       }
-      this.store.camera.width = w
-      this.store.camera.height = h
+      camera.width = w
+      camera.height = h
     })
   }
 }

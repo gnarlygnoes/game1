@@ -105,14 +105,6 @@ export class Player {
     m.velocity = V2.empty
   }
 
-  // reduceMovement() {
-  //   const {m} = this
-  //
-  //   if (!m) return
-  //
-  //   m.velocity = V2.scale(m.velocity, 0.85)
-  // }
-
   get m(): Mover {
     const {movers} = this.store
 
@@ -125,22 +117,10 @@ export class Player {
 
   startShooting() {
     this.shooting = true
-
-    // this.shootLoop()
   }
   stopShooting() {
     this.shooting = false
   }
-
-  // shootLoop = () => {
-  //   if (!this.shooting) return
-  //
-  //   this.shoot()
-  //
-  //   setTimeout(() => {
-  //     this.shootLoop()
-  //   }, 60)
-  // }
 
   lastShot = 0
   readonly timeBetweenShots = 60
@@ -153,22 +133,3 @@ export class Player {
     this.lastShot = 0
   }
 }
-
-// // TODO: Try get this working without the save and restore.
-// // (Apparently save and restore is slow)
-// function slowDrawImage(
-//   ctx: CanvasRenderingContext2D,
-//   img: HTMLImageElement,
-//   x: number,
-//   y: number,
-//   w: number,
-//   h: number,
-//   angle = 0
-// ) {
-//   ctx.save()
-//   ctx.translate(x + w / 2, y + h / 2)
-//   ctx.rotate(angle)
-//   ctx.translate(-x - w / 2, -y - h / 2)
-//   ctx.drawImage(img, x, y, w, h)
-//   ctx.restore()
-// }

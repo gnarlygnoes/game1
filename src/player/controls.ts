@@ -21,7 +21,6 @@ export class Controls {
   rotation = 0
 
   constructor(private store: Store) {
-    // new TouchControls(this)
     new TouchControls2(store, this)
 
     addEventListener('keydown', e => {
