@@ -5,7 +5,7 @@ import {Store} from '../store'
 import {Projectile} from '../../objects/projectile'
 import {Asteroid} from '../../objects/asteroids/asteroid'
 
-const INCREMENT_SIZE = 30
+const INCREMENT_SIZE = 10
 
 export function detectCollisions(
   store: Store,
@@ -40,6 +40,9 @@ export function detectCollisions(
       } else if (b instanceof Projectile) {
         gameObjects.objects.delete(idA)
         movers.delete(idA)
+      } else if (a instanceof Asteroid && b instanceof Asteroid) {
+        gameObjects.objects.delete(idA)
+        movers.delete(idA)
       }
     }
   }
@@ -65,7 +68,10 @@ export function fillXBuckets(
     position,
     size: [w],
     id,
+    visible,
   } of movers.values()) {
+    if (!visible) continue
+
     const x = position[0] + pixelShift
 
     for (let c = x; c < x + w; c += incrementSize) {
@@ -101,7 +107,9 @@ export function fillYBuckets(
   min += pixelShift
   max += pixelShift
 
-  for (const {position, size, id} of movers.values()) {
+  for (const {position, size, id, visible} of movers.values()) {
+    if (!visible) continue
+
     const h = size[1]
     const y = position[1] + pixelShift
 

@@ -22,7 +22,7 @@ export class GameObjects implements Updatable, Drawable {
     // new Asteroids(store)
 
     const d = 9000
-    const n = 2_000
+    const n = 6_000
 
     // const d = 300
     // const n = 6
