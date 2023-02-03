@@ -1,10 +1,12 @@
 import {Store} from '../store/store'
-import {Drawable, Updatable} from '../data-types/data-types'
+import {Drawable, GoType, Updatable} from '../data-types/data-types'
 import {Camera} from '../camera'
 import {nextEntityId} from '../store/mover/movers'
 
 export class Stats implements Drawable, Updatable {
   id = nextEntityId()
+
+  type = GoType.visual as const
 
   fps: number[] = []
   private frameDurations: number[] = []

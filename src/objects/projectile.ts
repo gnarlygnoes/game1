@@ -2,9 +2,13 @@ import {Store} from '../store/store'
 import {V2} from '../data-types/v2'
 import {Mover} from '../store/mover/mover'
 import {Camera} from '../camera'
+import {GoType} from '../data-types/data-types'
+import {GO} from '../store/game-objects'
 
 export class Projectile {
   id: number
+
+  type = GoType.weapon as const
 
   constructor(public store: Store) {
     const {
@@ -18,7 +22,7 @@ export class Projectile {
       V2.add(playerMover.position, V2.scale(playerMover.size, 0.5)),
       [5, 5],
       playerMover.direction,
-      V2.add(playerMover.velocity, V2.scale(playerMover.direction, 5))
+      V2.add(playerMover.velocity, V2.scale(playerMover.direction, 7))
     )
     this.id = m.id
     movers.add(m)
@@ -38,17 +42,22 @@ export class Projectile {
 
     ctx.fillStyle = 'red'
     ctx.beginPath()
-    ctx.arc(x + xShift, y + yShift, 5, 0, 2 * Math.PI)
+    ctx.arc(x + xShift, y + yShift, 4, 0, 2 * Math.PI)
     ctx.fill()
   }
 
-  update() {
+  update(timeSince: number, camera: Camera): void {
     const m = this.store.movers.get(this.id)
     if (!m) return
 
     if (!m.visible) {
-      this.store.gameObjects.objects.delete(m.id)
-      this.store.movers.delete(m.id)
+      this.store.gameObjects.delete(this.id)
+    }
+  }
+
+  hit(other: GO) {
+    if (other.type === GoType.object) {
+      this.store.gameObjects.delete(other.id)
     }
   }
 }

@@ -2,8 +2,7 @@ import {Mover} from './mover'
 import {V2, V2RO} from '../../data-types/v2'
 import {assert, time, timeEnd} from '../../misc/util'
 import {Store} from '../store'
-import {Projectile} from '../../objects/projectile'
-import {Asteroid} from '../../objects/asteroids/asteroid'
+import {GoType} from '../../data-types/data-types'
 
 const INCREMENT_SIZE = 10
 
@@ -26,23 +25,14 @@ export function detectCollisions(
   const {id} = gameObjects.player
 
   for (const [idA, idB] of intersecting) {
-    if (idA === id || idB === id) {
-      gameObjects.player.reduceMovement()
-    }
-
     const a = gameObjects.objects.get(idA)
     const b = gameObjects.objects.get(idB)
 
     if (a && b) {
-      if (a instanceof Projectile) {
-        gameObjects.objects.delete(idB)
-        movers.delete(idB)
-      } else if (b instanceof Projectile) {
-        gameObjects.objects.delete(idA)
-        movers.delete(idA)
-      } else if (a instanceof Asteroid && b instanceof Asteroid) {
-        gameObjects.objects.delete(idA)
-        movers.delete(idA)
+      if (a.type === GoType.weapon) {
+        a.hit(b)
+      } else if (b.type === GoType.weapon) {
+        b.hit(a)
       }
     }
   }

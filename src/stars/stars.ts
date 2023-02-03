@@ -1,14 +1,16 @@
 import {Store} from '../store/store'
 import {generateStars, transformStars} from './star-data'
-import {GameObject} from '../data-types/data-types'
+import {GoType} from '../data-types/data-types'
 import {Camera} from '../camera'
 import {Mover} from '../store/mover/mover'
 import {nextEntityId} from '../store/mover/movers'
 
-export class Stars implements GameObject {
+export class Stars {
   id = nextEntityId()
 
   stars = generateStars(100)
+
+  type = GoType.visual as const
 
   constructor(public store: Store) {}
 
@@ -63,7 +65,7 @@ export class Stars implements GameObject {
     }
   }
 
-  update(timeSince: number): void {
+  update(timeSince: number, camera: Camera): void {
     // this.starsYPosition = (this.starsYPosition + 0.00002 * (now - last)) % 1
   }
 }

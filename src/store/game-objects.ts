@@ -1,14 +1,17 @@
-import {Drawable, GameObject, Updatable} from '../data-types/data-types'
+import {Drawable, Updatable} from '../data-types/data-types'
 import {Stars} from '../stars/stars'
 import {Store} from './store'
 import {Player} from '../player/player'
 import {Stats} from '../stats/stats'
 import {Camera} from '../camera'
-import {Rand} from '../misc/random'
+import {initAsteroids} from '../objects/asteroids/asteroids'
 import {Asteroid} from '../objects/asteroids/asteroid'
+import {Projectile} from '../objects/projectile'
+
+export type GO = Player | Stats | Stars | Asteroid | Projectile
 
 export class GameObjects implements Updatable, Drawable {
-  objects: Map<number, GameObject> = new Map()
+  objects: Map<number, GO> = new Map()
 
   player = new Player(this.store)
   stats = new Stats(this.store)
@@ -19,22 +22,7 @@ export class GameObjects implements Updatable, Drawable {
     this.objects.set(stars.id, stars)
     this.objects.set(this.stats.id, this.stats)
 
-    // new Asteroids(store)
-
-    const d = 9000
-    const n = 6_000
-
-    // const d = 300
-    // const n = 6
-
-    for (let i = 0; i < n; i++) {
-      const a = new Asteroid(store, 10 + Rand.next() * 40, [
-        -(d / 2) + Rand.next() * d,
-        -(d / 2) + Rand.next() * d,
-      ])
-
-      this.objects.set(a.id, a)
-    }
+    initAsteroids(store, this.objects)
   }
 
   update(timeSince: number, camera: Camera) {
@@ -51,7 +39,8 @@ export class GameObjects implements Updatable, Drawable {
     }
   }
 
-  delete(id: number) {
-    //
+  delete(id: number): void {
+    this.store.movers.delete(id)
+    this.objects.delete(id)
   }
 }

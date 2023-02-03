@@ -12,4 +12,13 @@ export interface Entity {
   id: number
 }
 
-export interface GameObject extends Updatable, Drawable {}
+// export interface GameObject extends Updatable, Drawable {
+//   type: GoType
+// }
+
+export enum GoType {
+  weapon,
+  player,
+  object,
+  visual,
+}

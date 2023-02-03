@@ -1,6 +1,5 @@
 import {Store} from '../store/store'
 import {MoverBoxes} from '../stats/boxes'
-import {TouchControls} from './touch-controls'
 import {TouchControls2} from './touch-controls2'
 
 type UsedKeys =
@@ -50,7 +49,7 @@ export class Controls {
           this.rotation = 4
           break
         case ' ':
-          this.store.gameObjects.player.shoot()
+          this.store.gameObjects.player.startShooting()
           break
       }
     })
@@ -77,6 +76,9 @@ export class Controls {
         case 'd':
         case 'ArrowRight':
           this.rotation = 0
+          break
+        case ' ':
+          this.store.gameObjects.player.stopShooting()
           break
       }
     })

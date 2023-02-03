@@ -6,13 +6,18 @@ import {Camera} from '../camera'
 import {MoverBoxes} from '../stats/boxes'
 import {assert} from '../misc/util'
 import {Projectile} from '../objects/projectile'
+import {GoType} from '../data-types/data-types'
 
 export class Player {
   id: number
 
+  type = GoType.player as const
+
   shipImage = document.createElement('img')
 
   thruster: Thruster
+
+  private shooting = false
 
   constructor(public store: Store) {
     this.shipImage.src = require('./spaceShips_003.png')
@@ -26,16 +31,15 @@ export class Player {
     this.thruster = new Thruster(V2.add(m.position, [19, 38]), 8, 10, m)
   }
 
-  shoot() {
-    const p = new Projectile(this.store)
-
-    this.store.gameObjects.objects.set(p.id, p)
-  }
-
   update(timeSince: number): void {
     const {
       controls: {thrust, rotation, back},
     } = this.store
+
+    this.lastShot += timeSince
+    if (this.shooting && this.lastShot > this.timeBetweenShots) {
+      this.shoot()
+    }
 
     const {movers} = this.store
 
@@ -101,13 +105,13 @@ export class Player {
     m.velocity = V2.empty
   }
 
-  reduceMovement() {
-    const {m} = this
-
-    if (!m) return
-
-    m.velocity = V2.scale(m.velocity, 0.85)
-  }
+  // reduceMovement() {
+  //   const {m} = this
+  //
+  //   if (!m) return
+  //
+  //   m.velocity = V2.scale(m.velocity, 0.85)
+  // }
 
   get m(): Mover {
     const {movers} = this.store
@@ -117,6 +121,36 @@ export class Player {
     assert(m)
 
     return m
+  }
+
+  startShooting() {
+    this.shooting = true
+
+    // this.shootLoop()
+  }
+  stopShooting() {
+    this.shooting = false
+  }
+
+  // shootLoop = () => {
+  //   if (!this.shooting) return
+  //
+  //   this.shoot()
+  //
+  //   setTimeout(() => {
+  //     this.shootLoop()
+  //   }, 60)
+  // }
+
+  lastShot = 0
+  readonly timeBetweenShots = 60
+
+  shoot() {
+    const p = new Projectile(this.store)
+
+    this.store.gameObjects.objects.set(p.id, p)
+
+    this.lastShot = 0
   }
 }
 

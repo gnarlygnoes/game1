@@ -1,4 +1,4 @@
-import {Drawable, Entity} from '../../data-types/data-types'
+import {GoType} from '../../data-types/data-types'
 import {V2} from '../../data-types/v2'
 import {Rand} from '../../misc/random'
 import {Camera} from '../../camera'
@@ -10,10 +10,12 @@ import {makeCanvas} from '../../misc/util'
 const numPoints = 13
 const useCache = true
 
-export class Asteroid implements Drawable, Entity {
+export class Asteroid {
   points: V2[] = []
 
   id: number
+
+  type = GoType.object as const
 
   canvas: HTMLCanvasElement
   ctx: CanvasRenderingContext2D
@@ -170,5 +172,5 @@ export class Asteroid implements Drawable, Entity {
     ctx.fill()
   }
 
-  update() {}
+  update(timeSince: number, camera: Camera) {}
 }
