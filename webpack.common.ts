@@ -65,6 +65,7 @@ export function makeConfig({
       new DefinePlugin({
         __DEV__: mode === 'development',
         __FIEND_DEV__: false,
+        __JEST__: false,
       }),
     ],
     optimization: {

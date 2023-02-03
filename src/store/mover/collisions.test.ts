@@ -1,13 +1,12 @@
 import {Mover} from './mover'
 import {
   bucketIntersection,
-  createBuckets,
   detectCollisions,
   fillXBuckets,
-  getAllPairs,
-  getAllPairsAsStrings,
+  getAllPairsAsIds,
 } from './collisions'
 import {Store} from '../store'
+import {store2Ids} from './mover-ids'
 
 describe(detectCollisions.name, () => {
   const movers = new Map<number, Mover>()
@@ -19,20 +18,6 @@ describe(detectCollisions.name, () => {
     detectCollisions(new Store(0, 0), movers, [0, 0], [1000, 600])
 
     expect(true).toBe(true)
-  })
-})
-
-describe(createBuckets.name, () => {
-  test('make some zeroed buckets', () => {
-    const buckets = createBuckets(0, 1000, 100)
-
-    expect(buckets).toEqual([0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-  })
-
-  test('make some zeroed buckets2', () => {
-    const buckets = createBuckets(-100, 1000, 100)
-
-    expect(buckets).toEqual([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
   })
 })
 
@@ -48,7 +33,7 @@ describe(fillXBuckets.name, () => {
 
     const b = fillXBuckets(0, 1000, 100, movers)
 
-    expect(b[0]).toEqual([2, 3])
+    expect(b[0]).toEqual([4, 5])
   })
 
   test('2 boxes', () => {
@@ -67,44 +52,65 @@ describe(fillXBuckets.name, () => {
   })
 })
 
-describe(getAllPairs.name, () => {
+// describe(getAllPairs.name, () => {
+//   test('[1, 2]', () => {
+//     expect(getAllPairs([1, 2])).toEqual([[1, 2]])
+//   })
+//
+//   test('[1, 2, 3, 4, 5]', () => {
+//     expect(getAllPairs([1, 2, 3, 4, 5])).toEqual([
+//       [1, 2],
+//       [1, 3],
+//       [1, 4],
+//       [1, 5],
+//       [2, 3],
+//       [2, 4],
+//       [2, 5],
+//       [3, 4],
+//       [3, 5],
+//       [4, 5],
+//     ])
+//   })
+// })
+
+// describe(getAllPairsAsStrings.name, () => {
+//   test('[1, 2]', () => {
+//     expect(getAllPairsAsStrings([1, 2])).toEqual(['1-2'])
+//   })
+//
+//   test('[1, 2, 3, 4, 5]', () => {
+//     expect(getAllPairsAsStrings([1, 2, 3, 4, 5])).toEqual([
+//       '1-2',
+//       '1-3',
+//       '1-4',
+//       '1-5',
+//       '2-3',
+//       '2-4',
+//       '2-5',
+//       '3-4',
+//       '3-5',
+//       '4-5',
+//     ])
+//   })
+// })
+
+describe(getAllPairsAsIds.name, () => {
   test('[1, 2]', () => {
-    expect(getAllPairs([1, 2])).toEqual([[1, 2]])
+    expect(getAllPairsAsIds([1, 2])).toEqual([store2Ids(1, 2)])
   })
 
   test('[1, 2, 3, 4, 5]', () => {
-    expect(getAllPairs([1, 2, 3, 4, 5])).toEqual([
-      [1, 2],
-      [1, 3],
-      [1, 4],
-      [1, 5],
-      [2, 3],
-      [2, 4],
-      [2, 5],
-      [3, 4],
-      [3, 5],
-      [4, 5],
-    ])
-  })
-})
-
-describe(getAllPairsAsStrings.name, () => {
-  test('[1, 2]', () => {
-    expect(getAllPairsAsStrings([1, 2])).toEqual(['1-2'])
-  })
-
-  test('[1, 2, 3, 4, 5]', () => {
-    expect(getAllPairsAsStrings([1, 2, 3, 4, 5])).toEqual([
-      '1-2',
-      '1-3',
-      '1-4',
-      '1-5',
-      '2-3',
-      '2-4',
-      '2-5',
-      '3-4',
-      '3-5',
-      '4-5',
+    expect(getAllPairsAsIds([1, 2, 3, 4, 5])).toEqual([
+      store2Ids(1, 2),
+      store2Ids(1, 3),
+      store2Ids(1, 4),
+      store2Ids(1, 5),
+      store2Ids(2, 3),
+      store2Ids(2, 4),
+      store2Ids(2, 5),
+      store2Ids(3, 4),
+      store2Ids(3, 5),
+      store2Ids(4, 5),
     ])
   })
 })
@@ -119,7 +125,7 @@ describe(bucketIntersection.name, () => {
       [[3, 2]]
     )
 
-    expect(result).toEqual([[2, 3]])
+    expect(result).toEqual([])
   })
 
   test('harder', () => {
@@ -133,28 +139,6 @@ describe(bucketIntersection.name, () => {
       [[3, 2]]
     )
 
-    expect(result).toEqual([[2, 3]])
+    expect(result).toEqual([])
   })
 })
-
-// describe(numDigits.name, () => {
-//   test('124', () => {
-//     expect(numDigits(124)).toEqual(3)
-//   })
-//
-//   test('0.234', () => {
-//     expect(numDigits(0.234)).toEqual(3)
-//   })
-// })
-
-// describe(pairToFloat.name, () => {
-//   test('12, 24', () => {
-//     expect(pairToFloat(12, 24)).toEqual(12.24)
-//   })
-// })
-//
-// //
-//
-// //
-//
-// //

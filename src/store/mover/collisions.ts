@@ -1,8 +1,9 @@
 import {Mover} from './mover'
 import {V2, V2RO} from '../../data-types/v2'
 import {assert, time, timeEnd} from '../../misc/util'
-import {Store} from '../store'
+import type {Store} from '../store'
 import {GoType} from '../../data-types/data-types'
+import {store2Ids, unPackIds} from './mover-ids'
 
 const INCREMENT_SIZE = 10
 
@@ -22,7 +23,6 @@ export function detectCollisions(
   timeEnd(detectCollisions.name)
 
   const {gameObjects} = store
-  // const {id} = gameObjects.player
 
   for (const [idA, idB] of intersecting) {
     const a = gameObjects.objects.get(idA)
@@ -45,7 +45,7 @@ export function fillXBuckets(
   incrementSize: number,
   movers: Map<number, Mover>
 ) {
-  const buckets = createBuckets2(min, max, incrementSize)
+  const buckets = createBuckets(min, max, incrementSize)
 
   const {length} = buckets
   if (length === 0) return buckets
@@ -88,7 +88,7 @@ export function fillYBuckets(
   incrementSize: number,
   movers: Map<number, Mover>
 ) {
-  const buckets = createBuckets2(min, max, incrementSize)
+  const buckets = createBuckets(min, max, incrementSize)
 
   const {length} = buckets
   if (length === 0) return buckets
@@ -124,18 +124,18 @@ export function bucketIntersection(xBuckets: number[][], yBuckets: number[][]) {
   xBuckets = xBuckets.filter(b => b.length > 1)
   yBuckets = yBuckets.filter(b => b.length > 1)
 
-  const xSet = new Set<string>()
+  const xSet = new Set<number>()
 
   for (const x of xBuckets) {
-    for (const id of getAllPairsAsStrings(x)) {
+    for (const id of getAllPairsAsIds(x)) {
       xSet.add(id)
     }
   }
 
-  const set = new Set<string>()
+  const set = new Set<number>()
 
   for (const y of yBuckets) {
-    for (const id of getAllPairsAsStrings(y)) {
+    for (const id of getAllPairsAsIds(y)) {
       if (xSet.has(id)) {
         set.add(id)
       }
@@ -145,54 +145,57 @@ export function bucketIntersection(xBuckets: number[][], yBuckets: number[][]) {
   const pairs: V2[] = []
 
   for (const id of set.values()) {
-    pairs.push(id.split('-').map(n => parseInt(n)) as V2)
+    pairs.push(unPackIds(id))
   }
 
   return pairs
 }
 
-export function getAllPairs(ids: number[]): V2[] {
-  const pairs: V2[] = []
-
-  for (let i = 0; i < ids.length; i++) {
-    const id1 = ids[i]
-    for (let j = i + 1; j < ids.length; j++) {
-      const id2 = ids[j]
-      pairs.push([id1, id2])
-    }
-  }
-
-  return pairs
-}
-
-export function getAllPairsAsStrings(ids: number[]): string[] {
-  const pairs: string[] = []
-
-  for (let i = 0; i < ids.length; i++) {
-    const id1 = ids[i]
-    for (let j = i + 1; j < ids.length; j++) {
-      const id2 = ids[j]
-
-      pairs.push(`${id1}-${id2}`)
-    }
-  }
-
-  return pairs
-}
-
-// export function numDigits(n: number): number {
-//   return (Math.log10((n ^ (n >> 31)) - (n >> 31)) | 0) + 1
-// }
-
-// export function pairToFloat(a: number, b: number) {
-//   const n = 10 ** numDigits(b)
+// export function getAllPairs(ids: number[]): V2[] {
+//   const pairs: V2[] = []
 //
-//   return a + b / n
+//   for (let i = 0; i < ids.length; i++) {
+//     const id1 = ids[i]
+//     for (let j = i + 1; j < ids.length; j++) {
+//       const id2 = ids[j]
+//       pairs.push([id1, id2])
+//     }
+//   }
+//
+//   return pairs
+// }
+//
+// export function getAllPairsAsStrings(ids: number[]): string[] {
+//   const pairs: string[] = []
+//
+//   for (let i = 0; i < ids.length; i++) {
+//     const id1 = ids[i]
+//     for (let j = i + 1; j < ids.length; j++) {
+//       const id2 = ids[j]
+//
+//       pairs.push(`${id1}-${id2}`)
+//     }
+//   }
+//
+//   return pairs
 // }
 
-// export function floatToPair(f: number) {}
+export function getAllPairsAsIds(ids: number[]): number[] {
+  const pairs: number[] = []
 
-export function createBuckets2(
+  for (let i = 0; i < ids.length; i++) {
+    const id1 = ids[i]
+    for (let j = i + 1; j < ids.length; j++) {
+      const id2 = ids[j]
+
+      pairs.push(store2Ids(id1, id2))
+    }
+  }
+
+  return pairs
+}
+
+export function createBuckets(
   min: number,
   max: number,
   incrementSize: number
@@ -207,14 +210,4 @@ export function createBuckets2(
   }
 
   return a
-}
-
-// TODO: Remove and update tests
-export function createBuckets(
-  min: number,
-  max: number,
-  incrementSize: number
-): number[] {
-  const diff = max - min
-  return new Array(Math.ceil(diff / incrementSize)).fill(0)
 }

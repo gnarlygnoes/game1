@@ -20,7 +20,9 @@ export class Player {
   private shooting = false
 
   constructor(public store: Store) {
-    this.shipImage.src = require('./spaceShips_003.png')
+    if (!__JEST__) {
+      this.shipImage.src = require('./spaceShips_003.png')
+    }
 
     const {movers} = store
     const m = new Mover(V2.empty, [40, 40], [0, -1])

@@ -10,9 +10,10 @@ export function nextEntityId(): number {
   return id
 }
 
-const scale = 10_000_000
+const scale = 100_000_000
 
 // Takes positive integer ids
+// This will be inaccurate if given ids greater than about 88_000_000
 export function store2Ids(a: number, b: number): number {
   return a * scale + b
 }

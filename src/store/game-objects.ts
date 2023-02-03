@@ -16,6 +16,8 @@ export class GameObjects {
   stats = new Stats(this.store)
 
   constructor(public store: Store) {
+    if (__JEST__) return
+
     const stars = new Stars(store)
 
     this.objects.set(stars.id, stars)
