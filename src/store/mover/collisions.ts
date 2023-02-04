@@ -4,6 +4,7 @@ import {assert, time, timeEnd} from '../../misc/util'
 import type {Store} from '../store'
 import {GoType} from '../../data-types/data-types'
 import {store2Ids, unPackIds} from './mover-ids'
+import {collisionEffect, confirmCollision} from './collision-effect'
 
 const INCREMENT_SIZE = 10
 
@@ -25,6 +26,8 @@ export function detectCollisions(
   const {gameObjects} = store
 
   for (const [idA, idB] of intersecting) {
+    // console.log(idA, idB)
+
     if (!confirmCollision(idA, idB, movers)) continue
 
     const a = gameObjects.objects.get(idA)
@@ -35,21 +38,10 @@ export function detectCollisions(
         a.hit(b)
       } else if (b.type === GoType.weapon) {
         b.hit(a)
+      } else if (idA === 0 || idB === 0) {
+        collisionEffect(idA, idB, movers)
       }
     }
-  }
-}
-
-function confirmCollision(
-  idA: number,
-  idB: number,
-  movers: Map<number, Mover>
-) {
-  const mA = movers.get(idA)
-  const mB = movers.get(idB)
-
-  if (mA && mB) {
-    return V2.distance(mA.center, mB.center) <= mA.radius + mB.radius
   }
 }
 

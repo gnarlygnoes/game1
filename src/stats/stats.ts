@@ -30,7 +30,7 @@ export class Stats implements Drawable, Updatable {
     const str = (n: number) => n.toPrecision(4)
 
     return [
-      `${this.getFps()} fps (${this.getAvFrame().toFixed(2)}ms/f)`,
+      `${this.getFps()} fps (${this.getAvFrame().toPrecision(2)}ms/f)`,
       `pos (${str(position[0])}, ${str(position[1])})`,
       `dir (${direction[0].toFixed(2)}, ${direction[1].toFixed(2)})`,
       `vel (${velocity?.[0].toFixed(1) ?? 0}, ${

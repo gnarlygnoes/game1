@@ -24,6 +24,7 @@ export class GameObjects {
 
     initAsteroids(store, this.objects)
 
+    this.objects.set(this.player.id, this.player)
     this.objects.set(this.stats.id, this.stats)
   }
 

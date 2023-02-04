@@ -43,11 +43,11 @@ export class Stage extends $Component<{
     const timeSince = now - this.timeOfLastFrame
 
     gameObjects.update(timeSince, camera)
-    gameObjects.player.update(timeSince)
+    // gameObjects.player.update(timeSince)
     camera.update()
 
     gameObjects.draw(context, camera)
-    gameObjects.player.draw(context, camera)
+    // gameObjects.player.draw(context, camera)
 
     requestAnimationFrame(this.gameLoop)
 
