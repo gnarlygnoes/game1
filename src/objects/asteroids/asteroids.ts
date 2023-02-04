@@ -5,7 +5,7 @@ import {GO} from '../../store/game-objects'
 
 export function initAsteroids(store: Store, objects: Map<number, GO>) {
   const d = 9000
-  const n = 30_000
+  const n = 3_000
 
   for (let i = 0; i < n; i++) {
     const a = new Asteroid(store, 10 + Rand.next() * 40, [

@@ -2,6 +2,7 @@ import './stage.css'
 import {$Component, c, Canvas, createRef} from '../../fiend-ui/src'
 import {Store} from '../store/store'
 import {UiStore} from '../ui-store'
+import {time, timeEnd} from '../misc/util'
 
 export class Stage extends $Component<{
   uiStore: UiStore
@@ -26,10 +27,13 @@ export class Stage extends $Component<{
   }
 
   gameLoop = () => {
+    time(this.gameLoop.name)
+
     const {context} = this
     if (!context) return
 
     const now = Date.now()
+
     const {
       gameObjects,
       gameObjects: {stats},
@@ -45,10 +49,11 @@ export class Stage extends $Component<{
     gameObjects.draw(context, camera)
     gameObjects.player.draw(context, camera)
 
+    requestAnimationFrame(this.gameLoop)
+
     stats.addFrameDuration(Date.now() - now)
     this.timeOfLastFrame = now
-
-    requestAnimationFrame(this.gameLoop)
+    timeEnd(this.gameLoop.name)
   }
 
   componentDidMount() {

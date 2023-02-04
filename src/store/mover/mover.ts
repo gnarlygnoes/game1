@@ -32,7 +32,7 @@ export function updateMover(mover: Mover, timeSince: number, camera: Camera) {
     mover.direction = V2.normalise(V2.rotate(mover.direction, angle))
   }
 
-  if (mover.thrust[0] !== 0 && mover.thrust[1] !== 0) {
+  if (mover.thrust[0] !== 0 || mover.thrust[1] !== 0) {
     mover.velocity = V2.limitMagnitude(
       V2.add(mover.velocity, V2.scale(mover.thrust, timeSince / 100)),
       mover.maxVelocity
