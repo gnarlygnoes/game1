@@ -125,7 +125,7 @@ export class Player {
   }
 
   lastShot = 0
-  readonly timeBetweenShots = 60
+  readonly timeBetweenShots = 100
 
   shoot() {
     const p = new Projectile(this.store)

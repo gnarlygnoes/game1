@@ -23,6 +23,23 @@ export class Mover {
 
     public visible = true
   ) {}
+
+  get center(): V2RO {
+    const {
+      position: [x, y],
+      size: [w, h],
+    } = this
+
+    return [x + w / 2, y + h / 2]
+  }
+
+  get radius(): number {
+    const {
+      size: [w, h],
+    } = this
+
+    return (w + h) / 4
+  }
 }
 
 export function updateMover(mover: Mover, timeSince: number, camera: Camera) {

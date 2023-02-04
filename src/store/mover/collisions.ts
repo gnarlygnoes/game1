@@ -25,6 +25,8 @@ export function detectCollisions(
   const {gameObjects} = store
 
   for (const [idA, idB] of intersecting) {
+    if (!confirmCollision(idA, idB, movers)) continue
+
     const a = gameObjects.objects.get(idA)
     const b = gameObjects.objects.get(idB)
 
@@ -35,6 +37,19 @@ export function detectCollisions(
         b.hit(a)
       }
     }
+  }
+}
+
+function confirmCollision(
+  idA: number,
+  idB: number,
+  movers: Map<number, Mover>
+) {
+  const mA = movers.get(idA)
+  const mB = movers.get(idB)
+
+  if (mA && mB) {
+    return V2.distance(mA.center, mB.center) <= mA.radius + mB.radius
   }
 }
 
@@ -150,35 +165,6 @@ export function bucketIntersection(xBuckets: number[][], yBuckets: number[][]) {
 
   return pairs
 }
-
-// export function getAllPairs(ids: number[]): V2[] {
-//   const pairs: V2[] = []
-//
-//   for (let i = 0; i < ids.length; i++) {
-//     const id1 = ids[i]
-//     for (let j = i + 1; j < ids.length; j++) {
-//       const id2 = ids[j]
-//       pairs.push([id1, id2])
-//     }
-//   }
-//
-//   return pairs
-// }
-//
-// export function getAllPairsAsStrings(ids: number[]): string[] {
-//   const pairs: string[] = []
-//
-//   for (let i = 0; i < ids.length; i++) {
-//     const id1 = ids[i]
-//     for (let j = i + 1; j < ids.length; j++) {
-//       const id2 = ids[j]
-//
-//       pairs.push(`${id1}-${id2}`)
-//     }
-//   }
-//
-//   return pairs
-// }
 
 export function getAllPairsAsIds(ids: number[]): number[] {
   const pairs: number[] = []

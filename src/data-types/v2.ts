@@ -56,4 +56,8 @@ export namespace V2 {
 
     return [c * x - s * y, s * x + c * y]
   }
+
+  export function distance(a: V2RO, b: V2RO): number {
+    return magnitude(b[0] - a[0], b[1] - a[1])
+  }
 }
