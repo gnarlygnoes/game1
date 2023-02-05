@@ -38,7 +38,10 @@ export function detectCollisions(
         a.hit(b)
       } else if (b.type === GoType.weapon) {
         b.hit(a)
-      } else if (idA === 0 || idB === 0) {
+      }
+      // else if (idA === 0 || idB === 0) {
+      // }
+      else {
         collisionEffect(idA, idB, movers)
       }
     }

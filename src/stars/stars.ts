@@ -8,7 +8,7 @@ import {nextEntityId} from '../store/mover/mover-ids'
 export class Stars {
   id = nextEntityId()
 
-  stars = generateStars(100)
+  stars = generateStars(60)
 
   type = GoType.visual as const
 

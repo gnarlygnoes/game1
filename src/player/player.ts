@@ -26,6 +26,7 @@ export class Player {
 
     const {movers} = store
     const m = new Mover(V2.empty, [40, 40], [0, -1])
+    m.mass = 5
     this.id = m.id
 
     movers.add(m)

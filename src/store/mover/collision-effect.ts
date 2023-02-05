@@ -25,8 +25,8 @@ export function collisionEffect(
 
   if (!mA || !mB) return
 
-  const {center: cA, velocity: vA} = mA
-  const {center: cB, velocity: vB} = mB
+  const {center: cA, velocity: vA, mass: massA} = mA
+  const {center: cB, velocity: vB, mass: massB} = mB
 
   const collision = V2.subtract(cB, cA)
   const distance = V2.distance(cB, cA)
@@ -41,6 +41,14 @@ export function collisionEffect(
     return
   }
 
-  mA.velocity = [vA[0] - speed * normal[0], vA[1] - speed * normal[1]]
-  mB.velocity = [vB[0] + speed * normal[0], vB[1] + speed * normal[1]]
+  const impulse = (2 * speed) / (massA + massB)
+
+  mA.velocity = [
+    vA[0] - impulse * massB * normal[0],
+    vA[1] - impulse * massB * normal[1],
+  ]
+  mB.velocity = [
+    vB[0] + impulse * massA * normal[0],
+    vB[1] + impulse * massA * normal[1],
+  ]
 }

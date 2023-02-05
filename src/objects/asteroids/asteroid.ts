@@ -17,7 +17,7 @@ export class Asteroid {
 
   type = GoType.object as const
 
-  cache = new Cacheable(this.size * 1.2)
+  cache = useCache ? new Cacheable(this.size * 1.2) : null
 
   constructor(public store: Store, public size = 20, pos: V2) {
     const {movers} = store
@@ -50,8 +50,13 @@ export class Asteroid {
   }
 
   drawToCanvasAndCreateBitMap(): void {
-    const {size, cache} = this
-    const {ctx} = cache
+    if (!this.cache) return
+
+    const {
+      size,
+      cache,
+      cache: {ctx},
+    } = this
 
     if (!ctx) return
 
@@ -95,6 +100,8 @@ export class Asteroid {
   }
 
   drawCached(ctx: CanvasRenderingContext2D, camera: Camera, m: Mover): void {
+    if (!this.cache) return
+
     if (!this.cache.cached) {
       this.drawToCanvasAndCreateBitMap()
     }
