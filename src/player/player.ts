@@ -129,9 +129,11 @@ export class Player {
   readonly timeBetweenShots = 100
 
   shoot() {
-    const p = new Projectile(this.store)
+    const p1 = new Projectile(this.store, 'left')
+    this.store.gameObjects.objects.set(p1.id, p1)
 
-    this.store.gameObjects.objects.set(p.id, p)
+    const p2 = new Projectile(this.store, 'right')
+    this.store.gameObjects.objects.set(p2.id, p2)
 
     this.lastShot = 0
   }

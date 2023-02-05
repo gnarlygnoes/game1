@@ -12,24 +12,35 @@ export class Projectile {
 
   type = GoType.weapon as const
 
-  constructor(public store: Store) {
+  constructor(public store: Store, side: 'left' | 'right') {
     const {
       movers,
       gameObjects: {
-        player: {m: playerMover},
+        player: {m: pm},
       },
     } = store
 
+    let p = pm.center
+
+    if (side === 'left') {
+      const angle = V2.angle(pm.direction)
+      p = V2.add(p, V2.rotate([-10, -6], angle))
+    } else {
+      const angle = V2.angle(pm.direction)
+      p = V2.add(p, V2.rotate([10, -6], angle))
+    }
+
     const m = new Mover(
-      V2.add(playerMover.position, V2.scale(playerMover.size, 0.5)),
+      p,
       [size, size],
-      playerMover.direction,
-      V2.add(playerMover.velocity, V2.scale(playerMover.direction, 10)),
+      pm.direction,
+      V2.add(pm.velocity, V2.scale(pm.direction, 10)),
       V2.empty,
       0,
       1,
       100
     )
+
     this.id = m.id
     movers.add(m)
   }
@@ -46,9 +57,9 @@ export class Projectile {
       shift: [xShift, yShift],
     } = camera
 
-    ctx.fillStyle = 'red'
+    ctx.fillStyle = '#ffc916'
     ctx.beginPath()
-    ctx.arc(x + xShift, y + yShift, size, 0, 2 * Math.PI)
+    ctx.arc(x + xShift, y + yShift, size / 1.3, 0, 2 * Math.PI)
     ctx.fill()
   }
 

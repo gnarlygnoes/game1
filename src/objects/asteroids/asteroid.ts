@@ -23,7 +23,7 @@ export class Asteroid {
     const {movers} = store
 
     const m = new Mover(pos, [size, size])
-    m.mass = size / 15
+    m.mass = (size / 15) ** 1.6
     this.id = m.id
     movers.add(m)
 
