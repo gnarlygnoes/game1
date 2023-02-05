@@ -5,10 +5,10 @@ import {Camera} from '../../camera'
 import {Store} from '../../store/store'
 import {Mover} from '../../store/mover/mover'
 import {MoverBoxes} from '../../stats/boxes'
-import {makeCanvas} from '../../misc/util'
+import {Cacheable} from './cacheable'
 
 const numPoints = 13
-const useCache = true
+const useCache = false
 
 export class Asteroid {
   points: V2[] = []
@@ -17,27 +17,20 @@ export class Asteroid {
 
   type = GoType.object as const
 
-  canvas: HTMLCanvasElement
-  ctx: CanvasRenderingContext2D
-
-  cached = false
+  cache = new Cacheable(this.size * 1.2)
 
   constructor(public store: Store, public size = 20, pos: V2) {
-    const {ctx, canvas} = makeCanvas(size * 1.2, size * 1.2)
-
-    this.ctx = ctx
-    this.canvas = canvas
-
     const {movers} = store
 
     const m = new Mover(pos, [size, size])
+    m.mass = size / 15
     this.id = m.id
     movers.add(m)
 
     this.generatePoints()
   }
 
-  generatePoints() {
+  private generatePoints() {
     const {size} = this
 
     for (let i = 0; i < numPoints; i++) {
@@ -57,15 +50,29 @@ export class Asteroid {
   }
 
   drawToCanvasAndCreateBitMap(): void {
-    const {size, ctx} = this
+    const {size, cache} = this
+    const {ctx} = cache
 
     if (!ctx) return
 
-    ctx.beginPath()
-
     const c = size / 2
 
-    const gradient = ctx.createRadialGradient(c, c, size / 20, c, c, size / 2)
+    this.drawAsteroid(ctx, c, c)
+
+    cache.cached = true
+  }
+
+  drawAsteroid(ctx: CanvasRenderingContext2D, x: number, y: number): void {
+    ctx.beginPath()
+
+    const gradient = ctx.createRadialGradient(
+      x,
+      y,
+      this.size / 20,
+      x,
+      y,
+      this.size / 2
+    )
 
     gradient.addColorStop(0, '#7e7e7e')
     gradient.addColorStop(0.9, '#5d5d5d')
@@ -75,26 +82,24 @@ export class Asteroid {
     ctx.lineWidth = 4
 
     const first = this.points[0]
-    ctx.moveTo(c + first[0], c + first[1])
+    ctx.moveTo(x + first[0], y + first[1])
 
     for (const p of this.points) {
-      ctx.lineTo(c + p[0], c + p[1])
+      ctx.lineTo(x + p[0], y + p[1])
     }
 
-    ctx.lineTo(c + first[0], c + first[1])
+    ctx.lineTo(x + first[0], y + first[1])
 
     ctx.stroke()
     ctx.fill()
-
-    this.cached = true
   }
 
   drawCached(ctx: CanvasRenderingContext2D, camera: Camera, m: Mover): void {
-    if (!this.cached) {
+    if (!this.cache.cached) {
       this.drawToCanvasAndCreateBitMap()
     }
 
-    if (this.cached) {
+    if (this.cache.cached) {
       const {
         position: [xi, yi],
       } = m
@@ -103,13 +108,7 @@ export class Asteroid {
         shift: [xShift, yShift],
       } = camera
 
-      ctx.beginPath()
-
-      const x = xi + xShift
-      const y = yi + yShift
-
-      ctx.drawImage(this.canvas, x, y)
-
+      ctx.drawImage(this.cache.canvas, xi + xShift, yi + yShift)
       MoverBoxes.draw(ctx, m, camera)
     }
   }
@@ -133,43 +132,14 @@ export class Asteroid {
     const {
       position: [xi, yi],
     } = m
-
     const {
       shift: [xShift, yShift],
     } = camera
 
-    ctx.beginPath()
+    const c = this.size / 2
 
-    const x = xi + xShift
-    const y = yi + yShift
-
-    const gradient = ctx.createRadialGradient(
-      x,
-      y,
-      this.size / 10,
-      x,
-      y,
-      this.size
-    )
-
-    gradient.addColorStop(0, '#7e7e7e')
-    gradient.addColorStop(0.9, '#5d5d5d')
-
-    ctx.fillStyle = gradient
-    ctx.strokeStyle = '#5d5d5d'
-    ctx.lineWidth = 4
-
-    const first = this.points[0]
-    ctx.moveTo(x + first[0], y + first[1])
-
-    for (const p of this.points) {
-      ctx.lineTo(x + p[0], y + p[1])
-    }
-
-    ctx.lineTo(x + first[0], y + first[1])
-
-    ctx.stroke()
-    ctx.fill()
+    this.drawAsteroid(ctx, xi + xShift + c, yi + yShift + c)
+    MoverBoxes.draw(ctx, m, camera)
   }
 
   update(timeSince: number, camera: Camera) {}

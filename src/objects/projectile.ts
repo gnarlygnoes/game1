@@ -27,6 +27,7 @@ export class Projectile {
       V2.add(playerMover.velocity, V2.scale(playerMover.direction, 10)),
       V2.empty,
       0,
+      1,
       100
     )
     this.id = m.id

@@ -19,6 +19,8 @@ export class Mover {
 
     public rotation = 0,
 
+    public mass = 1,
+
     public maxVelocity = 10,
 
     public visible = true
