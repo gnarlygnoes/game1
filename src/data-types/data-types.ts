@@ -13,4 +13,5 @@ export enum GoType {
   player,
   object,
   visual,
+  enemy,
 }

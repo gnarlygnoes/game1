@@ -6,8 +6,9 @@ import {Camera} from '../camera'
 import {initAsteroids} from '../objects/asteroids/asteroids'
 import {Asteroid} from '../objects/asteroids/asteroid'
 import {Projectile} from '../objects/projectile'
+import {EnemyShip} from '../objects/enemies/enemy-ship'
 
-export type GO = Player | Stats | Stars | Asteroid | Projectile
+export type GO = Player | Stats | Stars | Asteroid | Projectile | EnemyShip
 
 export class GameObjects {
   objects: Map<number, GO> = new Map()
@@ -18,14 +19,18 @@ export class GameObjects {
   constructor(public store: Store) {
     if (__JEST__) return
 
-    const stars = new Stars(store)
+    this.add(new Stars(store))
 
-    this.objects.set(stars.id, stars)
+    initAsteroids(store, this)
 
-    initAsteroids(store, this.objects)
+    this.add(new EnemyShip(store, [200, 200]))
 
-    this.objects.set(this.player.id, this.player)
-    this.objects.set(this.stats.id, this.stats)
+    this.add(this.player)
+    this.add(this.stats)
+  }
+
+  add(gameObject: GO) {
+    this.objects.set(gameObject.id, gameObject)
   }
 
   update(timeSince: number, camera: Camera) {

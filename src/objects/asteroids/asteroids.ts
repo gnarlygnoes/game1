@@ -1,9 +1,9 @@
 import {Asteroid} from './asteroid'
 import {Rand} from '../../misc/random'
 import {Store} from '../../store/store'
-import {GO} from '../../store/game-objects'
+import {GameObjects} from '../../store/game-objects'
 
-export function initAsteroids(store: Store, objects: Map<number, GO>) {
+export function initAsteroids(store: Store, go: GameObjects) {
   const d = 9000
   const n = 5_000
 
@@ -13,6 +13,6 @@ export function initAsteroids(store: Store, objects: Map<number, GO>) {
       -(d / 2) + Rand.next() * d,
     ])
 
-    objects.set(a.id, a)
+    go.add(a)
   }
 }

@@ -4,12 +4,13 @@ import {V2} from '../data-types/v2'
 import {Thruster} from '../ships/parts/thruster'
 import {Camera} from '../camera'
 import {MoverBoxes} from '../stats/boxes'
-import {assert} from '../misc/util'
 import {Projectile} from '../objects/projectile'
 import {GoType} from '../data-types/data-types'
 
 export class Player {
   id: number
+
+  m: Mover
 
   type = GoType.player as const
 
@@ -25,13 +26,18 @@ export class Player {
     }
 
     const {movers} = store
-    const m = new Mover(V2.empty, [40, 40], [0, -1])
-    m.mass = 5
-    this.id = m.id
+    this.m = new Mover(V2.empty, [40, 40], [0, -1])
+    this.m.mass = 5
+    this.id = this.m.id
 
-    movers.add(m)
+    movers.add(this.m)
 
-    this.thruster = new Thruster(V2.add(m.position, [19, 38]), 8, 10, m)
+    this.thruster = new Thruster(
+      V2.add(this.m.position, [19, 38]),
+      8,
+      10,
+      this.m
+    )
   }
 
   update(timeSince: number): void {
@@ -106,16 +112,6 @@ export class Player {
 
     m.position = V2.empty
     m.velocity = V2.empty
-  }
-
-  get m(): Mover {
-    const {movers} = this.store
-
-    const m = movers.get(this.id)
-
-    assert(m)
-
-    return m
   }
 
   startShooting() {
