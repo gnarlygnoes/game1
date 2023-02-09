@@ -14,6 +14,8 @@ export class Player {
 
   type = GoType.player as const
 
+  health = 100
+
   shipImage = document.createElement('img')
 
   thruster: Thruster

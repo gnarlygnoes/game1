@@ -8,6 +8,7 @@ import {Store} from '../../store/store'
 export class EnemyShip {
   id: number
   m: Mover
+  health = 30
 
   type = GoType.enemy as const
 

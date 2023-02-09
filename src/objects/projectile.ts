@@ -12,6 +12,9 @@ export class Projectile {
 
   type = GoType.weapon as const
 
+  damage = 7
+  health = 1
+
   constructor(public store: Store, side: 'left' | 'right') {
     const {
       movers,
@@ -73,9 +76,14 @@ export class Projectile {
   }
 
   hit(other: GO) {
-    if (other.type === GoType.object) {
-      this.store.gameObjects.delete(other.id)
+    if (other.type === GoType.object || other.type === GoType.enemy) {
+      other.health -= this.damage
+
       this.store.gameObjects.delete(this.id)
+
+      if (other.health <= 0) {
+        this.store.gameObjects.delete(other.id)
+      }
     }
   }
 }

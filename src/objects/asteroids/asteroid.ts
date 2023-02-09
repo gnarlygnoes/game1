@@ -17,6 +17,8 @@ export class Asteroid {
 
   type = GoType.object as const
 
+  health = this.size
+
   cache = useCache ? new Cacheable(this.size * 1.2) : null
 
   constructor(public store: Store, public size = 20, pos: V2) {
