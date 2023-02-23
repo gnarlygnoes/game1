@@ -19,7 +19,11 @@ export class MouseControls {
     })
   }
 
-  setTargetPosition(clientX: number, clientY: number) {
+  update() {
+    const {targetPos} = this
+
+    if (!targetPos) return
+
     const {camera, gameObjects} = this.store
     const {
       m: {size, velocity, position},
@@ -30,13 +34,13 @@ export class MouseControls {
 
     // console.log(-(camera.width / 2 - clientX), -(camera.height / 2 - clientY))
 
-    const targetPos: V2 = [
-      -(camera.width / 2 - clientX),
-      -(camera.height / 2 - clientY),
-    ]
-    this.targetPos = targetPos
+    // const targetPos: V2 = [
+    //   -(camera.width / 2 - clientX),
+    //   -(camera.height / 2 - clientY),
+    // ]
+    // this.targetPos = targetPos
 
-    const targetVector = V2.limitMagnitude(targetPos, 2)
+    const targetVector = V2.limitMagnitude(targetPos, 10)
 
     const acclVector = V2.subtract(targetVector, velocity)
 
@@ -45,6 +49,16 @@ export class MouseControls {
     gameObjects.player.m.direction = V2.normalise(acclVector)
 
     console.log(this.targetPos)
+  }
+
+  setTargetPosition(clientX: number, clientY: number) {
+    const {camera} = this.store
+
+    const targetPos: V2 = [
+      -(camera.width / 2 - clientX),
+      -(camera.height / 2 - clientY),
+    ]
+    this.targetPos = targetPos
   }
 
   onMove = (e: PointerEvent) => {

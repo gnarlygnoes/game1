@@ -15,7 +15,7 @@ export namespace V2 {
     return [x * scale, y * scale]
   }
 
-  export function limitMagnitude(v: V2, limit: number): V2 {
+  export function limitMagnitude(v: V2RO, limit: number): V2RO {
     const [x, y] = v
     const len = Math.sqrt(x ** 2 + y ** 2)
 

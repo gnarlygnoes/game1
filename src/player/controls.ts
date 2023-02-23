@@ -21,9 +21,10 @@ export class Controls {
   back = false
   rotation = 0
 
+  mouseControls = new MouseControls(this.store, this)
+
   constructor(private store: Store) {
     // new TouchControls2(store, this)
-    new MouseControls(store, this)
 
     addEventListener('keydown', e => {
       switch (e.key as UsedKeys) {

@@ -44,8 +44,10 @@ export class Player {
 
   update(timeSince: number): void {
     const {
-      controls: {thrust, rotation, back},
+      controls: {thrust, rotation, back, mouseControls},
     } = this.store
+
+    mouseControls.update()
 
     this.lastShot += timeSince
     if (this.shooting && this.lastShot > this.timeBetweenShots) {
