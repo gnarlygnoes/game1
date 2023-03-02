@@ -7,10 +7,13 @@ import {initAsteroids} from '../objects/asteroids/asteroids'
 import {Asteroid} from '../objects/asteroids/asteroid'
 import {Projectile} from '../objects/projectile'
 import {EnemyShip} from '../objects/enemies/enemy-ship'
+import {TargetLocation} from '../player/target-location'
 
 export type GO = Player | Stats | Stars | Asteroid | Projectile | EnemyShip
 
 export class GameObjects {
+  targetLocation = new TargetLocation(this.store)
+
   objects: Map<number, GO> = new Map()
 
   player = new Player(this.store)
@@ -45,6 +48,8 @@ export class GameObjects {
     for (const o of this.objects.values()) {
       o.draw(context, camera)
     }
+
+    this.targetLocation.draw(context, camera)
   }
 
   delete(id: number): void {

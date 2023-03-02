@@ -70,8 +70,6 @@ export class Asteroid {
   }
 
   drawAsteroid(ctx: CanvasRenderingContext2D, x: number, y: number): void {
-    ctx.beginPath()
-
     const gradient = ctx.createRadialGradient(
       x,
       y,
@@ -87,6 +85,8 @@ export class Asteroid {
     ctx.fillStyle = gradient
     ctx.strokeStyle = '#5d5d5d'
     ctx.lineWidth = 4
+
+    ctx.beginPath()
 
     const first = this.points[0]
     ctx.moveTo(x + first[0], y + first[1])

@@ -3,7 +3,7 @@ import {V2, V2RO} from '../data-types/v2'
 import {Store} from '../store/store'
 
 export class MouseControls {
-  targetPos: V2RO | null = null
+  // targetPos: V2RO | null = null
 
   constructor(private store: Store, private controls: Controls) {
     addEventListener('pointerdown', e => {
@@ -20,7 +20,7 @@ export class MouseControls {
   }
 
   update() {
-    const {targetPos} = this
+    const {targetPos} = this.store
 
     if (!targetPos) return
 
@@ -40,7 +40,9 @@ export class MouseControls {
     // ]
     // this.targetPos = targetPos
 
-    const targetVector = V2.limitMagnitude(targetPos, 10)
+    const targetVector = V2.limitMagnitude(V2.subtract(targetPos, position), 10)
+
+    console.log({targetVector, velocity})
 
     const acclVector = V2.subtract(targetVector, velocity)
 
@@ -48,17 +50,15 @@ export class MouseControls {
     // this.controls.rotation = V2.angle(acclVector)
     gameObjects.player.m.direction = V2.normalise(acclVector)
 
-    console.log(this.targetPos)
+    console.log({target: this.store.targetPos})
   }
 
   setTargetPosition(clientX: number, clientY: number) {
-    const {camera} = this.store
+    const {
+      shift: [x, y],
+    } = this.store.camera
 
-    const targetPos: V2 = [
-      -(camera.width / 2 - clientX),
-      -(camera.height / 2 - clientY),
-    ]
-    this.targetPos = targetPos
+    this.store.targetPos = [clientX - x, clientY - y]
   }
 
   onMove = (e: PointerEvent) => {
