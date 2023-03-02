@@ -13,7 +13,7 @@ export class TargetLocation {
     const [xS, yS] = camera.shift
 
     context.beginPath()
-    context.fillStyle = 'red'
+    context.fillStyle = '#00ff00cc'
     context.arc(x + xS, y + yS, 7, 0, Math.PI * 2)
     context.fill()
   }

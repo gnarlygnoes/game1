@@ -37,18 +37,22 @@ export class Controls {
         case 'w':
         case 'ArrowUp':
           this.thrust = 0.9
+          this.store.targetPos = null
           break
         case 's':
         case 'ArrowDown':
           this.back = true
+          this.store.targetPos = null
           break
         case 'a':
         case 'ArrowLeft':
           this.rotation = -4
+          this.store.targetPos = null
           break
         case 'd':
         case 'ArrowRight':
           this.rotation = 4
+          this.store.targetPos = null
           break
         case ' ':
           this.store.gameObjects.player.startShooting()

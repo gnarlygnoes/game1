@@ -24,7 +24,7 @@ export class MouseControls {
 
     if (!targetPos) return
 
-    const {camera, gameObjects} = this.store
+    const {gameObjects} = this.store
     const {
       m: {size, velocity, position},
     } = gameObjects.player
@@ -32,22 +32,22 @@ export class MouseControls {
     const [x, y] = position
     const [w, h] = size
 
-    // console.log(-(camera.width / 2 - clientX), -(camera.height / 2 - clientY))
+    const distance = V2.subtract(targetPos, [x + w / 2, y + h / 2])
 
-    // const targetPos: V2 = [
-    //   -(camera.width / 2 - clientX),
-    //   -(camera.height / 2 - clientY),
-    // ]
-    // this.targetPos = targetPos
+    console.log(distance, V2.magnitude(distance[0], distance[1]))
 
-    const targetVector = V2.limitMagnitude(V2.subtract(targetPos, position), 10)
+    if (V2.magnitude(distance[0], distance[1]) < 50) {
+      this.store.targetPos = null
+      this.controls.thrust = 0
+      return
+    }
 
-    console.log({targetVector, velocity})
+    const targetVector = V2.limitMagnitude(distance, 10)
 
     const acclVector = V2.subtract(targetVector, velocity)
 
     this.controls.thrust = 1
-    // this.controls.rotation = V2.angle(acclVector)
+
     gameObjects.player.m.direction = V2.normalise(acclVector)
 
     console.log({target: this.store.targetPos})
