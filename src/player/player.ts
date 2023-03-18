@@ -4,23 +4,19 @@ import {V2} from '../data-types/v2'
 import {Thruster} from '../ships/parts/thruster'
 import {Camera} from '../camera'
 import {MoverBoxes} from '../stats/boxes'
-import {Projectile} from '../objects/projectile'
 import {GoType} from '../data-types/data-types'
+import {Weapon} from '../objects/weapon'
 
 export class Player {
   id: number
-
-  m: Mover
-
   type = GoType.player as const
 
   health = 100
-
   shipImage = document.createElement('img')
 
+  m: Mover
   thruster: Thruster
-
-  private shooting = false
+  weapon: Weapon
 
   constructor(public store: Store) {
     if (!__JEST__) {
@@ -33,6 +29,8 @@ export class Player {
     this.id = this.m.id
 
     movers.add(this.m)
+
+    this.weapon = new Weapon(store, this.m, this.id)
 
     this.thruster = new Thruster(
       V2.add(this.m.position, [19, 38]),
@@ -48,11 +46,7 @@ export class Player {
     } = this.store
 
     mouseControls.update()
-
-    this.lastShot += timeSince
-    if (this.shooting && this.lastShot > this.timeBetweenShots) {
-      this.shoot()
-    }
+    this.weapon.update(timeSince)
 
     const {movers} = this.store
 
@@ -116,25 +110,5 @@ export class Player {
 
     m.position = V2.empty
     m.velocity = V2.empty
-  }
-
-  startShooting() {
-    this.shooting = true
-  }
-  stopShooting() {
-    this.shooting = false
-  }
-
-  lastShot = 0
-  readonly timeBetweenShots = 100
-
-  shoot() {
-    const p1 = new Projectile(this.store, 'left')
-    this.store.gameObjects.objects.set(p1.id, p1)
-
-    const p2 = new Projectile(this.store, 'right')
-    this.store.gameObjects.objects.set(p2.id, p2)
-
-    this.lastShot = 0
   }
 }

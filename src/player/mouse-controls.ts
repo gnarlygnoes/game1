@@ -1,5 +1,5 @@
 import {Controls} from './controls'
-import {V2, V2RO} from '../data-types/v2'
+import {V2} from '../data-types/v2'
 import {Store} from '../store/store'
 
 export class MouseControls {

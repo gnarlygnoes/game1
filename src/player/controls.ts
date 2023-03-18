@@ -55,7 +55,7 @@ export class Controls {
           this.store.targetPos = null
           break
         case ' ':
-          this.store.gameObjects.player.startShooting()
+          this.store.gameObjects.player.weapon.startShooting()
           break
       }
     })
@@ -84,7 +84,7 @@ export class Controls {
           this.rotation = 0
           break
         case ' ':
-          this.store.gameObjects.player.stopShooting()
+          this.store.gameObjects.player.weapon.stopShooting()
           break
       }
     })

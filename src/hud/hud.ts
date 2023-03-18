@@ -28,7 +28,7 @@ export class Hud extends $Component<{uiStore: UiStore; store: Store}> {
     e.preventDefault()
     e.stopPropagation()
 
-    this.props.store.gameObjects.player.shoot()
+    this.props.store.gameObjects.player.weapon.shoot()
   }
 
   // Prevent context menu on long press on mobile.

@@ -15,29 +15,29 @@ export class Projectile {
   damage = 7
   health = 1
 
-  constructor(public store: Store, side: 'left' | 'right') {
-    const {
-      movers,
-      gameObjects: {
-        player: {m: pm},
-      },
-    } = store
+  constructor(
+    public store: Store,
+    public origin: Mover,
+    public originId: number,
+    side: 'left' | 'right'
+  ) {
+    const {movers, gameObjects} = store
 
-    let p = pm.center
+    let p = origin.center
 
     if (side === 'left') {
-      const angle = V2.angle(pm.direction)
+      const angle = V2.angle(origin.direction)
       p = V2.add(p, V2.rotate([-10, -6], angle))
     } else {
-      const angle = V2.angle(pm.direction)
+      const angle = V2.angle(origin.direction)
       p = V2.add(p, V2.rotate([10, -6], angle))
     }
 
     const m = new Mover(
       p,
       [size, size],
-      pm.direction,
-      V2.add(pm.velocity, V2.scale(pm.direction, 10)),
+      origin.direction,
+      V2.add(origin.velocity, V2.scale(origin.direction, 10)),
       V2.empty,
       0,
       1,
@@ -46,6 +46,7 @@ export class Projectile {
 
     this.id = m.id
     movers.add(m)
+    gameObjects.add(this)
   }
 
   draw(ctx: CanvasRenderingContext2D, camera: Camera): void {
@@ -76,7 +77,7 @@ export class Projectile {
   }
 
   hit(other: GO) {
-    if (other.type === GoType.object || other.type === GoType.enemy) {
+    if (other.type !== GoType.visual && other.id !== this.originId) {
       other.health -= this.damage
 
       this.store.gameObjects.delete(this.id)

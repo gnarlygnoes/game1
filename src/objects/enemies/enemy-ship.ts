@@ -4,11 +4,14 @@ import {V2} from '../../data-types/v2'
 import {MoverBoxes} from '../../stats/boxes'
 import {Mover} from '../../store/mover/mover'
 import {Store} from '../../store/store'
+import {Weapon} from '../weapon'
 
 export class EnemyShip {
   id: number
   m: Mover
   health = 30
+
+  weapon: Weapon
 
   type = GoType.enemy as const
 
@@ -17,10 +20,12 @@ export class EnemyShip {
   constructor(public store: Store, pos: V2) {
     const {movers} = store
 
-    this.m = new Mover(pos, [40, 40])
+    this.m = new Mover(pos, [40, 40], [1, 0])
     this.m.mass = 5
     this.id = this.m.id
     movers.add(this.m)
+
+    this.weapon = new Weapon(store, this.m, this.id)
 
     if (!__JEST__) {
       this.shipImage.src = require('../../player/spaceShips_003.png')
@@ -62,5 +67,16 @@ export class EnemyShip {
     MoverBoxes.draw(ctx, m, camera)
   }
 
-  update(timeSince: number, camera: Camera) {}
+  update(timeSince: number, camera: Camera) {
+    const {m: pm} = this.store.gameObjects.player
+    const {m} = this
+    this.weapon.update(timeSince)
+
+    if (V2.distance(pm.position, m.position) < 300) {
+      m.direction = V2.limitMagnitude(V2.subtract(pm.position, m.position), 1)
+      this.weapon.startShooting()
+    } else {
+      this.weapon.stopShooting()
+    }
+  }
 }
