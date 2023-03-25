@@ -1,10 +1,8 @@
 import {Controls} from './controls'
-import {V2} from '../data-types/v2'
 import {Store} from '../store/store'
+import {chase} from '../objects/chase'
 
 export class MouseControls {
-  // targetPos: V2RO | null = null
-
   constructor(private store: Store, private controls: Controls) {
     addEventListener('pointerdown', e => {
       if (e.currentTarget instanceof Window) {
@@ -25,32 +23,13 @@ export class MouseControls {
     if (!targetPos) return
 
     const {gameObjects} = this.store
-    const {
-      m: {size, velocity, position},
-    } = gameObjects.player
 
-    const [x, y] = position
-    const [w, h] = size
+    const thrust = chase(gameObjects.player.m, targetPos)
+    this.controls.thrust = thrust
 
-    const distance = V2.subtract(targetPos, [x + w / 2, y + h / 2])
-
-    console.log(distance, V2.magnitude(distance[0], distance[1]))
-
-    if (V2.magnitude(distance[0], distance[1]) < 50) {
+    if (thrust === 0) {
       this.store.targetPos = null
-      this.controls.thrust = 0
-      return
     }
-
-    const targetVector = V2.limitMagnitude(distance, 10)
-
-    const acclVector = V2.subtract(targetVector, velocity)
-
-    this.controls.thrust = 1
-
-    gameObjects.player.m.direction = V2.normalise(acclVector)
-
-    console.log({target: this.store.targetPos})
   }
 
   setTargetPosition(clientX: number, clientY: number) {

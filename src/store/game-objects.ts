@@ -27,6 +27,10 @@ export class GameObjects {
     initAsteroids(store, this)
 
     this.add(new EnemyShip(store, [200, 200]))
+    this.add(new EnemyShip(store, [400, 200]))
+    this.add(new EnemyShip(store, [200, -600]))
+    this.add(new EnemyShip(store, [-500, 200]))
+
 
     this.add(this.player)
     this.add(this.stats)

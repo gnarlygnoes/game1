@@ -72,10 +72,15 @@ export class EnemyShip {
     const {m} = this
     this.weapon.update(timeSince)
 
-    if (V2.distance(pm.position, m.position) < 300) {
+    const distance = V2.distance(pm.position, m.position)
+
+    if (distance < 300) {
       m.direction = V2.limitMagnitude(V2.subtract(pm.position, m.position), 1)
       this.weapon.startShooting()
-    } else {
+    } else if (distance < 800) {
+      //chase
+    }
+    else {
       this.weapon.stopShooting()
     }
   }

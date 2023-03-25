@@ -11,7 +11,7 @@ export class Player {
   id: number
   type = GoType.player as const
 
-  health = 100
+  health = 1000
   shipImage = document.createElement('img')
 
   m: Mover
