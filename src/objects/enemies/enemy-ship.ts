@@ -2,14 +2,16 @@ import {Camera} from '../../camera'
 import {GoType} from '../../data-types/data-types'
 import {V2} from '../../data-types/v2'
 import {MoverBoxes} from '../../stats/boxes'
-import {Mover} from '../../store/mover/mover'
+import {getPositionInFuture, Mover} from '../../store/mover/mover'
 import {Store} from '../../store/store'
+import {chase} from '../chase'
+import {Projectile} from '../projectile'
 import {Weapon} from '../weapon'
 
 export class EnemyShip {
   id: number
   m: Mover
-  health = 30
+  health = 100
 
   weapon: Weapon
 
@@ -60,8 +62,6 @@ export class EnemyShip {
     ctx.filter = `invert(1) contrast(0.8) brightness(1.5)`
     ctx.drawImage(this.shipImage, x, y, w, h)
 
-    // if (this.store.controls.thrust > 0) this.thruster.draw(ctx, camera)
-
     ctx.restore()
 
     MoverBoxes.draw(ctx, m, camera)
@@ -75,12 +75,18 @@ export class EnemyShip {
     const distance = V2.distance(pm.position, m.position)
 
     if (distance < 300) {
-      m.direction = V2.limitMagnitude(V2.subtract(pm.position, m.position), 1)
+      const time = distance / Projectile.velocity
+
+      const targetPosition = getPositionInFuture(pm, time)
+
+      m.direction = V2.limitMagnitude(
+        V2.subtract(targetPosition, m.position),
+        1
+      )
       this.weapon.startShooting()
     } else if (distance < 800) {
-      //chase
-    }
-    else {
+      chase(m, pm.position)
+    } else {
       this.weapon.stopShooting()
     }
   }

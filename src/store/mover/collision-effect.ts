@@ -18,7 +18,6 @@ export function collisionEffect(
   idA: number,
   idB: number,
   movers: Map<number, Mover>
-  // objects: Map<number, GO>
 ) {
   const mA = movers.get(idA)
   const mB = movers.get(idB)

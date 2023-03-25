@@ -26,8 +26,6 @@ export function detectCollisions(
   const {gameObjects} = store
 
   for (const [idA, idB] of intersecting) {
-    // console.log(idA, idB)
-
     if (!confirmCollision(idA, idB, movers)) continue
 
     const a = gameObjects.objects.get(idA)
@@ -38,10 +36,7 @@ export function detectCollisions(
         a.hit(b)
       } else if (b.type === GoType.weapon) {
         b.hit(a)
-      }
-      // else if (idA === 0 || idB === 0) {
-      // }
-      else {
+      } else {
         collisionEffect(idA, idB, movers)
       }
     }

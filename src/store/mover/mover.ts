@@ -58,7 +58,7 @@ export function updateMover(mover: Mover, timeSince: number, camera: Camera) {
     )
   }
 
-  mover.position = V2.add(mover.position, mover.velocity)
+  mover.position = getPositionInFuture(mover, timeSince)
 
   mover.visible = isVisible(mover.position, mover.size, camera)
 }
@@ -78,4 +78,11 @@ function isVisible([x, y]: V2RO, [w, h]: V2RO, camera: Camera): boolean {
   const bottom = -cy + height + extra
 
   return x > left && x < right && y > top && y < bottom
+}
+
+export function getPositionInFuture({position, velocity}: Mover, time: number) {
+  // Try 16 here to be close to frame time of 60fps.
+  const distance = V2.scale(velocity, time / 16)
+
+  return V2.add(position, distance)
 }

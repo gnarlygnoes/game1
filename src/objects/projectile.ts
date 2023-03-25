@@ -15,6 +15,8 @@ export class Projectile {
   damage = 7
   health = 1
 
+  static velocity = 10
+
   constructor(
     public store: Store,
     public origin: Mover,
@@ -37,7 +39,7 @@ export class Projectile {
       p,
       [size, size],
       origin.direction,
-      V2.add(origin.velocity, V2.scale(origin.direction, 10)),
+      V2.add(origin.velocity, V2.scale(origin.direction, Projectile.velocity)),
       V2.empty,
       0,
       1,
