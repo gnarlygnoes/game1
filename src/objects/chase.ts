@@ -19,7 +19,10 @@ export function chase(shipMover: Mover, target: V2RO): number {
 
   const acclVector = V2.subtract(targetVector, velocity)
 
-  shipMover.direction = V2.normalise(acclVector)
+  if (V2.magnitude(acclVector[0], acclVector[1]) > 1) {
+    shipMover.direction = V2.normalise(acclVector)
+  }
+
   shipMover.thrust = V2.scale(shipMover.direction, 1 / 1.5)
 
   return 1

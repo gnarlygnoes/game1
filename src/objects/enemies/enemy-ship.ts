@@ -74,7 +74,7 @@ export class EnemyShip {
 
     const distance = V2.distance(pm.position, m.position)
 
-    if (distance < 300) {
+    if (distance < 400) {
       const time = distance / Projectile.velocity
 
       const targetPosition = getPositionInFuture(pm, time)
@@ -84,7 +84,8 @@ export class EnemyShip {
         1
       )
       this.weapon.startShooting()
-    } else if (distance < 800) {
+    } else if (distance < 8000) {
+      this.weapon.stopShooting()
       chase(m, pm.position)
     } else {
       this.weapon.stopShooting()
