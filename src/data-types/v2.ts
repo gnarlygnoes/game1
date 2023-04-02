@@ -30,6 +30,10 @@ export namespace V2 {
     return Math.sqrt(x ** 2 + y ** 2)
   }
 
+  export function magnitude2([x, y]: V2RO): number {
+    return Math.sqrt(x ** 2 + y ** 2)
+  }
+
   export function add(a: V2RO, b: V2RO): V2 {
     return [a[0] + b[0], a[1] + b[1]]
   }

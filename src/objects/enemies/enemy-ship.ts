@@ -4,7 +4,7 @@ import {V2} from '../../data-types/v2'
 import {MoverBoxes} from '../../stats/boxes'
 import {getPositionInFuture, Mover} from '../../store/mover/mover'
 import {Store} from '../../store/store'
-import {chase} from '../chase'
+import {chase, chaseShip, matchVelocity, similarVelocity} from '../chase'
 import {Projectile} from '../projectile'
 import {Weapon} from '../weapon'
 
@@ -74,9 +74,22 @@ export class EnemyShip {
 
     const distance = V2.distance(pm.position, m.position)
 
-    if (distance < 400) {
-      const time = distance / Projectile.velocity
+    if (distance < 200) {
+      if (similarVelocity(m, pm)) {
+        const time = distance / Projectile.velocity
+        const targetPosition = getPositionInFuture(pm, time)
 
+        m.direction = V2.limitMagnitude(
+          V2.subtract(targetPosition, m.position),
+          1
+        )
+        this.weapon.startShooting()
+      } else {
+        matchVelocity(m, pm)
+        this.weapon.stopShooting()
+      }
+    } else if (distance < 400) {
+      const time = distance / Projectile.velocity
       const targetPosition = getPositionInFuture(pm, time)
 
       m.direction = V2.limitMagnitude(
@@ -86,7 +99,7 @@ export class EnemyShip {
       this.weapon.startShooting()
     } else if (distance < 8000) {
       this.weapon.stopShooting()
-      chase(m, pm.position)
+      chaseShip(m, pm)
     } else {
       this.weapon.stopShooting()
     }
