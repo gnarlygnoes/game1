@@ -68,11 +68,16 @@ export class EnemyShip {
   }
 
   update(timeSince: number, camera: Camera) {
-    const {m: pm} = this.store.gameObjects.player
+    const {m: pm, health} = this.store.gameObjects.player
     const {m} = this
     this.weapon.update(timeSince)
 
     const distance = V2.distance(pm.position, m.position)
+
+    if (health <= 0) {
+      this.weapon.stopShooting()
+      return
+    }
 
     if (distance < 200) {
       if (similarVelocity(m, pm)) {
