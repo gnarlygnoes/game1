@@ -25,7 +25,7 @@ export class Asteroid {
     const {movers} = store
 
     const m = new Mover(pos, [size, size])
-    m.mass = (size / 15) ** 1.6
+    m.mass = (size / 10) ** 1.6
     this.id = m.id
     movers.add(m)
 
@@ -52,13 +52,11 @@ export class Asteroid {
   }
 
   drawToCanvasAndCreateBitMap(): void {
-    if (!this.cache) return
+    const {cache, size} = this
 
-    const {
-      size,
-      cache,
-      cache: {ctx},
-    } = this
+    if (!cache) return
+
+    const {ctx} = cache
 
     if (!ctx) return
 

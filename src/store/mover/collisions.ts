@@ -32,13 +32,16 @@ export function detectCollisions(
     const b = gameObjects.objects.get(idB)
 
     if (a && b) {
+      collisionEffect(idA, idB, movers)
+      
       if (a.type === GoType.weapon) {
         a.hit(b)
       } else if (b.type === GoType.weapon) {
         b.hit(a)
       } else {
-        collisionEffect(idA, idB, movers)
+        
       }
+      
     }
   }
 }
