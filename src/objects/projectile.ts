@@ -5,8 +5,6 @@ import {Camera} from '../camera'
 import {GoType} from '../data-types/data-types'
 import {GO} from '../store/game-objects'
 
-// const size = 4
-
 const defaultSize = 4
 const defaultColour = 'rgb(255,200,0)'
 const hitDuration = 100
@@ -84,22 +82,7 @@ export class Projectile {
   }
 
   update(timeSince: number, camera: Camera): void {
-    if (this.startedHitAnimation) {
-      this.hitAnimationTimeLeft -= timeSince
-
-      const {hitAnimationTimeLeft} = this
-
-      if (hitAnimationTimeLeft <= 0) {
-        this.store.gameObjects.delete(this.id)
-      } else {
-        // this.colour = `rgb(255, 255, 255)`
-
-        this.size = Math.min(
-          (hitDuration * defaultSize) / hitAnimationTimeLeft,
-          this.maxSize
-        )
-      }
-    }
+    this.terminationUpdate(timeSince)
 
     if (!this.m.visible) {
       this.store.gameObjects.delete(this.id)
@@ -108,15 +91,36 @@ export class Projectile {
 
   hit(other: GO) {
     if (other.type !== GoType.visual && other.id !== this.originId) {
-      this.startedHitAnimation = true
-      this.hitAnimationTimeLeft = hitDuration
-      this.m.velocity = V2.empty
-      this.m.size = V2.empty
+      this.terminate()
 
       other.health -= this.damage
 
       if (other.health <= 0) {
-        this.store.gameObjects.delete(other.id)
+        other.terminate()
+      }
+    }
+  }
+
+  terminate() {
+    this.startedHitAnimation = true
+    this.hitAnimationTimeLeft = hitDuration
+    this.m.velocity = V2.empty
+    this.m.size = V2.empty
+  }
+
+  terminationUpdate(timeSince: number) {
+    if (this.startedHitAnimation) {
+      this.hitAnimationTimeLeft -= timeSince
+
+      const {hitAnimationTimeLeft} = this
+
+      if (hitAnimationTimeLeft <= 0) {
+        this.store.gameObjects.delete(this.id)
+      } else {
+        this.size = Math.min(
+          (hitDuration * defaultSize) / hitAnimationTimeLeft,
+          this.maxSize
+        )
       }
     }
   }

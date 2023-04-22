@@ -150,4 +150,8 @@ export class Asteroid {
   }
 
   update(timeSince: number, camera: Camera) {}
+
+  terminate() {
+    //
+  }
 }

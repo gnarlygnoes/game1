@@ -109,4 +109,8 @@ export class EnemyShip {
       this.weapon.stopShooting()
     }
   }
+
+  terminate() {
+    this.store.gameObjects.delete(this.id)
+  }
 }

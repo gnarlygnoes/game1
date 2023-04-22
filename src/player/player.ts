@@ -111,4 +111,8 @@ export class Player {
     m.position = V2.empty
     m.velocity = V2.empty
   }
+
+  terminate() {
+    this.store.gameObjects.delete(this.id)
+  }
 }
