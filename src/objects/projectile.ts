@@ -90,6 +90,7 @@ export class Projectile {
   }
 
   hit(other: GO) {
+    if (this.startedHitAnimation) return
     if (other.type !== GoType.visual && other.id !== this.originId) {
       this.terminate()
 

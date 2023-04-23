@@ -1,5 +1,5 @@
 import {GoType} from '../../data-types/data-types'
-import {V2} from '../../data-types/v2'
+import {V2, V2RO} from '../../data-types/v2'
 import {Rand} from '../../misc/random'
 import {Camera} from '../../camera'
 import {Store} from '../../store/store'
@@ -21,10 +21,13 @@ export class Asteroid {
 
   cache = useCache ? new Cacheable(this.size * 1.2) : null
 
-  constructor(public store: Store, public size = 20, pos: V2) {
+  m: Mover
+
+  constructor(public store: Store, public size = 20, pos: V2RO) {
     const {movers} = store
 
     const m = new Mover(pos, [size, size])
+    this.m = m
     m.mass = (size / 10) ** 1.6
     this.id = m.id
     movers.add(m)
@@ -121,10 +124,8 @@ export class Asteroid {
   }
 
   draw(ctx: CanvasRenderingContext2D, camera: Camera) {
-    const {movers} = this.store
-
-    const m = movers.get(this.id)
-    if (!m || !m.visible) {
+    const {m} = this
+    if (!m.visible) {
       return
     }
 
@@ -152,6 +153,28 @@ export class Asteroid {
   update(timeSince: number, camera: Camera) {}
 
   terminate() {
-    //
+    const {store, size, id, m} = this
+
+    store.gameObjects.delete(id)
+
+    const numParticles = Math.round(Math.random() * 3 + 2)
+    const particleSize = Math.round(size / numParticles)
+
+    if (particleSize < 10) return
+
+    for (let i = 0; i < numParticles; i++) {
+      const {Mineral} = require('./mineral')
+
+      const a = new Mineral(
+        store,
+        particleSize,
+        V2.add(m.position, [Rand.next(), -Rand.next()])
+      )
+
+      a.m.direction = V2.rotate([0, 1], (360 / numParticles) * i)
+      a.m.velocity = V2.scale(a.m.direction, 2)
+
+      store.gameObjects.add(a)
+    }
   }
 }

@@ -48,11 +48,7 @@ export class Player {
     mouseControls.update()
     this.weapon.update(timeSince)
 
-    const {movers} = this.store
-
-    const m = movers.get(this.id)
-
-    if (!m) return
+    const {m} = this
 
     m.rotation = rotation
 
@@ -68,13 +64,13 @@ export class Player {
   }
 
   draw(ctx: CanvasRenderingContext2D, camera: Camera): void {
-    const {m} = this
-    if (!m) return
-
     const {
-      position: [xi, yi],
-      size: [w, h],
-    } = m
+      m,
+      m: {
+        position: [xi, yi],
+        size: [w, h],
+      },
+    } = this
 
     const {
       shift: [xShift, yShift],
