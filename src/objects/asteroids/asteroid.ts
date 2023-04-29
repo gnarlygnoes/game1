@@ -12,7 +12,7 @@ export class Asteroid extends AsteroidBase {
 
     store.gameObjects.delete(id)
 
-    const particleSize = Math.random() * 6 + 7
+    const particleSize = Math.random() * 4 + 5
     const numParticles = size / particleSize - 1
 
     for (let i = 0; i < numParticles; i++) {

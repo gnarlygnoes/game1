@@ -4,7 +4,7 @@ import {V2} from '../../data-types/v2'
 import {MoverBoxes} from '../../stats/boxes'
 import {getPositionInFuture, Mover} from '../../store/mover/mover'
 import {Store} from '../../store/store'
-import {chase, chaseShip, matchVelocity, similarVelocity} from '../chase'
+import {chaseShip, matchVelocity, similarVelocity} from '../chase'
 import {Projectile} from '../projectile'
 import {Weapon} from '../weapon'
 

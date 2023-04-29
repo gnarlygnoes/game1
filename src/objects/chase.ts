@@ -10,7 +10,7 @@ export function chase(shipMover: Mover, target: V2RO, thrust = 2 / 3): number {
 
   const distance = V2.subtract(target, [x + w / 2, y + h / 2])
 
-  if (V2.magnitude2(distance) < 50) {
+  if (V2.magnitude2(distance) < 30) {
     shipMover.thrust = V2.empty
     return 0
   }
