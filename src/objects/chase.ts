@@ -2,7 +2,7 @@ import {Mover, getPositionInFuture} from '../store/mover/mover'
 import {V2, V2RO} from '../data-types/v2'
 
 // Returns thrust.
-export function chase(shipMover: Mover, target: V2RO): number {
+export function chase(shipMover: Mover, target: V2RO, thrust = 2 / 3): number {
   const {size, velocity, position} = shipMover
 
   const [x, y] = position
@@ -20,7 +20,7 @@ export function chase(shipMover: Mover, target: V2RO): number {
   const acclVector = V2.subtract(targetVector, velocity)
 
   shipMover.direction = V2.normalise(acclVector)
-  shipMover.thrust = V2.scale(shipMover.direction, 1 / 1.5)
+  shipMover.thrust = V2.scale(shipMover.direction, thrust)
 
   return 1
 }

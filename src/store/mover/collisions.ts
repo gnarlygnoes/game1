@@ -27,21 +27,16 @@ export function detectCollisions(
 
   for (const [idA, idB] of intersecting) {
     if (!confirmCollision(idA, idB, movers)) continue
-
     const a = gameObjects.objects.get(idA)
     const b = gameObjects.objects.get(idB)
+    if (!a || !b) continue
 
-    if (a && b) {
+    if (a.type === GoType.weapon || a.type === GoType.pickup) {
+      a.hit(b)
+    } else if (b.type === GoType.weapon || b.type === GoType.pickup) {
+      b.hit(a)
+    } else {
       collisionEffect(idA, idB, movers)
-      
-      if (a.type === GoType.weapon) {
-        a.hit(b)
-      } else if (b.type === GoType.weapon) {
-        b.hit(a)
-      } else {
-        
-      }
-      
     }
   }
 }

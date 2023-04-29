@@ -4,6 +4,7 @@ import {Mover} from '../store/mover/mover'
 import {Camera} from '../camera'
 import {GoType} from '../data-types/data-types'
 import {GO} from '../store/game-objects'
+import {collisionEffect} from '../store/mover/collision-effect'
 
 const defaultSize = 4
 const defaultColour = 'rgb(255,200,0)'
@@ -92,6 +93,7 @@ export class Projectile {
   hit(other: GO) {
     if (this.startedHitAnimation) return
     if (other.type !== GoType.visual && other.id !== this.originId) {
+      collisionEffect(this.id, other.id, this.store.movers.map)
       this.terminate()
 
       other.health -= this.damage

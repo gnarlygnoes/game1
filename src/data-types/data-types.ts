@@ -12,6 +12,7 @@ export enum GoType {
   weapon,
   player,
   object,
+  pickup,
   visual,
   enemy,
 }

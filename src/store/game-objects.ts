@@ -8,8 +8,16 @@ import {Asteroid} from '../objects/asteroids/asteroid'
 import {Projectile} from '../objects/projectile'
 import {EnemyShip} from '../objects/enemies/enemy-ship'
 import {TargetLocation} from '../player/target-location'
+import {Mineral} from '../objects/asteroids/mineral'
 
-export type GO = Player | Stats | Stars | Asteroid | Projectile | EnemyShip
+export type GO =
+  | Player
+  | Stats
+  | Stars
+  | Asteroid
+  | Projectile
+  | EnemyShip
+  | Mineral
 
 export class GameObjects {
   targetLocation = new TargetLocation(this.store)
