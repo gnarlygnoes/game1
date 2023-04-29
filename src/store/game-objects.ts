@@ -34,8 +34,8 @@ export class GameObjects {
 
     initAsteroids(store, this)
 
-    // this.add(new EnemyShip(store, [300, 600]))
-    // this.add(new EnemyShip(store, [400, 100]))
+    this.add(new EnemyShip(store, [300, 600]))
+    this.add(new EnemyShip(store, [400, 100]))
     // this.add(new EnemyShip(store, [200, -600]))
     // this.add(new EnemyShip(store, [-500, 200]))
 

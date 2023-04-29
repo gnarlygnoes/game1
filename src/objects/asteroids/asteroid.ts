@@ -12,10 +12,8 @@ export class Asteroid extends AsteroidBase {
 
     store.gameObjects.delete(id)
 
-    const numParticles = Math.round(Math.random() * 3 + 2)
-    const particleSize = Math.round(size / numParticles)
-
-    if (particleSize < 10) return
+    const particleSize = Math.random() * 6 + 7
+    const numParticles = size / particleSize - 1
 
     for (let i = 0; i < numParticles; i++) {
       const a = new Mineral(

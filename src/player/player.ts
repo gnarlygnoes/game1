@@ -30,7 +30,7 @@ export class Player {
 
     movers.add(this.m)
 
-    this.weapon = new Weapon(store, this.m, this.id)
+    this.weapon = new Weapon(store, this.m, this.id, 12)
 
     this.thruster = new Thruster(
       V2.add(this.m.position, [19, 38]),

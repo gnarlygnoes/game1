@@ -15,7 +15,6 @@ export class Projectile {
 
   type = GoType.weapon as const
 
-  damage = 7
   health = 1
 
   static velocity = 10
@@ -35,7 +34,8 @@ export class Projectile {
     public store: Store,
     public origin: Mover,
     public originId: number,
-    side: 'left' | 'right'
+    side: 'left' | 'right',
+    public damage = 7
   ) {
     const {movers, gameObjects} = store
 

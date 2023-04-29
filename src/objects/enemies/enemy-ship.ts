@@ -27,7 +27,7 @@ export class EnemyShip {
     this.id = this.m.id
     movers.add(this.m)
 
-    this.weapon = new Weapon(store, this.m, this.id)
+    this.weapon = new Weapon(store, this.m, this.id, 7)
 
     if (!__JEST__) {
       this.shipImage.src = require('../../player/spaceShips_003.png')

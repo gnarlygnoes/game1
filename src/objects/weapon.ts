@@ -7,7 +7,12 @@ export class Weapon {
   lastShot = 0
   readonly timeBetweenShots = 100
 
-  constructor(public store: Store, public origin: Mover, public originId: number) {}
+  constructor(
+    public store: Store,
+    public origin: Mover,
+    public originId: number,
+    public damage: number
+  ) {}
 
   update(timeSince: number) {
     this.lastShot += timeSince
@@ -24,8 +29,8 @@ export class Weapon {
   }
 
   shoot() {
-    new Projectile(this.store, this.origin, this.originId, 'left')
-    new Projectile(this.store, this.origin, this.originId, 'right')
+    new Projectile(this.store, this.origin, this.originId, 'left', this.damage)
+    new Projectile(this.store, this.origin, this.originId, 'right', this.damage)
 
     this.lastShot = 0
   }
