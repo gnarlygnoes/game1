@@ -5,7 +5,7 @@ import {GameObjects} from '../../store/game-objects'
 
 export function initAsteroids(store: Store, go: GameObjects) {
   const d = 9000
-  const n = 5_000
+  const n = 1000
 
   for (let i = 0; i < n; i++) {
     const a = new Asteroid(store, 5 + Rand.next() * 60, [

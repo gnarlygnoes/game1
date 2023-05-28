@@ -70,7 +70,10 @@ function isVisible([x, y]: V2RO, [w, h]: V2RO, camera: Camera): boolean {
     shift: [cx, cy],
   } = camera
 
-  const extra = 300
+  const extra = (w + h) / 2
+
+  x += w / 2
+  y += h / 2
 
   const left = -cx - extra
   const top = -cy - extra

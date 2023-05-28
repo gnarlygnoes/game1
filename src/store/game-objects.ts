@@ -9,6 +9,7 @@ import {Projectile} from '../objects/projectile'
 import {EnemyShip} from '../objects/enemies/enemy-ship'
 import {TargetLocation} from '../player/target-location'
 import {Mineral} from '../objects/asteroids/mineral'
+import {Planet} from '../objects/planet/planet'
 
 export type GO =
   | Player
@@ -18,6 +19,7 @@ export type GO =
   | Projectile
   | EnemyShip
   | Mineral
+  | Planet
 
 export class GameObjects {
   targetLocation = new TargetLocation(this.store)
@@ -32,11 +34,13 @@ export class GameObjects {
 
     this.add(new Stars(store))
 
+    this.add(new Planet(store, 1000, [550, 550]))
+
     initAsteroids(store, this)
 
-    this.add(new EnemyShip(store, [300, 600]))
-    this.add(new EnemyShip(store, [400, 100]))
-    // this.add(new EnemyShip(store, [200, -600]))
+    // this.add(new EnemyShip(store, [300, 600]))
+    // this.add(new EnemyShip(store, [400, 100]))
+    this.add(new EnemyShip(store, [200, -600]))
     // this.add(new EnemyShip(store, [-500, 200]))
 
     this.add(this.player)
