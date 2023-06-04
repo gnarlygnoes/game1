@@ -32,6 +32,19 @@ export class GameObjects {
   constructor(public store: Store) {
     if (__JEST__) return
 
+    this.scratch(store)
+    // this.initGame(store)
+  }
+
+  scratch(store: Store) {
+    this.add(new Stars(store))
+    this.add(new Planet(store, 400, [-200, -200]))
+
+    this.add(this.player)
+    this.add(this.stats)
+  }
+
+  initGame(store: Store) {
     this.add(new Stars(store))
 
     this.add(new Planet(store, 1000, [550, 550]))
