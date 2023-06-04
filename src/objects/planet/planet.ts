@@ -13,8 +13,6 @@ export class Planet {
   id: number
   texture: number[][] = []
 
-  readonly tileSize = 5
-
   constructor(public store: Store, public size: number, pos: V2RO) {
     const {movers} = store
 
@@ -28,20 +26,27 @@ export class Planet {
     this.init()
   }
 
+  readonly tileSize = 5
+  readonly scale = 50
+
   init() {
     const noiseGen = new Noise()
-    const {size} = this
 
-    const scale = 30
+    const {size, tileSize, scale} = this
 
-    const len = size / this.tileSize
+    const len = size / tileSize
 
     this.texture = []
 
     for (let x = 0; x < len; x++) {
       this.texture.push([])
       for (let y = 0; y < len; y++) {
-        const shade = Math.abs(noiseGen.perlin2(x / scale, y / scale)) * 256
+        const shade =
+          40 +
+          noiseGen.simplex2(x / scale, y / scale) * 128 +
+          noiseGen.simplex2(x / (scale / 2), y / (scale / 2)) * 128 +
+          noiseGen.simplex2(x / (scale / 4), y / (scale / 4)) * 128
+
         this.texture[x].push(shade)
       }
     }
