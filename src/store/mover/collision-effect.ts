@@ -5,7 +5,7 @@ export function confirmCollision(
   idA: number,
   idB: number,
   movers: Map<number, Mover>
-) {
+): boolean {
   const mA = movers.get(idA)
   const mB = movers.get(idB)
 
