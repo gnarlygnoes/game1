@@ -6,7 +6,7 @@ import {Mover} from '../../store/mover/mover'
 const numParticles = 40
 
 export class Thruster {
-  particles: {colour: string; position: V2}[] = []
+  particles: {position: V2}[] = []
 
   thrust = 1
 
@@ -24,7 +24,6 @@ export class Thruster {
       const x = (r.next() - 0.5) * width
 
       this.particles.push({
-        colour: `#ffff7755`,
         position: [x, y],
       })
     }

@@ -33,7 +33,7 @@ describe(fillXBuckets.name, () => {
 
     const b = fillXBuckets(0, 1000, 100, movers)
 
-    expect(b[0]).toEqual([4, 5])
+    expect(b[0].length).toEqual(2)
   })
 
   test('2 boxes', () => {

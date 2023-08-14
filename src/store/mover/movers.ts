@@ -5,6 +5,7 @@ import {detectCollisions} from './collisions'
 
 export class Movers implements Updatable {
   map = new Map<number, Mover>()
+  // array: Mover[] = []
 
   update(timeSince: number, camera: Camera): void {
     for (const m of this.map.values()) {

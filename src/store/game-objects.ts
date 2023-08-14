@@ -32,8 +32,8 @@ export class GameObjects {
   constructor(public store: Store) {
     if (__JEST__) return
 
-    this.scratch(store)
-    // this.initGame(store)
+    // this.scratch(store)
+    this.initGame(store)
   }
 
   scratch(store: Store) {

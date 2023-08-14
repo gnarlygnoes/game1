@@ -26,13 +26,14 @@ export class Stage extends $Component<{
     })
   }
 
-  gameLoop = () => {
+  gameLoop = (t: DOMHighResTimeStamp) => {
+    console.log(t)
     time(this.gameLoop.name)
 
     const {context} = this
     if (!context) return
 
-    const now = Date.now()
+    const now = t
 
     const {
       gameObjects,
@@ -49,7 +50,7 @@ export class Stage extends $Component<{
 
     requestAnimationFrame(this.gameLoop)
 
-    stats.addFrameDuration(Date.now() - now)
+    stats.addFrameDuration(timeSince)
     this.timeOfLastFrame = now
     timeEnd(this.gameLoop.name)
   }
@@ -60,7 +61,7 @@ export class Stage extends $Component<{
     if (current) {
       this.context = current.getContext('2d')
 
-      this.gameLoop()
+      this.gameLoop(Date.now())
     }
 
     addEventListener('resize', () => {

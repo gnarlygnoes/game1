@@ -57,11 +57,18 @@ export class Planet {
   update(timeSince: number, camera: Camera) {}
 
   draw(context: CanvasRenderingContext2D, camera: Camera): void {
-    const {m, size} = this
+    const {m} = this
 
     MoverBoxes.draw(context, m, camera)
 
     if (!m.visible) return
+
+    // this.drawCircle(context, camera)
+    this.drawTexture(context, camera)
+  }
+
+  drawCircle(context: CanvasRenderingContext2D, camera: Camera) {
+    const {m, size} = this
 
     const {
       shift: [xShift, yShift],
@@ -69,18 +76,16 @@ export class Planet {
     const {position} = m
     const [x, y] = position
 
-    this.drawTexture(context, camera)
-
-    // context.beginPath()
-    // context.fillStyle = 'rgb(255, 100, 100)'
-    // context.arc(
-    //   size / 2 + x + xShift,
-    //   size / 2 + y + yShift,
-    //   size / 2,
-    //   0,
-    //   Math.PI * 2
-    // )
-    // context.fill()
+    context.beginPath()
+    context.fillStyle = 'rgb(255, 100, 100)'
+    context.arc(
+      size / 2 + x + xShift,
+      size / 2 + y + yShift,
+      size / 2,
+      0,
+      Math.PI * 2
+    )
+    context.fill()
   }
 
   drawTexture(context: CanvasRenderingContext2D, camera: Camera): void {

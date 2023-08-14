@@ -12,6 +12,7 @@ export function confirmCollision(
   if (mA && mB) {
     return V2.distance(mA.center, mB.center) <= mA.radius + mB.radius
   }
+  return false
 }
 
 export function collisionEffect(

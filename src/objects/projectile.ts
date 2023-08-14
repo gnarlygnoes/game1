@@ -41,11 +41,11 @@ export class Projectile {
 
     let p = origin.center
 
+    const angle = V2.angle(origin.direction)
+    
     if (side === 'left') {
-      const angle = V2.angle(origin.direction)
       p = V2.add(p, V2.rotate([-10, -6], angle))
     } else {
-      const angle = V2.angle(origin.direction)
       p = V2.add(p, V2.rotate([10, -6], angle))
     }
 
