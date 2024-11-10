@@ -1,8 +1,8 @@
 import {createBuckets} from './collisions'
 import {assert} from '../../misc/util'
+import {Camera} from '../../camera'
 
 const numMovers = 2000
-// const sizeOfMover = 14
 
 enum I {
   // 2d vec
@@ -26,6 +26,60 @@ class Movers2 extends Float32Array {
   constructor() {
     super(numMovers)
   }
+
+  posX(id: Id): number {
+    return this[id]
+  }
+  posY(id: Id): number {
+    return this[id + 1]
+  }
+
+  width(id: Id): number {
+    return this[id + I.size]
+  }
+  height(id: Id): number {
+    return this[id + I.size + 1]
+  }
+
+  visible(id: Id): boolean {
+    return !!this[id + I.visible]
+  }
+
+  rotation(id: Id): number {
+    return this[id + I.rotation]
+  }
+
+  updateMover(id: Id, timeSince: number, camera: Camera) {
+    const rotation = this.rotation(id)
+    if (rotation !== 0) {
+      const angle = (timeSince / 1000) * rotation
+      const i = id + I.direction
+      this.rotate(i, angle)
+      this.normalise(i)
+    }
+    // TODO
+  }
+
+  rotate(i: number, angle: number) {
+    const x = this[i]
+    const y = this[i + 1]
+    const s = Math.sin(angle)
+    const c = Math.cos(angle)
+
+    this[i] = c * x - s * y
+    this[i + 1] = s * x + c * y
+  }
+
+  normalise(i: number) {
+    const x = this[i]
+    const y = this[i + 1]
+    const len = Math.sqrt(x ** 2 + y ** 2)
+    if (len === 0) return
+
+    const scale = 1 / len
+    this[i] = x * scale
+    this[i + 1] = y * scale
+  }
 }
 
 // Note: min and max could be negative.
@@ -45,12 +99,12 @@ export function fillXBuckets(
   max += pixelShift
 
   for (let id = 0; id < movers.length; id += I.len) {
-    if (!movers[id + I.visible]) {
+    if (!movers.visible(id)) {
       continue
     }
 
-    const x = movers[id] + pixelShift
-    const w = movers[id + I.size]
+    const x = movers.posX(id) + pixelShift
+    const w = movers.width(id)
 
     for (let c = x; c < x + w; c += incrementSize) {
       if (c >= min && c <= max) {
