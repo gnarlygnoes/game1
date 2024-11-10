@@ -11,7 +11,7 @@ export class Stage extends $Component<{
   ref = createRef<HTMLCanvasElement>()
   context: CanvasRenderingContext2D | null = null
 
-  timeOfLastFrame = Date.now()
+  timeOfLastFrame = 0
 
   render() {
     const {
@@ -27,21 +27,19 @@ export class Stage extends $Component<{
   }
 
   gameLoop = (t: DOMHighResTimeStamp) => {
-    console.log(t)
-    time(this.gameLoop.name)
+    const now = t
+    const timeSince = now - this.timeOfLastFrame
+    this.timeOfLastFrame = now
 
+    time(this.gameLoop.name)
     const {context} = this
     if (!context) return
-
-    const now = t
 
     const {
       gameObjects,
       gameObjects: {stats},
       camera,
     } = this.props.store
-
-    const timeSince = now - this.timeOfLastFrame
 
     gameObjects.update(timeSince, camera)
     camera.update()
@@ -51,7 +49,6 @@ export class Stage extends $Component<{
     requestAnimationFrame(this.gameLoop)
 
     stats.addFrameDuration(timeSince)
-    this.timeOfLastFrame = now
     timeEnd(this.gameLoop.name)
   }
 
@@ -61,7 +58,7 @@ export class Stage extends $Component<{
     if (current) {
       this.context = current.getContext('2d')
 
-      this.gameLoop(Date.now())
+      this.gameLoop(0)
     }
 
     addEventListener('resize', () => {

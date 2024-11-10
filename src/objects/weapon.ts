@@ -4,7 +4,7 @@ import {Projectile} from './projectile'
 
 export class Weapon {
   private shooting = false
-  lastShot = 0
+  private lastShot = 0
   readonly timeBetweenShots = 100
 
   constructor(
