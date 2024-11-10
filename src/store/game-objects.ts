@@ -47,7 +47,7 @@ export class GameObjects {
   initGame(store: Store) {
     this.add(new Stars(store))
 
-    this.add(new Planet(store, 1000, [550, 550]))
+    // this.add(new Planet(store, 1000, [550, 550]))
 
     initAsteroids(store, this)
 
