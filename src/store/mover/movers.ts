@@ -2,9 +2,12 @@ import {Mover, updateMover} from './mover'
 import {Updatable} from '../../data-types/data-types'
 import {Camera} from '../../camera'
 import {detectCollisions} from './collisions'
+import {Movers3} from './movers3'
 
 export class Movers implements Updatable {
   map = new Map<number, Mover>()
+
+  movers2 = new Movers3()
   // array: Mover[] = []
 
   update(timeSince: number, camera: Camera): void {
@@ -20,6 +23,7 @@ export class Movers implements Updatable {
   }
 
   add(mover: Mover): void {
+    this.movers2.setFromMover(mover)
     this.map.set(mover.id, mover)
   }
 
@@ -28,34 +32,7 @@ export class Movers implements Updatable {
   }
 
   delete(id: number) {
+    this.movers2.delete(id)
     this.map.delete(id)
-  }
-}
-
-function somethign() {
-  new Float32Array(2)
-}
-
-export class Vec2 extends Float32Array {
-  constructor(x: number, y: number) {
-    super(2);
-    this[0] = x;
-    this[1] = y;
-  }
-
-  get x() {
-    return this[0]
-  }
-
-  get y() {
-    return this[1]
-  }
-
-  set x(x: number) {
-    this[0]  = x
-  }
-
-  set y(y: number) {
-    this[1] = y
   }
 }

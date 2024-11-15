@@ -123,7 +123,10 @@ export function fillYBuckets(
   return buckets
 }
 
-export function bucketIntersection(xBuckets: number[][], yBuckets: number[][]) {
+export function bucketIntersection(
+  xBuckets: number[][],
+  yBuckets: number[][]
+): V2[] {
   xBuckets = xBuckets.filter(b => b.length > 1)
   yBuckets = yBuckets.filter(b => b.length > 1)
 

@@ -1,5 +1,4 @@
 import {makeMoversArray, MoverView} from './mover-array'
-import {Vec2} from "./movers";
 
 describe(makeMoversArray.name, () => {
   test('setting px and py', () => {
@@ -16,7 +15,31 @@ describe(makeMoversArray.name, () => {
   })
 })
 
-describe("Vec2 stuff", () => {
+describe('Vec2 stuff', () => {
+  class Vec2 extends Float32Array {
+    constructor(x: number, y: number) {
+      super(2)
+      this[0] = x
+      this[1] = y
+    }
+
+    get x() {
+      return this[0]
+    }
+
+    get y() {
+      return this[1]
+    }
+
+    set x(x: number) {
+      this[0] = x
+    }
+
+    set y(y: number) {
+      this[1] = y
+    }
+  }
+
   test('make it', () => {
     const v = new Vec2(1, 1)
 
@@ -41,8 +64,7 @@ describe("Vec2 stuff", () => {
   })
 
   class Vec {
-    constructor(public x: number, public y: number) {
-    }
+    constructor(public x: number, public y: number) {}
   }
 
   test('perf2', () => {
@@ -75,11 +97,11 @@ describe("Vec2 stuff", () => {
 
     for (let i = 0; i < n; i++) {
       let n = i * 2
-      vecs[n] = i;
-      vecs[n+1] = i
+      vecs[n] = i
+      vecs[n + 1] = i
     }
     console.log(`Time: ${Date.now() - t}ms`)
-    expect(vecs.length).toEqual(n*2)
+    expect(vecs.length).toEqual(n * 2)
 
     console.log(vecs)
   })
