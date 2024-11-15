@@ -1,14 +1,10 @@
 export class Input {
-  private readonly code: string
-  private position: number
-
-  attemptedPosition: number
-
-  constructor(code: string) {
-    this.code = code
-    this.position = 0
-    this.attemptedPosition = 0
-  }
+  constructor(
+    public readonly code: string,
+    public position = 0,
+    public attemptedPosition = 0,
+    public readonly len = code.length,
+  ) {}
 
   advance(): void {
     this.setPosition(this.position + 1)
@@ -16,10 +12,6 @@ export class Input {
 
   advanceBy(num: number): void {
     this.setPosition(this.position + num)
-  }
-
-  getPosition(): number {
-    return this.position
   }
 
   setPosition(pos: number): void {
