@@ -1,7 +1,5 @@
 import {Store} from '../store/store'
 import {MoverBoxes} from '../stats/boxes'
-import {TouchControls2} from './touch-controls2'
-import {MouseControls} from './mouse-controls'
 
 type UsedKeys =
   | 'ArrowUp'
@@ -17,11 +15,29 @@ type UsedKeys =
 
 export class Controls {
   // 0 - 1
-  thrust = 0
+  // thrust = 0
   back = false
-  rotation = 0
+  // rotation = 0
 
-  mouseControls = new MouseControls(this.store, this)
+  up = false
+  left = false
+  right = false
+
+  // TODO: Put left, right and top here to track accurately.
+
+  // mouseControls = new MouseControls(this.store, this)
+
+  get rotation(): number {
+    let rotation = 0
+    if (this.left) rotation -= 4
+    if (this.right) rotation += 4
+    return rotation
+  }
+
+  get thrust(): number {
+    if (this.up) return 0.9
+    return 0
+  }
 
   constructor(private store: Store) {
     // new TouchControls2(store, this)
@@ -36,7 +52,8 @@ export class Controls {
           break
         case 'w':
         case 'ArrowUp':
-          this.thrust = 0.9
+          // this.thrust = 0.9
+          this.up = true
           this.store.targetPos = null
           break
         case 's':
@@ -46,12 +63,14 @@ export class Controls {
           break
         case 'a':
         case 'ArrowLeft':
-          this.rotation = -4
+          this.left = true
+          // this.rotation = -4
           this.store.targetPos = null
           break
         case 'd':
         case 'ArrowRight':
-          this.rotation = 4
+          this.right = true
+          // this.rotation = 4
           this.store.targetPos = null
           break
         case ' ':
@@ -69,7 +88,8 @@ export class Controls {
           break
         case 'w':
         case 'ArrowUp':
-          this.thrust = 0
+          // this.thrust = 0
+          this.up = false
           break
         case 's':
         case 'ArrowDown':
@@ -77,11 +97,13 @@ export class Controls {
           break
         case 'a':
         case 'ArrowLeft':
-          this.rotation = 0
+          this.left = false
+          // this.rotation = 0
           break
         case 'd':
         case 'ArrowRight':
-          this.rotation = 0
+          this.right = false
+          // this.rotation = 0
           break
         case ' ':
           this.store.gameObjects.player.weapon.stopShooting()

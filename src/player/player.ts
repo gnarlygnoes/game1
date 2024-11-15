@@ -42,10 +42,10 @@ export class Player {
 
   update(timeSince: number): void {
     const {
-      controls: {thrust, rotation, back, mouseControls},
+      controls: {thrust, rotation, back},
     } = this.store
 
-    mouseControls.update()
+    // mouseControls.update()
     this.weapon.update(timeSince)
 
     const {m} = this

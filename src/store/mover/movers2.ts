@@ -22,6 +22,7 @@ enum I {
 
 type Id = number
 
+// TODO: Compare Float64 perf.
 class Movers2 extends Float32Array {
   constructor() {
     super(numMovers)
