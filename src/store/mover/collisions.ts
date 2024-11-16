@@ -1,6 +1,6 @@
 import {Mover} from './mover'
 import {V2, V2RO} from '../../data-types/v2'
-import {assert, time, timeEnd} from '../../misc/util'
+import {assert, time, timeEnd} from '../../lib/util'
 import type {Store} from '../store'
 import {GoType} from '../../data-types/data-types'
 import {store2Ids, unPackIds} from './mover-ids'
@@ -12,7 +12,7 @@ export function detectCollisions(
   store: Store,
   movers: Map<number, Mover>,
   [x1, y1]: V2RO,
-  [x2, y2]: V2RO
+  [x2, y2]: V2RO,
 ) {
   time(detectCollisions.name)
 
@@ -46,7 +46,7 @@ export function fillXBuckets(
   min: number,
   max: number,
   incrementSize: number,
-  movers: Map<number, Mover>
+  movers: Map<number, Mover>,
 ) {
   const buckets = createBuckets(min, max, incrementSize)
 
@@ -78,7 +78,7 @@ export function fillXBuckets(
 
   assert(
     buckets.length === length,
-    `Expected bucket length not to grow ${JSON.stringify(buckets)}`
+    `Expected bucket length not to grow ${JSON.stringify(buckets)}`,
   )
 
   return buckets
@@ -89,7 +89,7 @@ export function fillYBuckets(
   min: number,
   max: number,
   incrementSize: number,
-  movers: Map<number, Mover>
+  movers: Map<number, Mover>,
 ) {
   const buckets = createBuckets(min, max, incrementSize)
 
@@ -117,7 +117,7 @@ export function fillYBuckets(
 
   assert(
     buckets.length === length,
-    `Expected bucket length not to grow ${JSON.stringify(buckets)}`
+    `Expected bucket length not to grow ${JSON.stringify(buckets)}`,
   )
 
   return buckets
@@ -125,7 +125,7 @@ export function fillYBuckets(
 
 export function bucketIntersection(
   xBuckets: number[][],
-  yBuckets: number[][]
+  yBuckets: number[][],
 ): V2[] {
   xBuckets = xBuckets.filter(b => b.length > 1)
   yBuckets = yBuckets.filter(b => b.length > 1)
@@ -175,7 +175,7 @@ export function getAllPairsAsIds(ids: number[]): number[] {
 export function createBuckets(
   min: number,
   max: number,
-  incrementSize: number
+  incrementSize: number,
 ): number[][] {
   const diff = max - min
 

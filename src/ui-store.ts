@@ -1,5 +1,5 @@
 import {$Model} from '../fiend-ui/src'
-import {isTouchDevice} from './misc/util'
+import {isTouchDevice} from './lib/util'
 
 export class UiStore extends $Model {
   touchDevice = isTouchDevice()

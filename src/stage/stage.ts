@@ -2,7 +2,7 @@ import './stage.css'
 import {$Component, c, Canvas, createRef} from '../../fiend-ui/src'
 import {Store} from '../store/store'
 import {UiStore} from '../ui-store'
-import {time, timeEnd} from '../misc/util'
+import {time, timeEnd} from '../lib/util'
 
 export class Stage extends $Component<{
   uiStore: UiStore

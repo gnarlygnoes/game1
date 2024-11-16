@@ -2,7 +2,7 @@ import {V2, V2RO} from '../../data-types/v2'
 import {Cacheable} from './cacheable'
 import {Mover} from '../../store/mover/mover'
 import {Store} from '../../store/store'
-import {Rand} from '../../misc/random'
+import {Rand} from '../../lib/random'
 import {Camera} from '../../camera'
 import {MoverBoxes} from '../../stats/boxes'
 
@@ -20,7 +20,11 @@ export class AsteroidBase {
 
   m: Mover
 
-  constructor(public store: Store, public size = 20, pos: V2RO) {
+  constructor(
+    public store: Store,
+    public size = 20,
+    pos: V2RO,
+  ) {
     const {movers} = store
 
     const m = new Mover(pos, [size, size])
@@ -41,7 +45,7 @@ export class AsteroidBase {
 
       const p = V2.scale(
         V2.rotate([r1 * 0.25, 1 + r2 * 0.25], ((2 * Math.PI) / numPoints) * i),
-        size / 2.2
+        size / 2.2,
       )
 
       p[0] += 0.03
@@ -74,7 +78,7 @@ export class AsteroidBase {
       this.size / 20,
       x,
       y,
-      this.size / 2
+      this.size / 2,
     )
 
     gradient.addColorStop(0, '#7e7e7e')

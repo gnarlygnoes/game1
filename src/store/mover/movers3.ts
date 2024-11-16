@@ -1,7 +1,7 @@
 import {bucketIntersection, createBuckets} from './collisions'
-import {assert, time, timeEnd} from '../../misc/util'
+import {assert, time, timeEnd} from '../../lib/util'
 import {Camera} from '../../camera'
-import {Id} from '../cmp'
+import {Id} from '../../lib/cmp'
 import {Store} from '../store'
 import {Mover} from './mover'
 
@@ -129,7 +129,7 @@ function detectCollisions(
   x1: number,
   y1: number,
   x2: number,
-  y2: number
+  y2: number,
 ) {
   time(detectCollisions.name)
 
@@ -146,7 +146,7 @@ export function fillXBuckets(
   min: number,
   max: number,
   incrementSize: number,
-  movers: Movers3
+  movers: Movers3,
 ) {
   const buckets = createBuckets(min, max, incrementSize)
 
@@ -176,7 +176,7 @@ export function fillXBuckets(
 
   assert(
     buckets.length === length,
-    `Expected bucket length not to grow ${JSON.stringify(buckets)}`
+    `Expected bucket length not to grow ${JSON.stringify(buckets)}`,
   )
   return buckets
 }
@@ -185,7 +185,7 @@ export function fillYBuckets(
   min: number,
   max: number,
   incrementSize: number,
-  movers: Movers3
+  movers: Movers3,
 ) {
   const buckets = createBuckets(min, max, incrementSize)
 
@@ -214,7 +214,7 @@ export function fillYBuckets(
   }
   assert(
     buckets.length === length,
-    `Expected bucket length not to grow ${JSON.stringify(buckets)}`
+    `Expected bucket length not to grow ${JSON.stringify(buckets)}`,
   )
   return buckets
 }

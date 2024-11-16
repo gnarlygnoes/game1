@@ -1,5 +1,5 @@
 import {Asteroid} from './asteroid'
-import {Rand} from '../../misc/random'
+import {Rand} from '../../lib/random'
 import {Store} from '../../store/store'
 import {GameObjects} from '../../store/game-objects'
 

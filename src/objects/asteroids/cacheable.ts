@@ -1,4 +1,4 @@
-import {makeCanvas} from '../../misc/util'
+import {makeCanvas} from '../../lib/util'
 
 export class Cacheable {
   canvas: HTMLCanvasElement

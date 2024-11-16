@@ -1,7 +1,7 @@
 import {GoType} from '../../data-types/data-types'
 import {AsteroidBase} from './asteroid-base'
 import {V2} from '../../data-types/v2'
-import {Rand} from '../../misc/random'
+import {Rand} from '../../lib/random'
 import {Mineral} from './mineral'
 
 export class Asteroid extends AsteroidBase {
@@ -19,7 +19,7 @@ export class Asteroid extends AsteroidBase {
       const a = new Mineral(
         store,
         particleSize,
-        V2.add(m.position, [Rand.next(), -Rand.next()])
+        V2.add(m.position, [Rand.next(), -Rand.next()]),
       )
 
       a.m.direction = V2.rotate([0, 1], (360 / numParticles) * i)

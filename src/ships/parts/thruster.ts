@@ -1,5 +1,5 @@
 import {V2} from '../../data-types/v2'
-import {Random} from '../../misc/random'
+import {Random} from '../../lib/random'
 import {Camera} from '../../camera'
 import {Mover} from '../../store/mover/mover'
 
@@ -14,7 +14,7 @@ export class Thruster {
     public pos: V2,
     public width: number,
     public height: number,
-    public parent: Mover
+    public parent: Mover,
   ) {
     const r = new Random(0)
 
@@ -64,7 +64,7 @@ export class Thruster {
         px + xShift + lx + xPos,
         py + yShift + ly + y,
         2 * (0.1 + thrust),
-        2 * (0.1 + thrust)
+        2 * (0.1 + thrust),
       )
     }
   }

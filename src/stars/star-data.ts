@@ -1,5 +1,5 @@
 import {V2} from '../data-types/v2'
-import {Random} from '../misc/random'
+import {Random} from '../lib/random'
 
 export interface Star {
   v: V2
@@ -68,7 +68,7 @@ function generateStarTile(numStars: number): Star[] {
       v: [next(), next()],
       size: next(),
       colour: `hsl(${Math.round(next() * 255)}, ${Math.round(
-        next() * 20
+        next() * 20,
       )}%, ${Math.round(next() * 100)}%)`,
     })
   }

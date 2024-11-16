@@ -4,7 +4,7 @@ import {V2RO} from '../../data-types/v2'
 import {Store} from '../../store/store'
 import {Mover} from '../../store/mover/mover'
 import {MoverBoxes} from '../../stats/boxes'
-import {Noise} from '../../misc/perlin'
+import {Noise} from '../../lib/perlin'
 
 export class Planet {
   type = GoType.visual as const
@@ -13,7 +13,11 @@ export class Planet {
   id: number
   texture: number[][] = []
 
-  constructor(public store: Store, public size: number, pos: V2RO) {
+  constructor(
+    public store: Store,
+    public size: number,
+    pos: V2RO,
+  ) {
     const {movers} = store
 
     const m = new Mover(pos, [size, size])
@@ -83,7 +87,7 @@ export class Planet {
       size / 2 + y + yShift,
       size / 2,
       0,
-      Math.PI * 2
+      Math.PI * 2,
     )
     context.fill()
   }
@@ -107,7 +111,7 @@ export class Planet {
           x * tileSize + xShift + x1,
           y * tileSize + yShift + y1,
           tileSize,
-          tileSize
+          tileSize,
         )
       }
     }
