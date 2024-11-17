@@ -1,7 +1,7 @@
 import {Mover} from '../store/mover/mover'
 import {Store} from '../store/store'
 import {V2} from '../data-types/v2'
-import {Thruster} from '../ships/parts/thruster'
+import {Thruster} from '../objects/ships/thruster'
 import {Camera} from '../camera'
 import {MoverBoxes} from '../stats/boxes'
 import {GoType} from '../data-types/data-types'
@@ -36,7 +36,7 @@ export class Player {
       V2.add(this.m.position, [19, 38]),
       8,
       10,
-      this.m
+      this.m,
     )
   }
 

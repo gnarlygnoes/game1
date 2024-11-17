@@ -2,6 +2,8 @@ export class Input {
   constructor(
     public readonly code: string,
     public position = 0,
+
+    // Maybe we should only set attempted position on failure?
     public attemptedPosition = 0,
     public readonly len = code.length,
   ) {}

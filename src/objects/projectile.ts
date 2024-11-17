@@ -31,18 +31,18 @@ export class Projectile {
   colour = defaultColour
 
   constructor(
-    public store: Store,
-    public origin: Mover,
-    public originId: number,
+    readonly store: Store,
+    readonly origin: Mover,
+    readonly originId: number,
     side: 'left' | 'right',
-    public damage = 7
+    readonly damage = 7,
   ) {
     const {movers, gameObjects} = store
 
     let p = origin.center
 
     const angle = V2.angle(origin.direction)
-    
+
     if (side === 'left') {
       p = V2.add(p, V2.rotate([-10, -6], angle))
     } else {
@@ -57,7 +57,7 @@ export class Projectile {
       V2.empty,
       0,
       0.05,
-      100
+      100,
     )
 
     this.id = this.m.id
@@ -122,7 +122,7 @@ export class Projectile {
       } else {
         this.size = Math.min(
           (hitDuration * defaultSize) / hitAnimationTimeLeft,
-          this.maxSize
+          this.maxSize,
         )
       }
     }
