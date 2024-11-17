@@ -22,14 +22,15 @@ export type GO =
   | Planet
 
 export class GameObjects {
-  targetLocation = new TargetLocation(this.store)
-
   objects: Map<number, GO> = new Map()
-
-  player = new Player(this.store)
-  stats = new Stats(this.store)
+  stats
+  player
+  targetLocation
 
   constructor(public store: Store) {
+    this.stats = new Stats(store)
+    this.player = new Player(this.store)
+    this.targetLocation = new TargetLocation(this.store)
     if (__JEST__) return
 
     // this.scratch(store)

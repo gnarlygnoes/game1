@@ -11,13 +11,9 @@ const useCache = false
 
 export class AsteroidBase {
   points: V2[] = []
-
   id: number
-
-  health = this.size
-
-  cache = useCache ? new Cacheable(this.size * 1.2) : null
-
+  health: number
+  cache
   m: Mover
 
   constructor(
@@ -26,6 +22,8 @@ export class AsteroidBase {
     pos: V2RO,
   ) {
     const {movers} = store
+    this.health = size
+    this.cache = useCache ? new Cacheable(this.size * 1.2) : null
 
     const m = new Mover(pos, [size, size])
     this.m = m
