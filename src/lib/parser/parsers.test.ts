@@ -3,6 +3,7 @@ import {
   char,
   int,
   number,
+  or,
   parse,
   takeCharWhile,
   uint,
@@ -70,9 +71,16 @@ describe(untilS.name, () => {
 })
 
 describe(and.name, () => {
-  test('', () => {
+  test('aaabaa', () => {
     const out = parse(and(word('aaa'), word('baa')), 'aaabaa')
     expect(out).toBeTruthy()
+  })
+})
+
+describe(or.name, () => {
+  test('a or b', () => {
+    const out = parse(or(char('a'), char('b')), 'a')
+    expect(out).toEqual('a')
   })
 })
 

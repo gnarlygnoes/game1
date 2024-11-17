@@ -58,14 +58,11 @@ function isAlphaNumeric(str: string): boolean {
 
 export function char<T extends string>(c: T): Parser<T> {
   return input => {
-    const r = input.nextChar()
-    let result: T | null = null
-
-    if (r === c) {
+    if (input.nextChar() === c) {
       input.advance()
-      result = c
+      return c
     }
-    return result
+    return null
   }
 }
 
@@ -128,7 +125,7 @@ export function regex(re: RegExp): Parser<string> {
   }
 }
 
-export function or<T extends any[]>(...parsers: T): Parser<T> {
+export function or<T>(...parsers: Parser<T>[]): Parser<T> {
   return input => {
     for (const p of parsers) {
       const result = p(input)
