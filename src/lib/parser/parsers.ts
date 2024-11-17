@@ -3,7 +3,7 @@ import {Parser} from './types'
 import {isString} from './util'
 
 // Parses spaces, tabs and line endings.
-export const ___: Parser<''> = optionalWhiteSpace()
+export const ws: Parser<''> = optionalWhiteSpace()
 
 /** @deprecated */
 export const number: Parser<string> = regex(/-?(\d+(\.\d+)?)/)
@@ -15,6 +15,16 @@ export const int = map(and(or(char('-'), optionalWhiteSpace()), uint), res => {
 })
 
 export const untilLineEnd = takeCharWhile(c => !isLineEnd(c))
+
+// Doesn't handle escaped quotes?
+export const stringLiteral = map(
+  and(
+    char('"'),
+    takeCharWhile(c => c !== '"'),
+    char('"'),
+  ),
+  res => res[1],
+)
 
 function isLineEnd(val: string): boolean {
   return val === '\n' || val === '\r\n' || val == '\r'
@@ -28,6 +38,22 @@ function isWhiteSpace(val: string): boolean {
 function isDigit(char: string): boolean {
   const code = char.charCodeAt(0)
   return code >= 48 && code <= 57 // ASCII codes for '0' to '9'
+}
+
+function isAlphaNumeric(str: string): boolean {
+  const len = str.length
+  for (let i = 0; i < len; i++) {
+    const code = str.charCodeAt(i)
+    if (
+      !(code > 47 && code < 58) && // numeric (0-9)
+      !(code > 64 && code < 91) && // upper alpha (A-Z)
+      !(code > 96 && code < 123)
+    ) {
+      // lower alpha (a-z)
+      return false
+    }
+  }
+  return true
 }
 
 export function char<T extends string>(c: T): Parser<T> {
@@ -50,6 +76,8 @@ export function anyChar(): Parser<string> {
     return c
   }
 }
+
+export const anyWord = takeCharWhile(c => isAlphaNumeric(c))
 
 export function nothing(): Parser<''> {
   return () => {
@@ -191,7 +219,7 @@ export function many1<T>(parser: Parser<T>): Parser<T[]> {
 export function repSep<T>(parser: Parser<T>, separator: string): Parser<T[]> {
   return input => {
     const results: T[] = []
-    const sepParser = and(___, word(separator), ___)
+    const sepParser = and(ws, word(separator), ws)
     let result: T | null = parser(input)
 
     while (result !== null) {
