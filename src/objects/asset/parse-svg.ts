@@ -3,7 +3,6 @@ import {
   anyWord,
   char,
   map,
-  or,
   or2,
   parse,
   repParserSep,
@@ -22,58 +21,46 @@ class Tag {
 }
 
 export function parseSvg(text: string): Tag | null {
-  const parser = new ParseSvg()
-  return parse(parser.parseTag, text)
+  return parse(parseTag, text)
 }
 
-// We use a class to use getters to avoid calling with () and make a mistake.
 // Order is important.
-class ParseSvg {
-  private readonly parseCloseTag: Parser<string> = map(
-    and(word('</'), anyWord, char('>')),
-    res => res[1],
-  )
+const parseCloseTag: Parser<string> = map(
+  and(word('</'), anyWord, char('>')),
+  res => res[1],
+)
 
-  private readonly parseAttr: Parser<{name: string; value: string}> = map(
-    and(anyWord, char('='), stringLiteral),
-    ([name, , value]) => ({
-      name,
-      value,
-    }),
-  )
+const parseAttr: Parser<{name: string; value: string}> = map(
+  and(anyWord, char('='), stringLiteral),
+  ([name, , value]) => ({
+    name,
+    value,
+  }),
+)
 
-  private readonly parseEnd: Parser<Tag[]> = map(word('/>'), _ => [])
+const parseEnd: Parser<Tag[]> = map(word('/>'), _ => [])
 
-  private readonly parseEndOrChildren: Parser<Tag[]> = or2(
-    () => this.parseEnd,
-    () => this.parseChildren,
-  )
+// Need to use or2 here to break the recursion cycle.
+const parseEndOrChildren: Parser<Tag[]> = or2(
+  () => parseEnd,
+  () => parseChildren,
+)
 
-  get parseTag(): Parser<Tag> {
-    const {parseAttr, parseEndOrChildren} = this
+const parseTag: Parser<Tag> = map(
+  and(
+    char('<'),
+    anyWord,
+    ws,
+    repParserSep(parseAttr, ws),
+    parseEndOrChildren,
+    ws,
+  ),
+  ([, name, , attr, children]) => {
+    return new Tag(name, attr, children)
+  },
+)
 
-    return map(
-      and(
-        char('<'),
-        anyWord,
-        ws,
-        repParserSep(parseAttr, ws),
-        parseEndOrChildren,
-        ws,
-      ),
-      ([, name, , attr, children]) => {
-        return new Tag(name, attr, children)
-      },
-    )
-  }
-
-  // We need at least on parser a function to break the dependency cycle.
-  private get parseChildren(): Parser<Tag[]> {
-    const {parseTag, parseCloseTag} = this
-
-    return map(
-      and(char('>'), ws, repParserSep(parseTag, ws), ws, parseCloseTag),
-      res => res[2],
-    )
-  }
-}
+const parseChildren: Parser<Tag[]> = map(
+  and(char('>'), ws, repParserSep(parseTag, ws), ws, parseCloseTag),
+  res => res[2],
+)
