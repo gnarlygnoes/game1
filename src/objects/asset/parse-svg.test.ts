@@ -2,7 +2,8 @@ import {parseSvg} from './parse-svg'
 
 describe(parseSvg.name, () => {
   test('basic', () => {
-    parseSvg('<svg width="100"/>')
+    const res = parseSvg('<svg width="100"/>')
+    console.log(res)
     // parseSvg('<svg width="100"></svg>')
   })
 })

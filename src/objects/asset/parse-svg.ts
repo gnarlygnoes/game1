@@ -27,12 +27,12 @@ export function parseSvg(text: string): Tag | null {
 
 // We use a class to use getters to avoid calling with () and make a mistake.
 class ParseSvg {
-  parseCloseTag: Parser<string> = map(
+  private parseCloseTag: Parser<string> = map(
     and(word('</'), anyWord, char('>')),
     res => res[1],
   )
 
-  parseAttr: Parser<{name: string; value: string}> = map(
+  private parseAttr: Parser<{name: string; value: string}> = map(
     and(anyWord, char('='), stringLiteral),
     ([name, , value]) => ({
       name,
@@ -40,9 +40,12 @@ class ParseSvg {
     }),
   )
 
-  parseEnd: Parser<Tag[]> = map(word('/>'), _ => [])
+  private parseEnd: Parser<Tag[]> = map(word('/>'), _ => [])
 
-  parseEndOrChildren: Parser<Tag[]> = or(this.parseEnd, this.parseChildren)
+  private parseEndOrChildren: Parser<Tag[]> = or(
+    this.parseEnd,
+    this.parseChildren,
+  )
 
   parseTag: Parser<Tag> = map(
     and(
@@ -58,15 +61,13 @@ class ParseSvg {
     },
   )
 
-  // We make a different instance to avoid an infinite initialisation loop.
-  parseChildTag: Parser<Tag> = this.parseTag
-
-  get parseChildren(): Parser<Tag[]> {
+  // We need at least on parser a function to break the dependency cycle.
+  private get parseChildren(): Parser<Tag[]> {
     return map(
       and(
         char('>'),
         ws,
-        repParserSep(this.parseChildTag, ws),
+        repParserSep(this.parseTag, ws),
         ws,
         this.parseCloseTag,
       ),
