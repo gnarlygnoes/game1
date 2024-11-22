@@ -12,7 +12,7 @@ import {
 } from '../../lib/parser/parsers'
 import {Parser} from '../../lib/parser/types'
 
-class Tag {
+export class Tag {
   constructor(
     readonly name: string,
     readonly attr: {name: string; value: string}[],
