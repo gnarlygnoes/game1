@@ -4,6 +4,7 @@ import {
   char,
   map,
   or,
+  or2,
   parse,
   repParserSep,
   stringLiteral,
@@ -26,13 +27,14 @@ export function parseSvg(text: string): Tag | null {
 }
 
 // We use a class to use getters to avoid calling with () and make a mistake.
+// Order is important.
 class ParseSvg {
-  private parseCloseTag: Parser<string> = map(
+  private readonly parseCloseTag: Parser<string> = map(
     and(word('</'), anyWord, char('>')),
     res => res[1],
   )
 
-  private parseAttr: Parser<{name: string; value: string}> = map(
+  private readonly parseAttr: Parser<{name: string; value: string}> = map(
     and(anyWord, char('='), stringLiteral),
     ([name, , value]) => ({
       name,
@@ -40,37 +42,37 @@ class ParseSvg {
     }),
   )
 
-  private parseEnd: Parser<Tag[]> = map(word('/>'), _ => [])
+  private readonly parseEnd: Parser<Tag[]> = map(word('/>'), _ => [])
 
-  private parseEndOrChildren: Parser<Tag[]> = or(
-    this.parseEnd,
-    this.parseChildren,
+  private readonly parseEndOrChildren: Parser<Tag[]> = or2(
+    () => this.parseEnd,
+    () => this.parseChildren,
   )
 
-  parseTag: Parser<Tag> = map(
-    and(
-      char('<'),
-      anyWord,
-      ws,
-      repParserSep(this.parseAttr, ws),
-      this.parseEndOrChildren,
-      ws,
-    ),
-    ([, name, , attr, children]) => {
-      return new Tag(name, attr, children)
-    },
-  )
+  get parseTag(): Parser<Tag> {
+    const {parseAttr, parseEndOrChildren} = this
+
+    return map(
+      and(
+        char('<'),
+        anyWord,
+        ws,
+        repParserSep(parseAttr, ws),
+        parseEndOrChildren,
+        ws,
+      ),
+      ([, name, , attr, children]) => {
+        return new Tag(name, attr, children)
+      },
+    )
+  }
 
   // We need at least on parser a function to break the dependency cycle.
   private get parseChildren(): Parser<Tag[]> {
+    const {parseTag, parseCloseTag} = this
+
     return map(
-      and(
-        char('>'),
-        ws,
-        repParserSep(this.parseTag, ws),
-        ws,
-        this.parseCloseTag,
-      ),
+      and(char('>'), ws, repParserSep(parseTag, ws), ws, parseCloseTag),
       res => res[2],
     )
   }

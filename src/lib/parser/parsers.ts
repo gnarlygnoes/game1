@@ -144,6 +144,21 @@ export function or<T>(...parsers: Parser<T>[]): Parser<T> {
   }
 }
 
+type Parser2<T> = () => Parser<T>
+
+export function or2<T>(...parsers: Parser2<T>[]): Parser<T> {
+  return input => {
+    for (const p of parsers) {
+      const result = p()(input)
+
+      if (result !== null) {
+        return result
+      }
+    }
+    return null
+  }
+}
+
 // Need to test this.
 export function and<T extends any[]>(
   ...parsers: {[K in keyof T]: Parser<T[K]>}
