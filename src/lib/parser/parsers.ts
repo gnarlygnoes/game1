@@ -1,6 +1,7 @@
 import {Input} from './input'
 import {Parser} from './types'
 import {isString} from './util'
+import {c} from '../../../fiend-ui/src'
 
 // Parses spaces, tabs and line endings.
 export const ws: Parser<''> = optionalWhiteSpace()
@@ -100,10 +101,15 @@ export function word(str: string): Parser<string> {
 
 export function optionalWhiteSpace(): Parser<''> {
   return input => {
-    while (isWhiteSpace(input.nextChar())) {
-      input.advance()
-    }
+    const {code, position} = input
 
+    for (let i = position; i < code.length; i++) {
+      const c = code[i]
+      if (!isWhiteSpace(c)) {
+        input.setPosition(i)
+        return ''
+      }
+    }
     return '' as const
   }
 }

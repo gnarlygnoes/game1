@@ -1,14 +1,14 @@
 import {
-  ws,
   and,
   anyWord,
   char,
   map,
   or,
+  parse,
   repParserSep,
   stringLiteral,
   word,
-  parse,
+  ws,
 } from '../../lib/parser/parsers'
 import {Parser} from '../../lib/parser/types'
 
@@ -20,43 +20,57 @@ class Tag {
   ) {}
 }
 
-export function parseSvg(text: string) {
-  const result = parse(parseTag, text)
-  console.log(result)
+export function parseSvg(text: string): Tag | null {
+  const parser = new ParseSvg()
+  return parse(parser.parseTag, text)
 }
 
-function parseTag(): Parser<Tag> {
-  return map(
+// We use a class to use getters to avoid calling with () and make a mistake.
+class ParseSvg {
+  parseCloseTag: Parser<string> = map(
+    and(word('</'), anyWord, char('>')),
+    res => res[1],
+  )
+
+  parseAttr: Parser<{name: string; value: string}> = map(
+    and(anyWord, char('='), stringLiteral),
+    ([name, , value]) => ({
+      name,
+      value,
+    }),
+  )
+
+  parseEnd: Parser<Tag[]> = map(word('/>'), _ => [])
+
+  parseEndOrChildren: Parser<Tag[]> = or(this.parseEnd, this.parseChildren)
+
+  parseTag: Parser<Tag> = map(
     and(
       char('<'),
       anyWord,
       ws,
-      repParserSep(parseAttr, ws),
-      parseEndOrChildren(),
+      repParserSep(this.parseAttr, ws),
+      this.parseEndOrChildren,
       ws,
     ),
     ([, name, , attr, children]) => {
       return new Tag(name, attr, children)
     },
   )
-}
 
-const parseAttr = map(and(anyWord, char('='), stringLiteral), res => ({
-  name: res[0],
-  value: res[2],
-}))
+  // We make a different instance to avoid an infinite initialisation loop.
+  parseChildTag: Parser<Tag> = this.parseTag
 
-const parseEnd: Parser<Tag[]> = map(word('/>'), _ => [])
-
-function parseEndOrChildren(): Parser<Tag[]> {
-  return or(parseEnd, parseChildren())
-}
-
-const parseCloseTag = map(and(word('</'), anyWord, char('>')), res => res[1])
-
-function parseChildren(): Parser<Tag[]> {
-  return map(
-    and(char('>'), ws, repParserSep(parseTag(), ws), ws, parseCloseTag),
-    res => res[2],
-  )
+  get parseChildren(): Parser<Tag[]> {
+    return map(
+      and(
+        char('>'),
+        ws,
+        repParserSep(this.parseChildTag, ws),
+        ws,
+        this.parseCloseTag,
+      ),
+      res => res[2],
+    )
+  }
 }
