@@ -1,4 +1,6 @@
 import {makeMoversArray, MoverView} from './mover-array'
+import {describe, test} from 'node:test'
+import expect from 'expect'
 
 describe(makeMoversArray.name, () => {
   test('setting px and py', () => {
@@ -64,7 +66,10 @@ describe('Vec2 stuff', () => {
   })
 
   class Vec {
-    constructor(public x: number, public y: number) {}
+    constructor(
+      public x: number,
+      public y: number,
+    ) {}
   }
 
   test('perf2', () => {

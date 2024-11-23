@@ -1,3 +1,6 @@
+import {describe, test} from 'node:test'
+import expect from 'expect'
+
 describe('Compare object construction', () => {
   const n = 1000_000
 
@@ -49,7 +52,10 @@ describe('Compare object construction', () => {
     console.time('class')
 
     class V2 {
-      constructor(public x: number, public y: number) {}
+      constructor(
+        public x: number,
+        public y: number,
+      ) {}
     }
 
     const array: V2[] = []

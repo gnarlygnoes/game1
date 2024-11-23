@@ -1,4 +1,6 @@
 import {V2} from './v2'
+import {describe, test} from 'node:test'
+import expect from 'expect'
 
 describe('normaliseV2', () => {
   function len([x, y]: V2): number {

@@ -1,4 +1,6 @@
 import {Cmp, Cmp2, Id} from './cmp'
+import {describe, test} from 'node:test'
+import expect from 'expect'
 
 describe('Cmp', () => {
   test('put stuff in', () => {

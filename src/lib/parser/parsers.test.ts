@@ -12,6 +12,8 @@ import {
   word,
 } from './parsers'
 import {Input} from './input'
+import {describe, it, test} from 'node:test'
+import expect from 'expect'
 
 describe('test built in parsers', () => {
   it('untilLineEnd', () => {

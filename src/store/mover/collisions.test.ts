@@ -7,6 +7,8 @@ import {
 } from './collisions'
 import {Store} from '../store'
 import {store2Ids} from './mover-ids'
+import {describe, test} from 'node:test'
+import expect from 'expect'
 
 describe(detectCollisions.name, () => {
   const movers = new Map<number, Mover>()
@@ -80,7 +82,7 @@ describe(bucketIntersection.name, () => {
         [1, 2],
         [2, 3],
       ],
-      [[3, 2]]
+      [[3, 2]],
     )
 
     expect(result).toEqual([])
@@ -94,7 +96,7 @@ describe(bucketIntersection.name, () => {
         [2, 3, 4],
         [2, 3],
       ],
-      [[3, 2]]
+      [[3, 2]],
     )
 
     expect(result).toEqual([])

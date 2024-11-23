@@ -1,6 +1,8 @@
 import {parseSvg, Tag} from './parse-svg'
 import * as path from 'node:path'
 import {readFileSync} from 'fs'
+import {describe, test} from 'node:test'
+import expect from 'expect'
 
 describe(parseSvg.name, () => {
   test('basic', () => {
