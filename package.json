@@ -3,19 +3,17 @@
   "version": "0.0.1",
   "description": "2D ship battle game set in space",
   "scripts": {
-    "start": "node config.dev.mjs --watch",
-    "check": "tsc --watch --noEmit",
-    "test": "tsx --test src/*.test.ts src/*/*.test.ts src/*/*/*.test.ts src/*/*/*/*.test.ts",
-    "testAll": "jest --config ./jest.config.js"
+    "start": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "test": "vitest"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@types/node": "^22.9.2",
-    "esbuild": "^0.24.0",
-    "expect": "^29.7.0",
-    "prettier": "^3.3.3",
-    "tsx": "^4.19.2",
-    "typescript": "^5.7.2"
+    "@types/node": "^22.9.3",
+    "typescript": "~5.7.2",
+    "vite": "^5.4.11",
+    "vitest": "^2.1.5"
   }
 }

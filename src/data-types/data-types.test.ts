@@ -1,5 +1,4 @@
-import {describe, test} from 'node:test'
-import expect from 'expect'
+import {describe, expect, test} from "vitest"
 
 describe('Compare object construction', () => {
   const n = 1000_000
@@ -29,7 +28,7 @@ describe('Compare object construction', () => {
   test('object', () => {
     console.time('object')
 
-    const array: {x: number; y: number}[] = []
+    const array: { x: number; y: number }[] = []
 
     let x = 0
     let y = 0
@@ -55,7 +54,8 @@ describe('Compare object construction', () => {
       constructor(
         public x: number,
         public y: number,
-      ) {}
+      ) {
+      }
     }
 
     const array: V2[] = []

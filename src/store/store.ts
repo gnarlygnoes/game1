@@ -3,7 +3,6 @@ import {Controls} from '../player/controls'
 import {Movers} from './mover/movers'
 import {Camera} from '../camera'
 import {V2RO} from '../data-types/v2'
-import {Movers3} from './mover/movers3'
 
 export class Store {
   targetPos: V2RO | null = null

@@ -13,14 +13,14 @@ export class Player {
   type = GoType.player as const
 
   health = 1000
-  shipImage = document.createElement('img')
+  shipImage = __VITEST__ ? {src: ''} as HTMLImageElement : document.createElement('img')
 
   m: Mover
   thruster: Thruster
   weapon: Weapon
 
   constructor(public store: Store) {
-    if (!__JEST__) {
+    if (!__VITEST__) {
       this.shipImage.src = spaceShip
     }
 
@@ -89,7 +89,9 @@ export class Player {
     ctx.rotate(angle)
     ctx.translate(-x - w2, -y - h2)
 
-    ctx.drawImage(this.shipImage, x, y, w, h)
+    if (!__VITEST__) {
+      ctx.drawImage(this.shipImage, x, y, w, h)
+    }
 
     if (this.store.controls.thrust > 0) this.thruster.draw(ctx, camera)
 

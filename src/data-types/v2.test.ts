@@ -1,6 +1,5 @@
+import {describe, expect, test} from 'vitest'
 import {V2} from './v2'
-import {describe, test} from 'node:test'
-import expect from 'expect'
 
 describe('normaliseV2', () => {
   function len([x, y]: V2): number {
@@ -103,7 +102,8 @@ describe('Try find best struct', () => {
   const n = 1000_000
 
   class S {
-    constructor(a: number, b: V2, c: V2, d: V2) {}
+    constructor(a: number, b: V2, c: V2, d: V2) {
+    }
   }
 
   test('class', () => {

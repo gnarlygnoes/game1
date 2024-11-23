@@ -40,6 +40,7 @@ export class Controls {
   }
 
   constructor(private store: Store) {
+    if (__VITEST__) return
     // new TouchControls2(store, this)
 
     addEventListener('keydown', e => {

@@ -1,6 +1,5 @@
+import {describe, expect, test} from 'vitest'
 import {parseTransform} from './transform'
-import {describe, test} from 'node:test'
-import expect from 'expect'
 
 describe('parseTransform', () => {
   test('matrix(-1 0 0 1 40 176)', () => {

@@ -1,6 +1,5 @@
 import {store2Ids, unPackIds} from './mover-ids'
-import {describe, test} from 'node:test'
-import expect from 'expect'
+import {describe, expect, test} from "vitest";
 
 describe(store2Ids.name, () => {
   test('123, 321', () => {

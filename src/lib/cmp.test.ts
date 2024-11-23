@@ -1,10 +1,9 @@
+import {describe, expect, test} from 'vitest';
 import {Cmp, Cmp2, Id} from './cmp'
-import {describe, test} from 'node:test'
-import expect from 'expect'
 
 describe('Cmp', () => {
   test('put stuff in', () => {
-    type Pos = {x: number; y: number}
+    type Pos = { x: number; y: number }
     let id: Id = 0
 
     const cmp = new Cmp<Pos>()
@@ -17,7 +16,7 @@ describe('Cmp', () => {
 
 describe('Cmp2', () => {
   test('put stuff in', () => {
-    type Pos = {x: number; y: number; deleted?: true}
+    type Pos = { x: number; y: number; deleted?: true }
 
     const cmp = new Cmp2<Pos>({x: 0, y: 0})
     cmp.set(0, {x: 1, y: 1})

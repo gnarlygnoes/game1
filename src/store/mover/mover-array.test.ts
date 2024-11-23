@@ -1,6 +1,5 @@
+import {describe, expect, test} from 'vitest'
 import {makeMoversArray, MoverView} from './mover-array'
-import {describe, test} from 'node:test'
-import expect from 'expect'
 
 describe(makeMoversArray.name, () => {
   test('setting px and py', () => {
@@ -69,7 +68,8 @@ describe('Vec2 stuff', () => {
     constructor(
       public x: number,
       public y: number,
-    ) {}
+    ) {
+    }
   }
 
   test('perf2', () => {

@@ -1,19 +1,6 @@
-import {
-  and,
-  char,
-  int,
-  number,
-  or,
-  parse,
-  takeCharWhile,
-  uint,
-  untilLineEnd,
-  untilS,
-  word,
-} from './parsers'
+import {and, char, int, number, or, parse, takeCharWhile, uint, untilLineEnd, untilS, word,} from './parsers'
 import {Input} from './input'
-import {describe, it, test} from 'node:test'
-import expect from 'expect'
+import {describe, expect, it, test} from 'vitest'
 
 describe('test built in parsers', () => {
   it('untilLineEnd', () => {
@@ -65,11 +52,13 @@ describe('int', () => {
 })
 
 describe(untilS.name, () => {
-  const input = new Input('abcdefghijklmnomg')
-  const res = untilS('omg')(input)
-  expect(res).toBeTruthy()
-  expect(res).toEqual('abcdefghijklmn')
-  expect(input.endOfInput()).toBeTruthy()
+  test('up to omg', () => {
+    const input = new Input('abcdefghijklmnomg')
+    const res = untilS('omg')(input)
+    expect(res).toBeTruthy()
+    expect(res).toEqual('abcdefghijklmn')
+    expect(input.endOfInput()).toBeTruthy()
+  })
 })
 
 describe(and.name, () => {

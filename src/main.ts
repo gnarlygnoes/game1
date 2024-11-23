@@ -1,4 +1,4 @@
-import './index.css'
+import './style.css'
 import {$Component, c, Div, render} from '../fiend-ui/src'
 import {Stage} from './stage/stage'
 import {Hud} from './hud/hud'

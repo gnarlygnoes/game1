@@ -1,14 +1,9 @@
 import {Mover} from './mover'
-import {
-  bucketIntersection,
-  detectCollisions,
-  fillXBuckets,
-  getAllPairsAsIds,
-} from './collisions'
+import {bucketIntersection, detectCollisions, fillXBuckets, getAllPairsAsIds,} from './collisions'
 import {Store} from '../store'
 import {store2Ids} from './mover-ids'
-import {describe, test} from 'node:test'
-import expect from 'expect'
+import {describe, expect, test} from 'vitest'
+
 
 describe(detectCollisions.name, () => {
   const movers = new Map<number, Mover>()

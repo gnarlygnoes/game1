@@ -7,6 +7,7 @@ import {Store} from '../../store/store'
 import {chaseShip, matchVelocity, similarVelocity} from '../chase'
 import {Projectile} from '../projectile'
 import {Weapon} from '../weapon'
+import shipUrl from '../../player/spaceShips_003.png'
 
 export class EnemyShip {
   id: number
@@ -29,8 +30,8 @@ export class EnemyShip {
 
     this.weapon = new Weapon(store, this.m, this.id, 7)
 
-    if (!__JEST__) {
-      this.shipImage.src = require('../../player/spaceShips_003.png')
+    if (!__VITEST__) {
+      this.shipImage.src = shipUrl
     }
   }
 

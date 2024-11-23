@@ -31,7 +31,7 @@ export class GameObjects {
     this.stats = new Stats(store)
     this.player = new Player(this.store)
     this.targetLocation = new TargetLocation(this.store)
-    if (__JEST__) return
+    if (__VITEST__) return
 
     // this.scratch(store)
     this.initGame(store)

@@ -1,6 +1,5 @@
+import {describe, expect, test} from 'vitest'
 import {Random} from './random'
-import {describe, test} from 'node:test'
-import expect from 'expect'
 
 describe('random', () => {
   test('nextInt', () => {
