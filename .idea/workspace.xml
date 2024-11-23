@@ -5,31 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7d9e59d8-552d-40fc-94a1-f3660ab746c5" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/IntelliLang.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/patience.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/prettier.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/prettier.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.swcrc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/jest.config.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data-types/data-types.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/data-types/data-types.test.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data-types/v2.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/data-types/v2.test.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/cmp.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/cmp.test.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/parser/parsers.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/parser/parsers.test.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/random.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/random.test.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/objects/asset/parse-svg.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/objects/asset/parse-svg.test.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/objects/asset/transform.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/objects/asset/transform.test.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/mover/collisions.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/mover/collisions.test.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/mover/mover-array.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/mover/mover-array.test.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/mover/mover-ids.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/mover/mover-ids.test.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webpack.common.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/webpack.dev.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/webpack.prod.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,6 +42,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Node.js Test Runner.detectCollisions.name.executor": "Debug",
     "Node.js Test Runner.makeMoversArray.name.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.go.formatter.settings.were.checked": "true",
@@ -73,6 +50,7 @@
     "git-widget-placeholder": "esbuild",
     "go.import.settings.migrated": "true",
     "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/Users/Toby/Repos/test-vite",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
@@ -134,7 +112,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1732332061461</updated>
-      <workItem from="1732332063170" duration="623000" />
+      <workItem from="1732332063170" duration="2060000" />
     </task>
     <servers />
   </component>
