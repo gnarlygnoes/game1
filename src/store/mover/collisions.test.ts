@@ -1,12 +1,17 @@
 import {Mover} from './mover'
-import {bucketIntersection, detectCollisions, fillXBuckets, getAllPairsAsIds,} from './collisions'
+import {
+  bucketIntersection,
+  detectCollisions,
+  fillXBuckets,
+  getAllPairsAsIds,
+} from './collisions'
 import {Store} from '../store'
 import {store2Ids} from './mover-ids'
 import {describe, expect, test} from 'vitest'
-
+import {CmpMap} from '../../lib/cmp.ts'
 
 describe(detectCollisions.name, () => {
-  const movers = new Map<number, Mover>()
+  const movers = new CmpMap<Mover>()
 
   movers.set(0, new Mover([20, 20]))
   movers.set(0, new Mover([20, 20]))
@@ -20,7 +25,7 @@ describe(detectCollisions.name, () => {
 
 describe(fillXBuckets.name, () => {
   test('2 colliding boxes', () => {
-    const movers = new Map<number, Mover>()
+    const movers = new CmpMap<Mover>()
 
     const m1 = new Mover([20, 20], [20, 20])
     const m2 = new Mover([30, 30], [20, 20])
@@ -34,7 +39,7 @@ describe(fillXBuckets.name, () => {
   })
 
   test('2 boxes', () => {
-    const movers = new Map<number, Mover>()
+    const movers = new CmpMap<Mover>()
 
     let id = 0
 

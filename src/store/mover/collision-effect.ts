@@ -1,10 +1,11 @@
 import {Mover} from './mover'
 import {V2, V2RO} from '../../data-types/v2'
+import {CmpI} from '../../lib/cmp.ts'
 
 export function confirmCollision(
   idA: number,
   idB: number,
-  movers: Map<number, Mover>
+  movers: CmpI<Mover>,
 ): boolean {
   const mA = movers.get(idA)
   const mB = movers.get(idB)
@@ -15,11 +16,7 @@ export function confirmCollision(
   return false
 }
 
-export function collisionEffect(
-  idA: number,
-  idB: number,
-  movers: Map<number, Mover>
-) {
+export function collisionEffect(idA: number, idB: number, movers: CmpI<Mover>) {
   const mA = movers.get(idA)
   const mB = movers.get(idB)
 

@@ -3,7 +3,7 @@ import {generateStars, transformStars} from './star-data'
 import {GoType} from '../data-types/data-types'
 import {Camera} from '../camera'
 import {Mover} from '../store/mover/mover'
-import {nextEntityId} from '../store/mover/mover-ids'
+import {nextEntityId} from '../lib/cmp.ts'
 
 export class Stars {
   id = nextEntityId()
@@ -31,7 +31,7 @@ export class Stars {
   drawBackground(
     ctx: CanvasRenderingContext2D,
     pageWidth: number,
-    pageHeight: number
+    pageHeight: number,
   ) {
     ctx.fillStyle = `rgb(0, 0, 0)`
     ctx.fillRect(0, 0, pageWidth, pageHeight)
@@ -41,7 +41,7 @@ export class Stars {
     ctx: CanvasRenderingContext2D,
     pageWidth: number,
     pageHeight: number,
-    mover: Mover
+    mover: Mover,
   ) {
     const {
       position: [x, y],

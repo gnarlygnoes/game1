@@ -1,15 +1,5 @@
 import {V2} from '../../data-types/v2'
 
-let nextId = 0
-
-export function nextEntityId(): number {
-  const id = nextId
-
-  nextId++
-
-  return id
-}
-
 const scale = 100_000_000
 
 // Takes positive integer ids

@@ -1,8 +1,10 @@
 export type V2 = [number, number]
+
+// TODO: Should we be reusing these instead of making lots of copies?
 export type V2RO = Readonly<V2>
 
 export namespace V2 {
-  export const empty: V2RO = [0, 0]
+  export const empty: V2 = [0, 0]
 
   export function normalise(v: V2): V2 {
     const [x, y] = v

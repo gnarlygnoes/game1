@@ -1,6 +1,6 @@
 import {V2, V2RO} from '../../data-types/v2'
 import {Camera} from '../../camera'
-import {nextEntityId} from './mover-ids'
+import {nextEntityId} from '../../lib/cmp.ts'
 
 export class Mover {
   id = nextEntityId()
@@ -23,7 +23,7 @@ export class Mover {
 
     public maxVelocity = 10,
 
-    public visible = true
+    public visible = true,
   ) {}
 
   get center(): V2RO {
@@ -54,7 +54,7 @@ export function updateMover(mover: Mover, timeSince: number, camera: Camera) {
   if (mover.thrust[0] !== 0 || mover.thrust[1] !== 0) {
     mover.velocity = V2.limitMagnitude(
       V2.add(mover.velocity, V2.scale(mover.thrust, timeSince / 100)),
-      mover.maxVelocity
+      mover.maxVelocity,
     )
   }
 

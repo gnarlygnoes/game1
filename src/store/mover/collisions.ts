@@ -5,12 +5,13 @@ import type {Store} from '../store'
 import {GoType} from '../../data-types/data-types'
 import {store2Ids, unPackIds} from './mover-ids'
 import {collisionEffect, confirmCollision} from './collision-effect'
+import {CmpI} from '../../lib/cmp.ts'
 
 const INCREMENT_SIZE = 10
 
 export function detectCollisions(
   store: Store,
-  movers: Map<number, Mover>,
+  movers: CmpI<Mover>,
   [x1, y1]: V2RO,
   [x2, y2]: V2RO,
 ) {
@@ -46,7 +47,7 @@ export function fillXBuckets(
   min: number,
   max: number,
   incrementSize: number,
-  movers: Map<number, Mover>,
+  movers: CmpI<Mover>,
 ) {
   const buckets = createBuckets(min, max, incrementSize)
 
@@ -62,7 +63,7 @@ export function fillXBuckets(
     size: [w],
     id,
     visible,
-  } of movers.values()) {
+  } of movers) {
     if (!visible) continue
 
     const x = position[0] + pixelShift
@@ -89,7 +90,7 @@ export function fillYBuckets(
   min: number,
   max: number,
   incrementSize: number,
-  movers: Map<number, Mover>,
+  movers: CmpI<Mover>,
 ) {
   const buckets = createBuckets(min, max, incrementSize)
 
@@ -100,7 +101,7 @@ export function fillYBuckets(
   min += pixelShift
   max += pixelShift
 
-  for (const {position, size, id, visible} of movers.values()) {
+  for (const {position, size, id, visible} of movers) {
     if (!visible) continue
 
     const h = size[1]

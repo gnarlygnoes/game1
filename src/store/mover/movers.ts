@@ -2,16 +2,16 @@ import {Mover, updateMover} from './mover'
 import {Updatable} from '../../data-types/data-types'
 import {Camera} from '../../camera'
 import {detectCollisions} from './collisions'
-import {Movers3} from './movers3'
+import {CmpMap} from '../../lib/cmp.ts'
+import {time, timeEnd} from '../../lib/util.ts'
 
 export class Movers implements Updatable {
-  map = new Map<number, Mover>()
-
-  movers2 = new Movers3()
-  // array: Mover[] = []
+  map = new CmpMap<Mover>()
+  // map = new Cmp<Mover>()
 
   update(timeSince: number, camera: Camera): void {
-    for (const m of this.map.values()) {
+    time('movers')
+    for (const m of this.map) {
       updateMover(m, timeSince, camera)
     }
 
@@ -20,19 +20,18 @@ export class Movers implements Updatable {
     } = camera
 
     detectCollisions(camera.store, this.map, a, b)
+    timeEnd('movers')
   }
 
   add(mover: Mover): void {
-    this.movers2.setFromMover(mover)
     this.map.set(mover.id, mover)
   }
 
-  get(id: number): Mover | undefined {
+  get(id: number): Mover | null {
     return this.map.get(id)
   }
 
   delete(id: number) {
-    this.movers2.delete(id)
     this.map.delete(id)
   }
 }

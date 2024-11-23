@@ -1,8 +1,31 @@
-const cmpSize = 2000
+const cmpSize = 20000
 
 export type Id = number
 
-export class Cmp<T> {
+let nextId = 0
+const deleted: Id[] = []
+
+export function nextEntityId(): number {
+  const reused = deleted.pop()
+  if (reused !== undefined) return reused
+
+  const id = nextId
+  nextId++
+  return id
+}
+
+export function claimId(id: Id): void {
+  deleted.push(id)
+}
+
+export interface CmpI<T> {
+  set(id: Id, value: T): void
+  get(id: Id): T | null
+  delete(id: Id): void
+  [Symbol.iterator](): Iterator<T>
+}
+
+export class Cmp<T> implements CmpI<T> {
   data: (T | null)[] = Array.from({length: cmpSize}, () => null)
 
   set(id: Id, value: T) {
@@ -14,6 +37,7 @@ export class Cmp<T> {
   }
 
   delete(id: Id) {
+    claimId(id)
     this.data[id] = null
   }
 
@@ -33,6 +57,27 @@ export class Cmp<T> {
         return {value: null, done: true}
       },
     }
+  }
+}
+
+export class CmpMap<T> implements CmpI<T> {
+  data = new Map<Id, T>()
+
+  set(id: Id, value: T) {
+    this.data.set(id, value)
+  }
+
+  get(id: Id): T | null {
+    return this.data.get(id) ?? null
+  }
+
+  delete(id: Id) {
+    claimId(id)
+    this.data.delete(id)
+  }
+
+  [Symbol.iterator](): Iterator<T> {
+    return this.data.values()
   }
 }
 

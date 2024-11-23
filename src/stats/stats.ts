@@ -1,7 +1,7 @@
 import {Store} from '../store/store'
 import {Drawable, GoType, Updatable} from '../data-types/data-types'
 import {Camera} from '../camera'
-import {nextEntityId} from '../store/mover/mover-ids'
+import {nextEntityId} from '../lib/cmp.ts'
 
 export class Stats implements Drawable, Updatable {
   id = nextEntityId()
