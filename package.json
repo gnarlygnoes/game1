@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "2D ship battle game set in space",
   "scripts": {
+    "postinstall": "npm --prefix cottontail-js install",
     "start": "vite",
     "check": "tsc --watch --noEmit",
     "build": "tsc && vite build",
