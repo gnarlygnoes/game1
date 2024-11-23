@@ -6,6 +6,7 @@ import {Camera} from '../camera'
 import {MoverBoxes} from '../stats/boxes'
 import {GoType} from '../data-types/data-types'
 import {Weapon} from '../objects/weapon'
+import spaceShip from './spaceShips_003.png'
 
 export class Player {
   id: number
@@ -20,7 +21,7 @@ export class Player {
 
   constructor(public store: Store) {
     if (!__JEST__) {
-      this.shipImage.src = require('./spaceShips_003.png')
+      this.shipImage.src = spaceShip
     }
 
     const {movers} = store

@@ -6,6 +6,8 @@
   "scripts": {
     "start": "webpack-dev-server --config ./webpack.dev.ts",
     "build": "webpack --config ./webpack.prod.ts",
+    "start2": "esbuild src/index.ts --watch --bundle --sourcemap --define:__DEV__=true --define:__JEST__=false --define:__FIEND_DEV__=false --loader:.png=file --outdir=dist/output --public-path=output",
+    "start3": "node config.dev.mjs --watch",
     "test": "jest --config ./jest.config.js --watch",
     "testAll": "jest --config ./jest.config.js"
   },
@@ -17,6 +19,7 @@
     "@types/jest": "^29.5.14",
     "css-loader": "^7.1.2",
     "css-minimizer-webpack-plugin": "^7.0.0",
+    "esbuild": "^0.24.0",
     "fork-ts-checker-webpack-plugin": "^9.0.2",
     "html-webpack-plugin": "^5.6.3",
     "jest": "^29.7.0",
