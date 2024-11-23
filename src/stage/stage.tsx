@@ -1,10 +1,10 @@
 import './stage.css'
-import {$Component, c, Canvas, createRef} from '../../fiend-ui/src'
 import {Store} from '../store/store'
 import {UiStore} from '../ui-store'
 import {time, timeEnd} from '../lib/util'
+import {createElement, createRef, Custom} from "../../cottontail-js";
 
-export class Stage extends $Component<{
+export class Stage extends Custom<{
   uiStore: UiStore
   store: Store
 }> {
@@ -18,12 +18,7 @@ export class Stage extends $Component<{
       $size: {width, height},
     } = this.props.uiStore
 
-    return Canvas({
-      ref: this.ref,
-      className: c`Stage`,
-      width,
-      height,
-    })
+    return <canvas ref={this.ref} className="Stage" width={width} height={height}/>
   }
 
   gameLoop = (t: DOMHighResTimeStamp) => {

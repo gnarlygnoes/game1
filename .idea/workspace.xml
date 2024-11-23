@@ -5,39 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7d9e59d8-552d-40fc-94a1-f3660ab746c5" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/prettier.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/prettier.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cottontail-js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitmodules" beforeDir="false" afterPath="$PROJECT_DIR$/.gitmodules" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/game1.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/game1.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config.dev.mjs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/favicon.ico" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/manifest.webmanifest" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/resources/icon-192x192.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/resources/icon-512x512.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/robots.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/service-worker.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/sitemap.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fiend-ui" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/globals.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/globals.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data-types/data-types.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/data-types/data-types.test.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data-types/v2.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/data-types/v2.test.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/cmp.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/cmp.test.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/parser/omg.test.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/parser/parsers.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/parser/parsers.test.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/random.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/random.test.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/objects/asset/parse-svg.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/objects/asset/parse-svg.test.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/objects/asset/transform.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/objects/asset/transform.test.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/objects/enemies/enemy-ship.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/objects/enemies/enemy-ship.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/player/controls.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/player/controls.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/player/player.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/player/player.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/game-objects.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/game-objects.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/mover/collisions.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/mover/collisions.test.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/mover/mover-array.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/mover/mover-array.test.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/mover/mover-ids.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/mover/mover-ids.test.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/store.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/store.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hud/converse/converse.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hud/converse/converse.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hud/hud.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hud/hud.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/stage/stage.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/stage/stage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ui-store.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui-store.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -53,15 +36,9 @@
     </option>
   </component>
   <component name="FormatOnSaveOptions">
+    <option name="myAllFileTypesSelected" value="true" />
     <option name="mySelectedFileTypes">
-      <set>
-        <option value="Go" />
-        <option value="HTML" />
-        <option value="JavaScript" />
-        <option value="Rust" />
-        <option value="TypeScript" />
-        <option value="TypeScript JSX" />
-      </set>
+      <set />
     </option>
   </component>
   <component name="Git.Settings">
@@ -97,16 +74,17 @@
     "RunOnceActivity.go.formatter.settings.were.checked": "true",
     "RunOnceActivity.go.migrated.go.modules.settings": "true",
     "Vitest.untilS.name.executor": "Run",
-    "git-widget-placeholder": "vite",
+    "git-widget-placeholder": "main",
     "go.import.settings.migrated": "true",
     "ignore.virus.scanning.warn.message": "true",
     "last_opened_file_path": "C:/Users/Toby/Repos/game1/public",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "npm.check.executor": "Run",
     "org.rust.first.attach.projects": "true",
-    "prettierjs.PrettierConfiguration.Package": "C:\\Users\\Toby\\Repos\\game1\\fiend-ui\\node_modules\\prettier",
-    "settings.editor.selected.configurable": "settings.javascript.prettier",
+    "prettierjs.PrettierConfiguration.Package": "C:\\Users\\Toby\\Repos\\game1\\cottontail-js\\node_modules\\prettier",
+    "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings",
     "ts.external.directory.path": "C:\\Users\\Toby\\Repos\\game1\\node_modules\\typescript\\lib"
   }
 }]]></component>
@@ -117,7 +95,7 @@
       <recent name="C:\Users\Toby\Repos\game1" />
     </key>
   </component>
-  <component name="RunManager" selected="Vitest.untilS.name">
+  <component name="RunManager" selected="npm.check">
     <configuration name="untilS.name" type="JavaScriptTestRunnerVitest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <vitest-package value="$PROJECT_DIR$/node_modules/vitest" />
@@ -171,8 +149,19 @@
       </test-names>
       <method v="2" />
     </configuration>
+    <configuration name="check" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="check" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="npm.check" />
         <item itemvalue="Vitest.untilS.name" />
         <item itemvalue="Node.js Test Runner.parseSvg.name.ship1" />
         <item itemvalue="Node.js Test Runner.detectCollisions.name" />
@@ -204,7 +193,8 @@
       <workItem from="1732340698728" duration="1096000" />
       <workItem from="1732341827112" duration="140000" />
       <workItem from="1732341973088" duration="76000" />
-      <workItem from="1732342054606" duration="1531000" />
+      <workItem from="1732342054606" duration="2205000" />
+      <workItem from="1732344303629" duration="799000" />
     </task>
     <servers />
   </component>

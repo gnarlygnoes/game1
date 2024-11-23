@@ -1,12 +1,11 @@
-import {$Model} from '../fiend-ui/src'
 import {isTouchDevice} from './lib/util'
+import {init$} from "../cottontail-js";
 
-export class UiStore extends $Model {
+export class UiStore {
   touchDevice = isTouchDevice()
 
   constructor() {
-    super()
-    super.connect()
+    init$(this)
   }
 
   $size = {

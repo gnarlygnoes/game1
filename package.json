@@ -4,6 +4,7 @@
   "description": "2D ship battle game set in space",
   "scripts": {
     "start": "vite",
+    "check": "tsc --watch --noEmit",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "test": "vitest"
