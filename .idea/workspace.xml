@@ -5,23 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7d9e59d8-552d-40fc-94a1-f3660ab746c5" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/cottontail-js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitmodules" beforeDir="false" afterPath="$PROJECT_DIR$/.gitmodules" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/game1.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/game1.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fiend-ui" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/globals.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/globals.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hud/converse/converse.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hud/converse/converse.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hud/hud.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hud/hud.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/stage/stage.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/stage/stage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ui-store.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui-store.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cottontail-js" beforeDir="false" afterPath="$PROJECT_DIR$/cottontail-js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cottontail-js/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/cottontail-js/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cottontail-js/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/cottontail-js/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cottontail-js/src/jsx-types/index.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/cottontail-js/src/jsx-types/index.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cottontail-js/src/jsx-types/jsx-runtime.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/cottontail-js/src/jsx-types/jsx-runtime.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cottontail-js/src/lib/components/fragment.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/cottontail-js/src/lib/components/fragment.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cottontail-js/src/lib/components/types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/cottontail-js/src/lib/components/types.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cottontail-js/src/scratch/app.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cottontail-js/src/scratch/app.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cottontail-js/src/scratch/app2.ts" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,7 +36,7 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/cottontail-js" />
   </component>
   <component name="MacroExpansionManager">
     <option name="directoryName" value="ixuatefp" />
@@ -67,6 +61,8 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Jest.simple div.executor": "Run",
+    "Jest.test re-rendering keyed lists.executor": "Run",
     "Node.js Test Runner.detectCollisions.name.executor": "Debug",
     "Node.js Test Runner.makeMoversArray.name.executor": "Run",
     "Node.js Test Runner.parseSvg.name.ship1.executor": "Debug",
@@ -80,6 +76,7 @@
     "last_opened_file_path": "C:/Users/Toby/Repos/game1/public",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
+    "nodejs.jest.jest_package": "C:/Users/Toby/Repos/game1/cottontail-js/node_modules/jest",
     "nodejs_package_manager_path": "npm",
     "npm.check.executor": "Run",
     "org.rust.first.attach.projects": "true",
@@ -95,7 +92,31 @@
       <recent name="C:\Users\Toby\Repos\game1" />
     </key>
   </component>
-  <component name="RunManager" selected="npm.check">
+  <component name="RunManager" selected="Jest.simple div">
+    <configuration name="simple div" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <jest-package value="$PROJECT_DIR$/cottontail-js/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$/cottontail-js" />
+      <envs />
+      <scope-kind value="SUITE" />
+      <test-file value="$PROJECT_DIR$/cottontail-js/src/scratch/examples.test.tsx" />
+      <test-names>
+        <test-name value="simple div" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="test re-rendering keyed lists" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <jest-package value="$PROJECT_DIR$/cottontail-js/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$/cottontail-js" />
+      <envs />
+      <scope-kind value="SUITE" />
+      <test-file value="$PROJECT_DIR$/cottontail-js/src/lib/render/keys.test.tsx" />
+      <test-names>
+        <test-name value="test re-rendering keyed lists" />
+      </test-names>
+      <method v="2" />
+    </configuration>
     <configuration name="untilS.name" type="JavaScriptTestRunnerVitest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <vitest-package value="$PROJECT_DIR$/node_modules/vitest" />
@@ -106,32 +127,6 @@
       <test-file value="$PROJECT_DIR$/src/lib/parser/parsers.test.ts" />
       <test-names>
         <test-name value="untilS.name" />
-      </test-names>
-      <method v="2" />
-    </configuration>
-    <configuration name="detectCollisions.name" type="NodeJsTestRunner" temporary="true">
-      <node-interpreter value="project" />
-      <working-dir value="$PROJECT_DIR$" />
-      <language value="TYPE_SCRIPT" />
-      <typescript-loader value="TSX" />
-      <envs />
-      <scope-kind value="SUITE" />
-      <test-file value="$PROJECT_DIR$/src/store/mover/collisions.test.ts" />
-      <test-names>
-        <test-name value="detectCollisions.name" />
-      </test-names>
-      <method v="2" />
-    </configuration>
-    <configuration name="makeMoversArray.name" type="NodeJsTestRunner" temporary="true">
-      <node-interpreter value="project" />
-      <working-dir value="$PROJECT_DIR$" />
-      <language value="TYPE_SCRIPT" />
-      <typescript-loader value="TSX" />
-      <envs />
-      <scope-kind value="SUITE" />
-      <test-file value="$PROJECT_DIR$/src/store/mover/mover-array.test.ts" />
-      <test-names>
-        <test-name value="makeMoversArray.name" />
       </test-names>
       <method v="2" />
     </configuration>
@@ -161,11 +156,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Jest.simple div" />
+        <item itemvalue="Jest.test re-rendering keyed lists" />
         <item itemvalue="npm.check" />
         <item itemvalue="Vitest.untilS.name" />
         <item itemvalue="Node.js Test Runner.parseSvg.name.ship1" />
-        <item itemvalue="Node.js Test Runner.detectCollisions.name" />
-        <item itemvalue="Node.js Test Runner.makeMoversArray.name" />
       </list>
     </recent_temporary>
   </component>
@@ -194,7 +189,7 @@
       <workItem from="1732341827112" duration="140000" />
       <workItem from="1732341973088" duration="76000" />
       <workItem from="1732342054606" duration="2205000" />
-      <workItem from="1732344303629" duration="799000" />
+      <workItem from="1732344303629" duration="2947000" />
     </task>
     <servers />
   </component>
