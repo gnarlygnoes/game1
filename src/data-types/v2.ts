@@ -9,6 +9,85 @@ export class Vec2 {
     public x: number,
     public y: number,
   ) {}
+
+  clone(): Vec2 {
+    return new Vec2(this.x, this.y)
+  }
+
+  normalise(): this {
+    const {x, y} = this
+    const len = Math.sqrt(x ** 2 + y ** 2)
+    if (len === 0) return this
+    const scale = 1 / len
+    this.x *= scale
+    this.y *= scale
+    return this
+  }
+
+  limitMagnitude(limit: number): this {
+    const {x, y} = this
+    const len = Math.sqrt(x ** 2 + y ** 2)
+    if (len < limit) return this
+
+    const scale = limit / len
+    this.x *= scale
+    this.y *= scale
+    return this
+  }
+
+  magnitude(): number {
+    const {x, y} = this
+    return Math.sqrt(x ** 2 + y ** 2)
+  }
+
+  add(other: Vec2): this {
+    this.x += other.x
+    this.y += other.y
+    return this
+  }
+
+  subtract(other: Vec2): this {
+    this.x -= other.x
+    this.y -= other.y
+    return this
+  }
+
+  reverse(): this {
+    this.x *= -1
+    this.y *= -1
+    return this
+  }
+
+  angle(): number {
+    const {x, y} = this
+    return Math.atan2(y, x) + (90 * Math.PI) / 180
+  }
+
+  scale(scale: number): this {
+    this.x *= scale
+    this.y *= scale
+    return this
+  }
+
+  rotate(angle: number): this {
+    const {x, y} = this
+    const s = Math.sin(angle)
+    const c = Math.cos(angle)
+
+    this.x = c * x - s * y
+    this.y = s * x + c * y
+    return this
+  }
+
+  distance(other: Vec2): number {
+    const dx = other.x - this.x
+    const dy = other.y - this.y
+    return Math.sqrt(dx ** 2 + dy ** 2)
+  }
+}
+
+export function vec2(x: number, y: number): Vec2 {
+  return new Vec2(x, y)
 }
 
 export namespace V2 {
@@ -56,6 +135,7 @@ export namespace V2 {
     return [-a, -b]
   }
 
+  // In radians, I think.
   export function angle([x, y]: V2RO): number {
     return Math.atan2(y, x) + (90 * Math.PI) / 180
   }
