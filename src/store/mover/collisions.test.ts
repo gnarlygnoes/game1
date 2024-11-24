@@ -10,8 +10,12 @@ import {store2Ids} from './mover-ids'
 import {describe, expect, test} from 'vitest'
 import {CmpMap} from '../../lib/cmp.ts'
 
+function makeCmp() {
+  return new CmpMap<Mover>()
+}
+
 describe(detectCollisions.name, () => {
-  const movers = new CmpMap<Mover>()
+  const movers = makeCmp()
 
   movers.set(0, new Mover([20, 20]))
   movers.set(0, new Mover([20, 20]))
@@ -25,7 +29,7 @@ describe(detectCollisions.name, () => {
 
 describe(fillXBuckets.name, () => {
   test('2 colliding boxes', () => {
-    const movers = new CmpMap<Mover>()
+    const movers = makeCmp()
 
     const m1 = new Mover([20, 20], [20, 20])
     const m2 = new Mover([30, 30], [20, 20])
@@ -39,7 +43,7 @@ describe(fillXBuckets.name, () => {
   })
 
   test('2 boxes', () => {
-    const movers = new CmpMap<Mover>()
+    const movers = makeCmp()
 
     let id = 0
 

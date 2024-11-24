@@ -1,11 +1,11 @@
 import {bucketIntersection, createBuckets} from './collisions'
 import {assert, time, timeEnd} from '../../lib/util'
 import {Camera} from '../../camera'
-import {Id} from '../../lib/cmp'
+import {claimId, CmpI, Id} from '../../lib/cmp'
 import {Store} from '../store'
 import {Mover} from './mover'
 
-const numMovers = 2000
+const moversSize = 20000
 
 enum I {
   // 2d vec
@@ -20,39 +20,60 @@ enum I {
   mass = 11,
   maxVelocity = 12,
   visible = 13,
-  len = 14,
+  deleted = 14,
+  len = 15,
 }
 
 // TODO: Compare Float64 and standard array perf.
-export class Movers3 extends Float32Array {
+export class Movers3 {
+  data: Float32Array
+
   constructor() {
-    super(numMovers)
+    this.data = new Float32Array(moversSize)
   }
 
   posX(id: Id): number {
-    return this[id]
+    return this.data[id]
   }
   posY(id: Id): number {
-    return this[id + 1]
+    return this.data[id + 1]
   }
-
   width(id: Id): number {
-    return this[id + I.size]
+    return this.data[id + I.size]
   }
   height(id: Id): number {
-    return this[id + I.size + 1]
+    return this.data[id + I.size + 1]
   }
-
-  visible(id: Id): boolean {
-    return !!this[id + I.visible]
+  dirX(id: Id): number {
+    return this.data[id + I.direction]
   }
-
+  dirY(id: Id): number {
+    return this.data[id + I.direction + 1]
+  }
+  velX(id: Id): number {
+    return this.data[id + I.velocity]
+  }
+  velY(id: Id): number {
+    return this.data[id + I.velocity + 1]
+  }
+  thrustX(id: Id): number {
+    return this.data[id + I.thrust]
+  }
+  thrustY(id: Id): number {
+    return this.data[id + I.thrust + 1]
+  }
   rotation(id: Id): number {
-    return this[id + I.rotation]
+    return this.data[id + I.rotation]
+  }
+  mass(id: Id): number {
+    return this.data[id + I.mass]
+  }
+  visible(id: Id): boolean {
+    return !!this.data[id + I.visible]
   }
 
   setFromMover(m: Mover) {
-    const a = this
+    const a = this.data
     const i = m.id
     a[i] = m.position[0]
     a[i + 1] = m.position[1]
@@ -68,11 +89,15 @@ export class Movers3 extends Float32Array {
     a[i + I.mass] = m.mass
     a[i + I.maxVelocity] = m.maxVelocity
     a[i + I.visible] = m.visible ? 1 : 0
+    a[i + I.deleted] = 0
   }
 
-  getMover(id: Id): Mover {
-    const a = this
+  getMover(id: Id): Mover | null {
+    const a = this.data
     const i = id
+
+    if (a[id + I.deleted] === 1) return null
+
     const m = new Mover()
     m.position = [a[i], a[i + 1]]
     m.size = [a[i + I.size], a[i + I.size + 1]]
@@ -83,6 +108,7 @@ export class Movers3 extends Float32Array {
     m.mass = a[i + I.mass]
     m.maxVelocity = a[i + I.maxVelocity]
     m.visible = !!a[i + I.visible]
+
     return m
   }
 
@@ -94,30 +120,72 @@ export class Movers3 extends Float32Array {
       this.rotate(i, angle)
       this.normalise(i)
     }
-    // TODO
+
+    if (this.thrustX(id) !== 0 || this.thrustY(id) !== 0) {
+      //
+    }
   }
 
-  delete(id: Id) {}
+  delete(id: Id) {
+    claimId(id)
+    this.data[id + I.deleted] = 1
+  }
 
   rotate(i: number, angle: number) {
-    const x = this[i]
-    const y = this[i + 1]
+    const a = this.data
+    const x = a[i]
+    const y = a[i + 1]
     const s = Math.sin(angle)
     const c = Math.cos(angle)
 
-    this[i] = c * x - s * y
-    this[i + 1] = s * x + c * y
+    a[i] = c * x - s * y
+    a[i + 1] = s * x + c * y
   }
 
   normalise(i: number) {
-    const x = this[i]
-    const y = this[i + 1]
+    const a = this.data
+    const x = a[i]
+    const y = a[i + 1]
     const len = Math.sqrt(x ** 2 + y ** 2)
     if (len === 0) return
 
     const scale = 1 / len
-    this[i] = x * scale
-    this[i + 1] = y * scale
+    a[i] = x * scale
+    a[i + 1] = y * scale
+  }
+
+  length = moversSize
+}
+
+export class MoversA implements CmpI<Mover> {
+  data = new Movers3()
+
+  set(id: Id, value: Mover): void {
+    this.data.setFromMover(value)
+  }
+  get(id: Id): Mover | null {
+    return this.data.getMover(id)
+  }
+  delete(id: Id): void {
+    this.data.delete(id)
+  }
+
+  [Symbol.iterator](): Iterator<Mover> {
+    let id = 0
+    const {data} = this
+
+    return {
+      next(): IteratorResult<Mover> {
+        while (id < moversSize) {
+          const value = data.getMover(id)
+          id += I.len
+          if (value !== null) {
+            return {value, done: false}
+          }
+        }
+        return {value: null, done: true}
+      },
+    }
   }
 }
 

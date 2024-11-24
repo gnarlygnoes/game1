@@ -4,10 +4,12 @@ import {Camera} from '../../camera'
 import {detectCollisions} from './collisions'
 import {CmpMap} from '../../lib/cmp.ts'
 import {time, timeEnd} from '../../lib/util.ts'
+import {MoversA} from './movers3.ts'
 
 export class Movers implements Updatable {
   map = new CmpMap<Mover>()
   // map = new Cmp<Mover>()
+  // map = new MoversA()
 
   update(timeSince: number, camera: Camera): void {
     time('movers')
