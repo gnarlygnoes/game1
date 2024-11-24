@@ -3,6 +3,14 @@ export type V2 = [number, number]
 // TODO: Should we be reusing these instead of making lots of copies?
 export type V2RO = Readonly<V2>
 
+// Probably use mutation as this is what 3js does.
+export class Vec2 {
+  constructor(
+    public x: number,
+    public y: number,
+  ) {}
+}
+
 export namespace V2 {
   export const empty: V2RO = [0, 0]
 

@@ -4,8 +4,7 @@ import {Camera} from '../../camera'
 import {claimId, CmpI, Id} from '../../lib/cmp'
 import {Store} from '../store'
 import {Mover} from './mover'
-
-const moversSize = 20000
+import {V2} from '../../data-types/v2.ts'
 
 enum I {
   // 2d vec
@@ -24,13 +23,12 @@ enum I {
   len = 15,
 }
 
-// TODO: Compare Float64 and standard array perf.
-export class Movers3 {
-  data: Float32Array
+const moversLen = 12000
+const moversSize = moversLen * I.len
 
-  constructor() {
-    this.data = new Float32Array(moversSize)
-  }
+export class Movers3 {
+  // TODO: Compare Float64 and standard array perf.
+  data = new Float32Array(moversSize)
 
   posX(id: Id): number {
     return this.data[id]
@@ -43,6 +41,9 @@ export class Movers3 {
   }
   height(id: Id): number {
     return this.data[id + I.size + 1]
+  }
+  dir(id: Id): V2 {
+    return [this.data[id + I.direction], this.data[id + I.direction + 1]]
   }
   dirX(id: Id): number {
     return this.data[id + I.direction]
