@@ -9,7 +9,7 @@ const moversSize = 20000
 
 enum I {
   // 2d vec
-  pos = 0,
+  // pos = 0,
   size = 2,
   direction = 4,
   velocity = 6,
@@ -72,6 +72,7 @@ export class Movers3 {
     return !!this.data[id + I.visible]
   }
 
+  // Just for compatibility. Probably slow.
   setFromMover(m: Mover) {
     const a = this.data
     const i = m.id
@@ -92,6 +93,7 @@ export class Movers3 {
     a[i + I.deleted] = 0
   }
 
+  // Just for compatibility. Probably slow.
   getMover(id: Id): Mover | null {
     const a = this.data
     const i = id
@@ -122,7 +124,7 @@ export class Movers3 {
     }
 
     if (this.thrustX(id) !== 0 || this.thrustY(id) !== 0) {
-      //
+      // this.scale(id + I.th)
     }
   }
 
@@ -150,6 +152,26 @@ export class Movers3 {
     if (len === 0) return
 
     const scale = 1 / len
+    a[i] = x * scale
+    a[i + 1] = y * scale
+  }
+
+  limitMagnitude(i: number, limit: number) {
+    const a = this.data
+    const x = a[i]
+    const y = a[i + 1]
+
+    const len = Math.sqrt(x ** 2 + y ** 2)
+    if (len < limit) return
+    const scale = limit / len
+    a[i] = x * scale
+    a[i + 1] = y * scale
+  }
+
+  scale(i: number, scale: number) {
+    const a = this.data
+    const x = a[i]
+    const y = a[i + 1]
     a[i] = x * scale
     a[i + 1] = y * scale
   }
