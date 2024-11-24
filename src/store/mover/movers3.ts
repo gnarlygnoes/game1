@@ -4,7 +4,7 @@ import {Camera} from '../../camera'
 import {claimId, CmpI, Id} from '../../lib/cmp'
 import {Store} from '../store'
 import {Mover} from './mover'
-import {V2} from '../../data-types/v2.ts'
+import {V2, V2RO, Vec2, vec2} from '../../data-types/v2.ts'
 
 enum I {
   // 2d vec
@@ -69,6 +69,9 @@ export class Movers3 {
   mass(id: Id): number {
     return this.data[id + I.mass]
   }
+  maxVelocity(id: Id): number {
+    return this.data[id + I.maxVelocity]
+  }
   visible(id: Id): boolean {
     return !!this.data[id + I.visible]
   }
@@ -125,8 +128,16 @@ export class Movers3 {
     }
 
     if (this.thrustX(id) !== 0 || this.thrustY(id) !== 0) {
-      // this.scale(id + I.th)
+      const thrust = this.getVec2(id + I.thrust)
+      const velocity = this.getVec2(id + I.velocity)
+      const newVelocity = velocity
+        .add(thrust.scale(timeSince / 100))
+        .limitMagnitude(this.maxVelocity(id))
+      this.setVec2(id + I.velocity, newVelocity)
     }
+
+    this.setVec2(id, this.getPositionInFuture(id, timeSince))
+    this.data[id + I.visible] = this.isVisible(id, camera) ? 1 : 0
   }
 
   delete(id: Id) {
@@ -169,12 +180,58 @@ export class Movers3 {
     a[i + 1] = y * scale
   }
 
+  getVec2(i: number): Vec2 {
+    const a = this.data
+    const x = a[i]
+    const y = a[i + 1]
+
+    return vec2(x, y)
+  }
+
+  setVec2(i: number, v: Vec2) {
+    this.data[i] = v.x
+    this.data[i + 1] = v.y
+  }
+
   scale(i: number, scale: number) {
     const a = this.data
     const x = a[i]
     const y = a[i + 1]
     a[i] = x * scale
     a[i + 1] = y * scale
+  }
+
+  getPositionInFuture(id: Id, time: number): Vec2 {
+    const position = this.getVec2(id)
+    const velocity = this.getVec2(id + I.velocity)
+
+    // Try 16 here to be close to frame time of 60fps.
+    return position.add(velocity.scale(time / 16))
+  }
+
+  isVisible(id: Id, camera: Camera): boolean {
+    const {
+      width,
+      height,
+      shift: [cx, cy],
+    } = camera
+
+    let x = this.posX(id)
+    let y = this.posY(id)
+    const w = this.width(id)
+    const h = this.height(id)
+
+    const extra = (w + h) / 2
+
+    x += w / 2
+    y += h / 2
+
+    const left = -cx - extra
+    const top = -cy - extra
+    const right = -cx + width + extra
+    const bottom = -cy + height + extra
+
+    return x > left && x < right && y > top && y < bottom
   }
 
   length = moversSize
