@@ -9,7 +9,6 @@ import {MoversA} from './movers3.ts'
 export class Movers implements Updatable {
   map = new CmpMap<Mover>()
   // map = new Cmp<Mover>()
-  // map = new MoversA()
 
   update(timeSince: number, camera: Camera): void {
     time('movers')

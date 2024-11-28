@@ -4,9 +4,9 @@ import {Camera} from '../../camera'
 import {claimId, CmpI, Id} from '../../lib/cmp'
 import {Store} from '../store'
 import {Mover} from './mover'
-import {V2, V2RO, Vec2, vec2} from '../../data-types/v2.ts'
+import {V2, Vec2, vec2} from '../../data-types/v2.ts'
 
-enum I {
+export enum I {
   // 2d vec
   // pos = 0,
   size = 2,
@@ -28,7 +28,7 @@ const moversSize = moversLen * I.len
 
 export class Movers3 {
   // TODO: Compare Float64 and standard array perf.
-  data = new Float32Array(moversSize)
+  data = new Float64Array(moversSize)
 
   posX(id: Id): number {
     return this.data[id]
@@ -287,6 +287,23 @@ function detectCollisions(
   const intersecting = bucketIntersection(xBuckets, yBuckets)
 
   timeEnd(detectCollisions.name)
+
+  const {gameObjects} = store
+
+  // for (const [idA, idB] of intersecting) {
+  //   if (!confirmCollision(idA, idB, movers)) continue
+  //   const a = gameObjects.objects.get(idA)
+  //   const b = gameObjects.objects.get(idB)
+  //   if (!a || !b) continue
+  //
+  //   if (a.type === GoType.weapon || a.type === GoType.pickup) {
+  //     a.hit(b)
+  //   } else if (b.type === GoType.weapon || b.type === GoType.pickup) {
+  //     b.hit(a)
+  //   } else {
+  //     collisionEffect(idA, idB, movers)
+  //   }
+  // }
 }
 
 // Note: min and max could be negative.
